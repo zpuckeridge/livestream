@@ -75,7 +75,9 @@ export function Nav() {
                   <br />
                   <MenuDivider />
                   <MenuItem>Your Servers</MenuItem>
-                  <MenuItem>Account Settings</MenuItem>
+                  <MenuItem>
+                    <Link href="/account">Account Settings</Link>
+                  </MenuItem>
                   <MenuItem>Logout</MenuItem>
                 </MenuList>
               </Menu>
