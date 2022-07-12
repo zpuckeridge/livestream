@@ -1,13 +1,9 @@
 import Head from "next/head";
-import dynamic from "next/dynamic";
 
 import { Box, Flex } from "@chakra-ui/react";
 import { Cloudflare } from "../components/cloudflare";
 import { Nav } from "../components/nav";
-
-const WidgetBot = dynamic(() => import("@widgetbot/react-embed"), {
-  ssr: false,
-});
+import { Chat } from "../components/chat";
 
 export default function Home() {
   return (
@@ -25,13 +21,8 @@ export default function Home() {
         <Box w="75%">
           <Cloudflare />
         </Box>
-        <Box flex="1" bg="darkgrey">
-          <WidgetBot
-            server="491954283814715392"
-            channel="537794443265441792"
-            width="100%"
-            height="100%"
-          />
+        <Box flex="1">
+          <Chat />
         </Box>
       </Flex>
     </Box>
