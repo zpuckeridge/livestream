@@ -2,20 +2,12 @@ import Head from "next/head";
 import dynamic from "next/dynamic";
 
 import { Box, Flex } from "@chakra-ui/react";
-import { Stream } from "@cloudflare/stream-react";
+import { Cloudflare } from "../components/cloudflare";
+import { Nav } from "../components/nav";
 
 const WidgetBot = dynamic(() => import("@widgetbot/react-embed"), {
   ssr: false,
 });
-
-export const Cloudflare = () => {
-  const videoIdOrSignedUrl = "f077f9951270324416d117a6c1a93d52";
-  return (
-    <Box>
-      <Stream controls src={videoIdOrSignedUrl} />
-    </Box>
-  );
-};
 
 export default function Home() {
   return (
@@ -28,7 +20,7 @@ export default function Home() {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
+      <Nav />
       <Flex>
         <Box w="75%">
           <Cloudflare />
