@@ -10,6 +10,7 @@ import {
   MenuItem,
   MenuDivider,
   useDisclosure,
+  Text,
   useColorModeValue,
   Stack,
   useColorMode,
@@ -61,20 +62,16 @@ export function Nav() {
                   />
                 </MenuButton>
                 <MenuList alignItems={"center"}>
-                  <br />
                   <Center>
                     <Avatar
                       size={"2xl"}
                       src={"https://avatars.dicebear.com/api/male/username.svg"}
                     />
                   </Center>
-                  <br />
-                  <Center>
-                    <p>Username</p>
+                  <Center marginTop="1rem" marginBottom="1rem">
+                    <Text>sdelta</Text>
                   </Center>
-                  <br />
                   <MenuDivider />
-                  <MenuItem>Your Servers</MenuItem>
                   <MenuItem>
                     <Link href="/account">Account Settings</Link>
                   </MenuItem>

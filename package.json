@@ -16,10 +16,13 @@
     "@emotion/styled": "^11.9.3",
     "@supabase/supabase-js": "^1.35.4",
     "@widgetbot/react-embed": "^1.4.1",
+    "cloudflare": "^2.9.1",
     "framer-motion": "^6.4.3",
+    "net": "^1.0.2",
     "next": "12.2.2",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "tls": "^0.0.1"
   },
   "devDependencies": {
     "eslint": "8.19.0",

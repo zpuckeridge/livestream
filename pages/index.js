@@ -4,6 +4,7 @@ import { Box, Flex } from "@chakra-ui/react";
 import { Cloudflare } from "../components/cloudflare";
 import { Nav } from "../components/nav";
 import { Chat } from "../components/chat";
+import { Vods } from "../components/vods";
 
 export default function Home() {
   return (

@@ -14,11 +14,22 @@ import {
   Label,
   Badge,
   HStack,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverHeader,
+  PopoverBody,
+  PopoverFooter,
+  PopoverArrow,
+  PopoverCloseButton,
+  PopoverAnchor,
   AvatarBadge,
   Avatar,
   IconButton,
   Center,
 } from "@chakra-ui/react";
+
+import { Profile } from "../components/profile";
 
 export function Chat() {
   return (
@@ -34,12 +45,21 @@ export function Chat() {
         <HStack>
           <Avatar src="https://bit.ly/39qYq5Z" size="sm" />
           <Box>
-            <Heading as="h6" size="sm">
-              sdelta
-              <Badge marginLeft="0.25rem" colorScheme="green">
-                Moderator
-              </Badge>
-            </Heading>
+            <Popover>
+              <PopoverTrigger>
+                <Button variant="link" colorScheme="black">
+                  <Heading as="h6" size="sm">
+                    sdelta
+                    <Badge marginLeft="0.25rem" colorScheme="green">
+                      Moderator
+                    </Badge>
+                  </Heading>
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent>
+                <Profile />
+              </PopoverContent>
+            </Popover>
             <Text>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit.
             </Text>
@@ -56,12 +76,21 @@ export function Chat() {
         <HStack>
           <Avatar src="https://bit.ly/39qYq5Z" size="sm" />
           <Box>
-            <Heading as="h6" size="sm">
-              jaitaiwan
-              <Badge marginLeft="0.25rem" colorScheme="purple">
-                New
-              </Badge>
-            </Heading>
+            <Popover>
+              <PopoverTrigger>
+                <Button variant="link" colorScheme="black">
+                  <Heading as="h6" size="sm">
+                    jaitaiwan
+                    <Badge marginLeft="0.25rem" colorScheme="purple">
+                      New
+                    </Badge>
+                  </Heading>
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent>
+                <Profile />
+              </PopoverContent>
+            </Popover>
 
             <Text>
               Lorem ipsum dolor sit amet, consectetur adipiscing elit.
