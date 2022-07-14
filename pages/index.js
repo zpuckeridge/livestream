@@ -20,7 +20,7 @@ export default function Home() {
       <Nav />
       <Flex>
         <Box w="75%">
-          <Cloudflare />
+          <Cloudflare videoIdOrSignedUrl="30024a5d915ecb3d30a8aa11c9e236fc" />
         </Box>
         <Box flex="1">
           <Chat />
