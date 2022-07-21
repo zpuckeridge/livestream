@@ -26,6 +26,7 @@ export default function Home() {
           <Chat />
         </Box>
       </Flex>
+      <Vods />
     </Box>
   );
 }

@@ -27,95 +27,65 @@ import {
   Avatar,
   IconButton,
   Center,
+  background,
 } from "@chakra-ui/react";
 
 import { Profile } from "../components/profile";
 
 export function Chat() {
   return (
-    <Box padding="1rem">
-      <Heading>Live Chat</Heading>
-      <Box
-        borderWidth="2px"
-        marginTop="1rem"
-        padding="1rem"
-        boxShadow="md"
-        rounded="1rem"
-      >
-        <HStack>
-          <Avatar src="https://bit.ly/39qYq5Z" size="sm" />
-          <Box>
-            <Popover>
-              <PopoverTrigger>
-                <Button variant="link" colorScheme="black">
-                  <Heading as="h6" size="sm">
-                    sdelta
-                    <Badge marginLeft="0.25rem" colorScheme="green">
-                      Moderator
-                    </Badge>
-                  </Heading>
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent>
-                <Profile />
-              </PopoverContent>
-            </Popover>
-            <Text>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            </Text>
-          </Box>
-        </HStack>
-      </Box>
-      <Box
-        borderWidth="2px"
-        marginTop="1rem"
-        padding="1rem"
-        boxShadow="md"
-        rounded="1rem"
-      >
-        <HStack>
-          <Avatar src="https://bit.ly/39qYq5Z" size="sm" />
-          <Box>
-            <Popover>
-              <PopoverTrigger>
-                <Button variant="link" colorScheme="black">
-                  <Heading as="h6" size="sm">
-                    jaitaiwan
-                    <Badge marginLeft="0.25rem" colorScheme="purple">
-                      New
-                    </Badge>
-                  </Heading>
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent>
-                <Profile />
-              </PopoverContent>
-            </Popover>
-
-            <Text>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-            </Text>
-          </Box>
-        </HStack>
-      </Box>
-      <Box marginTop="1rem">
-        <FormControl>
+    <>
+      <Box padding="1rem">
+        <Box
+          padding="0.5rem"
+          borderRadius="lg"
+          _hover={{
+            backgroundColor: useColorModeValue("white", "gray.800"),
+          }}
+        >
           <HStack>
-            <Input
-              placeholder="Type a message..."
-              size="md"
-              borderWidth="2px"
-              borderColor="gray.200"
-              borderRadius="sm"
-              boxShadow="md"
-              rounded="1rem"
-            />
-            <Button size="md" boxShadow="md" rounded="1rem">
-              Send
-            </Button>
+            <Avatar src="https://bit.ly/39qYq5Z" size="sm" />
+            <Box>
+              <Popover>
+                <PopoverTrigger>
+                  <Button variant="link" colorScheme="black">
+                    <Heading as="h6" size="sm">
+                      sdelta
+                      <Badge marginLeft="0.25rem" colorScheme="green">
+                        Moderator
+                      </Badge>
+                    </Heading>
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent>
+                  <Profile />
+                </PopoverContent>
+              </Popover>
+              <Text>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              </Text>
+            </Box>
           </HStack>
-        </FormControl>
+        </Box>
+        <Box marginTop="1rem">
+          <FormControl>
+            <HStack>
+              <Input
+                placeholder="Type a message..."
+                size="md"
+                borderWidth="2px"
+                borderColor="gray.200"
+                borderRadius="sm"
+                boxShadow="md"
+                rounded="1rem"
+              />
+              <Button size="md" boxShadow="md" rounded="1rem">
+                Send
+              </Button>
+            </HStack>
+          </FormControl>
+        </Box>
       </Box>
-    </Box>
+    </>
   );
 }
