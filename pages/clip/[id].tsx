@@ -24,15 +24,15 @@ const Clip = (props: { id: Key | null | undefined }) => {
         <meta property="og:image:height" content="720" />
         <meta
           property="og:url"
-          content={`https://customer-ldcl3cff16n8d346.cloudflarestream.com/${props.id}/manifest/video.m3u8`}
+          content={`https://customer-ldcl3cff16n8d346.cloudflarestream.com/${props.id}/downloads/default.mp4`}
         />
         <meta
           property="og:video"
-          content={`https://customer-ldcl3cff16n8d346.cloudflarestream.com/${props.id}/manifest/video.m3u8`}
+          content={`https://customer-ldcl3cff16n8d346.cloudflarestream.com/${props.id}/downloads/default.mp4`}
         />
         <meta
           property="og:video:url"
-          content={`https://customer-ldcl3cff16n8d346.cloudflarestream.com/${props.id}/manifest/video.m3u8`}
+          content={`https://customer-ldcl3cff16n8d346.cloudflarestream.com/${props.id}/downloads/default.mp4`}
         />
         <meta property="og:video:type" content="text/html" />
         <meta property="og:video:width" content="1920" />
