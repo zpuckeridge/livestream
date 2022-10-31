@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { Key } from "react";
 import CloudflareStream from "../../lib/stream";
 
@@ -12,7 +13,7 @@ export const getServerSideProps = (context: { query: { id: any } }) => {
 const Clip = (props: { id: Key | null | undefined }) => {
   return (
     <>
-      <head>
+      <Head>
         <meta property="og:type" content="video.other" />
         <meta
           property="og:image"
@@ -36,7 +37,7 @@ const Clip = (props: { id: Key | null | undefined }) => {
         <meta property="og:video:type" content="text/html" />
         <meta property="og:video:width" content="1920" />
         <meta property="og:video:height" content="1080" />
-      </head>
+      </Head>
       <div>
         <CloudflareStream videoIdOrSignedUrl={props.id} key={props.id} />
       </div>

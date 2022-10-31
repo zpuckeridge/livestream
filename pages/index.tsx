@@ -1,5 +1,5 @@
 import { Key, ReactNode } from "react";
-import useSWR from "swr";
+import UseSWR from "swr";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -7,7 +7,7 @@ const fetcher = (arg: any, ...args: any) =>
   fetch(arg, ...args).then((res) => res.json());
 
 export default function getClips() {
-  const { data, error } = useSWR("/api/cloudflare", fetcher);
+  const { data, error } = UseSWR("/api/cloudflare", fetcher);
 
   if (error) return <div>Failed to load</div>;
   if (!data) return <div>Loading...</div>;
@@ -17,14 +17,14 @@ export default function getClips() {
       <ul>
         {data.result.map(
           (v: {
-            thumbnail: string | StaticImport;
+            thumbnail: string;
             meta: any;
             uploaded: ReactNode;
             duration: ReactNode;
             uid: Key | null | undefined;
           }) => {
             return (
-              <div className="mt-10">
+              <div className="mt-10" key="v">
                 <Link
                   href={{
                     pathname: `clip/[id]`,

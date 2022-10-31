@@ -5,15 +5,7 @@ var cf = require("cloudflare")({
   key: "e5f80b8e52669c0ec2a2fc78eb54dde2fd0b8",
 });
 
-export default async function getVideos(
-  req: any,
-  res: {
-    status: number;
-    json(error: any): unknown;
-    setHeader: (arg0: string, arg1: string) => void;
-    end: (arg0: string) => void;
-  }
-) {
+export default async function getVideos(req: any, res: any) {
   return new Promise<void>(async (resolve, reject) => {
     const data = await cf.stream
       .listVideos(`${CLOUDFLARE_ID}`)
@@ -26,9 +18,9 @@ export default async function getVideos(
       })
       .catch((error: { message: any }) => {
         console.error("Could not list videos", error);
-        res.status(500).json({
-          error: `Could not list videos: ${error.message}`,
-        });
+        res
+          .status(500)
+          .json({ error: `Could not list videos: ${error.message}` });
       });
     res.status(200).end();
   });
