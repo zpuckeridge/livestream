@@ -11,7 +11,7 @@
   "dependencies": {
     "@cloudflare/stream-react": "^1.8.0",
     "@supabase/ui": "^0.36.5",
-    "cloudflare": "^0.0.8",
+    "cloudflare": "^2.9.1",
     "next": "13.0.0",
     "next-themes": "^0.2.1",
     "react": "18.2.0",
