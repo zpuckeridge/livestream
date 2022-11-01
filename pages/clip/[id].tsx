@@ -38,8 +38,10 @@ const Clip = (props: { id: Key | null | undefined }) => {
         <meta property="og:video:width" content="1920" />
         <meta property="og:video:height" content="1080" />
       </Head>
-      <div>
-        <CloudflareStream videoIdOrSignedUrl={props.id} key={props.id} />
+      <div className="xl:max-w-6xl mx-auto mt-10 mb-20">
+        <div className="m-4 border-4 rounded-md shadow-xl">
+          <CloudflareStream videoIdOrSignedUrl={props.id} key={props.id} />
+        </div>
       </div>
     </>
   );

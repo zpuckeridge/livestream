@@ -1,55 +1,17 @@
-import { Key, ReactNode } from "react";
-import UseSWR from "swr";
-import Image from "next/image";
-import Link from "next/link";
+import CloudflareStream from "../lib/stream";
+import GetClips from "../components/clips";
 
-const fetcher = (arg: any, ...args: any) =>
-  fetch(arg, ...args).then((res) => res.json());
-
-export default function getClips() {
-  const { data, error } = UseSWR("/api/cloudflare", fetcher);
-
-  if (error) return <div>Failed to load</div>;
-  if (!data) return <div>Loading...</div>;
-
+export default function Home() {
   return (
-    <div>
-      <ul>
-        {data.result.map(
-          (v: {
-            thumbnail: string;
-            meta: any;
-            uploaded: ReactNode;
-            duration: ReactNode;
-            uid: Key | null | undefined;
-          }) => {
-            return (
-              <div className="mt-10" key="v">
-                <Link
-                  href={{
-                    pathname: `clip/[id]`,
-                    query: {
-                      id: `${v.uid}`,
-                    },
-                  }}
-                  as={`clip/${v.uid}`}
-                >
-                  <h1 className="font-bold">{v.meta.name}</h1>
-                </Link>
-
-                <h1>Published: {v.uploaded}</h1>
-                <h1>Length: {v.duration}</h1>
-                <Image
-                  src={v.thumbnail}
-                  alt={v.meta.name}
-                  width={100}
-                  height={100}
-                />
-              </div>
-            );
-          }
-        )}
-      </ul>
-    </div>
+    <>
+      <div className="xl:max-w-6xl mx-auto mt-10 mb-20">
+        <div className="m-4 border-4 rounded-md shadow-xl">
+          <CloudflareStream videoIdOrSignedUrl="4d4f99dc7903820b7fcd0c821a4880cf" />
+        </div>
+        <div>
+          <GetClips />
+        </div>
+      </div>
+    </>
   );
 }
