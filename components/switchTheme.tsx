@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
-import { IconSun, IconMoon } from "@supabase/ui";
+import { Sun, Moon } from "react-feather";
 
 export default function ThemeSwitch() {
   const [mounted, setMounted] = useState(false);
@@ -27,9 +27,9 @@ export default function ThemeSwitch() {
         {mounted && (
           <>
             {theme === "dark" ? (
-              <IconSun strokeWidth={2} />
+              <Sun strokeWidth={2} />
             ) : (
-              <IconMoon strokeWidth={2} />
+              <Moon strokeWidth={2} />
             )}
           </>
         )}

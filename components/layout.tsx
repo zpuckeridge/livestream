@@ -1,5 +1,5 @@
 import ThemeSwitch from "./switchTheme";
-import { IconHome } from "@supabase/ui";
+import { Home } from "react-feather";
 import Link from "next/link";
 
 export default function Layout({ children }: { children: any }) {
@@ -12,7 +12,7 @@ export default function Layout({ children }: { children: any }) {
               aria-label="Home"
               className="w-9 h-9 bg-gray-200 rounded-lg dark:bg-[#1d1f22] flex items-center justify-center  hover:ring-2 ring-gray-300  transition-all"
             >
-              <IconHome strokeWidth={2} />
+              <Home />
             </button>
           </Link>
           <ThemeSwitch />

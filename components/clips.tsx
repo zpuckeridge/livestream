@@ -15,14 +15,13 @@ export default function GetClips() {
     if (data) {
       setTimeout(() => {
         setLoading(false);
-      }, 5000);
+      }, 0);
     }
   }, [data]);
 
   let skeletonCards = Array(2).fill(0);
 
   if (error) return <div>Failed to load</div>;
-  if (!data) return <div>Loading...</div>;
 
   return (
     <>
@@ -49,16 +48,18 @@ export default function GetClips() {
                     }}
                     as={`clip/${v.uid}`}
                   >
-                    <h1 className="font-bold">{v.meta.name}</h1>
-
-                    <h1>Published: {v.uploaded}</h1>
-                    <h1>Length: {v.duration}</h1>
-                    <Image
-                      src={v.thumbnail}
-                      alt={v.meta.name}
-                      width={640}
-                      height={360}
-                    />
+                    <div className="transform hover:scale-[1.05] transition-all">
+                      <Image
+                        src={v.thumbnail}
+                        alt={v.meta.name}
+                        width={640}
+                        height={360}
+                        className="rounded-xl"
+                      />
+                      <h1 className="font-bold">{v.meta.name}</h1>
+                      <h1>Published: {v.uploaded}</h1>
+                      <h1>Length: {v.duration}</h1>
+                    </div>
                   </Link>
                 </div>
               );
