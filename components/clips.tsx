@@ -1,8 +1,10 @@
-import { Key, ReactNode, useEffect, useState } from "react";
+import { Key, useEffect, useState } from "react";
 import UseSWR from "swr";
 import Image from "next/image";
 import Link from "next/link";
 import SkeletonCard from "./skeleton";
+import { secondsToTime } from "./time";
+import dateFormat from "dateformat";
 
 const fetcher = (arg: any, ...args: any) =>
   fetch(arg, ...args).then((res) => res.json());
@@ -26,19 +28,20 @@ export default function GetClips() {
   return (
     <>
       {loading ? (
-        skeletonCards.map((index: number) => <SkeletonCard key={index} />)
+        skeletonCards.map((_, index) => <SkeletonCard key={index} />)
       ) : (
-        <div className="grid grid-cols-3 gap-4 m-4">
+        <div className="mt-10 justify-items-center grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 m-4">
           {data.result.map(
             (v: {
+              uploaded: string | number | Date | undefined;
+              duration: number;
               thumbnail: string;
+              creator: string;
               meta: any;
-              uploaded: ReactNode;
-              duration: ReactNode;
               uid: Key | null | undefined;
             }) => {
               return (
-                <div className="mt-10" key="v">
+                <div key={v.uid}>
                   <Link
                     href={{
                       pathname: `clip/[id]`,
@@ -54,11 +57,14 @@ export default function GetClips() {
                         alt={v.meta.name}
                         width={640}
                         height={360}
-                        className="rounded-xl"
+                        className="rounded-2xl"
+                        priority
                       />
-                      <h1 className="font-bold">{v.meta.name}</h1>
-                      <h1>Published: {v.uploaded}</h1>
-                      <h1>Length: {v.duration}</h1>
+                      <h1 className="font-bold mt-2">{v.meta.name}</h1>
+                      <div className="flex justify-between">
+                        <h1>{dateFormat(v.uploaded, "dS mmmm yyyy")}</h1>
+                        <h1>{secondsToTime(v.duration)}</h1>
+                      </div>
                     </div>
                   </Link>
                 </div>

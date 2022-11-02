@@ -10,7 +10,7 @@ export default function Layout({ children }: { children: any }) {
           <Link href="/">
             <button
               aria-label="Home"
-              className="w-9 h-9 bg-gray-200 rounded-lg dark:bg-[#1d1f22] flex items-center justify-center  hover:ring-2 ring-gray-300  transition-all"
+              className="w-9 h-9 rounded-lg flex items-center justify-center bg-gray-200 dark:bg-[#1d1f22] hover:ring-2 ring-gray-300  transition-all"
             >
               <Home />
             </button>
