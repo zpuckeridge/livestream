@@ -21,7 +21,7 @@ export default function GetClips() {
     }
   }, [data]);
 
-  let skeletonCards = Array(2).fill(0);
+  let skeletonCards = Array(3).fill(0);
 
   if (error) return <div>Failed to load</div>;
 
