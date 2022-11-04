@@ -10,8 +10,8 @@ export default async function getVideos(req: any, res: any) {
       .then((response: any) => {
         res.status(200);
         res.setHeader("Content-Type", "application/json");
-        res.setHeader("Cache-Control", "max-age=180000");
-        res.end(JSON.stringify(response));
+        res.setHeader("Cache-Control", "s-maxage=86400");
+        res.end(JSON.stringify(response, null, 2));
         resolve();
       })
       .catch((error: { message: any }) => {
