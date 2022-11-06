@@ -14,6 +14,7 @@ const Clip = (props: { id: Key | null | undefined }) => {
   return (
     <>
       <Head>
+        <meta property="og:title" content="sdelta.xyz" />
         <meta property="og:type" content="video.other" />
         <meta
           property="og:image"
