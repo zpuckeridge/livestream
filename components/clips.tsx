@@ -30,7 +30,7 @@ export default function GetClips() {
       {loading ? (
         skeletonCards.map((_, index) => <SkeletonCard key={index} />)
       ) : (
-        <div className="mt-10 justify-items-center grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 m-4">
+        <div className="mt-10 justify-items-center grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-4 m-4">
           {data.result.map(
             (v: {
               uploaded: string | number | Date | undefined;
@@ -40,7 +40,7 @@ export default function GetClips() {
               uid: string;
             }) => {
               return (
-                <div>
+                <div key={v.uid}>
                   <Link
                     href={{
                       pathname: `video/[id]`,
