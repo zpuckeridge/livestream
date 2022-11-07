@@ -1,6 +1,6 @@
 const SkeletonCard = () => {
   return (
-    <div className="mt-10 justify-items-center grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 m-4">
+    <div className="mt-10 justify-items-center grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-4 m-4">
       <div className="w-full animate-pulse flex-row items-center justify-center">
         <div className="flex flex-col space-y-2">
           <div className="h-32 w-full rounded-md bg-gray-300 "></div>

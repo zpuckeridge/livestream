@@ -1,4 +1,4 @@
-import { Key, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import UseSWR from "swr";
 import Image from "next/image";
 import Link from "next/link";
@@ -36,20 +36,22 @@ export default function GetClips() {
               uploaded: string | number | Date | undefined;
               duration: number;
               thumbnail: string;
-              creator: string;
               meta: any;
-              uid: Key | null | undefined;
+              uid: string;
             }) => {
               return (
-                <div key={v.uid}>
+                <div>
                   <Link
                     href={{
-                      pathname: `clip/[id]`,
+                      pathname: `video/[id]`,
                       query: {
                         id: `${v.uid}`,
+                        name: `${v.meta.name}`,
+                        uploaded: `${v.uploaded}`,
+                        duration: `${v.duration}`,
                       },
                     }}
-                    as={`clip/${v.uid}`}
+                    as={`clip/${v.meta.name}`}
                   >
                     <div className="transform hover:scale-[1.05] transition-all">
                       <Image
