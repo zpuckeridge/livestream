@@ -11,17 +11,9 @@ const fetcher = (arg: any, ...args: any) =>
 
 export default function GetClips() {
   const [loading, setLoading] = useState(true);
-  const { data, error } = useSWR(
-    `${process.env.NEXT_PUBLIC_VERCEL_ENV == "local" ? "http://" : "https://"}${
-      process.env.NEXT_PUBLIC_VERCEL_URL
-    }/api/cloudflare`,
-    fetcher,
-    {
-      suspense: true,
-    }
-  );
+  const { data, error } = useSWR(`/api/cloudflare`, fetcher);
 
-  if (error) return <div>Failed to load</div>;
+  if (error || !data) return <div>Failed to load</div>;
 
   let skeletonCards = Array(3).fill(0);
 
