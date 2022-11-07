@@ -2,35 +2,38 @@ import dateFormat from "dateformat";
 import Head from "next/head";
 import { secondsToTime } from "../../components/time";
 import CloudflareStream from "../../lib/stream";
+import useSWR from "swr";
+import { useState } from "react";
 
 export const getServerSideProps = (context: {
   query: {
-    uploaded: any;
-    duration: any;
-    id: any;
-    name: any;
+    id: string;
   };
 }) => {
   return {
     props: {
       id: context.query.id,
-      name: context.query.name,
-      uploaded: context.query.uploaded,
-      duration: context.query.duration,
     },
   };
 };
 
-const Clip = (props: {
-  id: string;
-  name: string | null | undefined;
-  uploaded: string | number | Date | undefined;
-  duration: number;
-}) => {
+const fetcher = (arg: any, ...args: any) =>
+  fetch(arg, ...args).then((res) => {
+    return res.json();
+  });
+
+export const Clip = (props: { id: string }) => {
+  const [loading, setLoading] = useState(true);
+  const { data, error } = useSWR("/api/meta?id=" + props.id, fetcher);
+
+  if (error || !data) {
+    return <div>Failed to load</div>;
+  }
+
   return (
     <>
       <Head>
-        <meta property="og:title" content={`${props.name}`} />
+        <meta property="og:title" content={`${data.result.meta.name}`} />
         <meta property="og:site_name" content="sdelta.xyz" />
         <meta property="og:type" content="video.other" />
         <meta
@@ -58,10 +61,12 @@ const Clip = (props: {
           <CloudflareStream videoIdOrSignedUrl={props.id} key={props.id} />
         </div>
         <div className="m-4">
-          <h1 className="text-2xl font-bold mt-2">{props.name}</h1>
+          <h1 className="text-2xl font-bold mt-2">{data.result.meta.name}</h1>
           <div className="flex justify-between">
-            <h1>{dateFormat(props.uploaded, "dS mmmm yyyy")} | 🤫 views</h1>
-            <h1>{secondsToTime(props.duration)}</h1>
+            <h1>
+              {dateFormat(data.result.uploaded, "dS mmmm yyyy")} | 🤫 views
+            </h1>
+            <h1>{secondsToTime(data.result.duration)}</h1>
           </div>
         </div>
       </div>
