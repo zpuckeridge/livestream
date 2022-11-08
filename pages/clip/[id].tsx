@@ -24,11 +24,12 @@ const fetcher = (arg: any, ...args: any) =>
 
 export const Clip = (props: { id: string }) => {
   const [loading, setLoading] = useState(true);
-  const { data, error } = useSWR("/api/meta?id=" + props.id, fetcher);
+  const { data, error } = useSWR("/api/videoDetails?id=" + props.id, fetcher);
 
-  if (error || !data) {
-    return <div>Failed to load</div>;
-  }
+  if (error) return <div>An error has occurred while loading!</div>;
+
+  if (!data)
+    return <div>Oops! Looks likes we are missing some data here...</div>;
 
   return (
     <>
