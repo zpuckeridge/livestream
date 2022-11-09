@@ -11,7 +11,10 @@ const fetcher = (arg: any, ...args: any) =>
 
 export default function GetClips() {
   const [loading, setLoading] = useState(true);
-  const { data, error } = UseSWR(`${process.env.CLOUDFLARE_WORKER}`, fetcher);
+  const { data, error } = UseSWR(
+    `https://stream.zacchary7124.workers.dev`,
+    fetcher
+  );
 
   useEffect(() => {
     if (data) {
