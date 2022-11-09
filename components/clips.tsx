@@ -1,5 +1,5 @@
-import { Suspense, useEffect, useState } from "react";
-import useSWR from "swr";
+import { useEffect, useState } from "react";
+import UseSWR from "swr";
 import Image from "next/image";
 import Link from "next/link";
 import SkeletonCard from "./skeleton";
@@ -11,7 +11,10 @@ const fetcher = (arg: any, ...args: any) =>
 
 export default function GetClips() {
   const [loading, setLoading] = useState(true);
-  const { data, error } = useSWR("/api/listVideos", fetcher);
+  const { data, error } = UseSWR(
+    "https://stream.zacchary7124.workers.dev/",
+    fetcher
+  );
 
   useEffect(() => {
     if (data) {
@@ -21,9 +24,9 @@ export default function GetClips() {
     }
   }, [data]);
 
-  if (error) return <div>An error has occurred while loading!</div>;
-
   let skeletonCards = Array(3).fill(0);
+
+  if (error) return <div>Failed to load</div>;
 
   return (
     <>
@@ -43,7 +46,7 @@ export default function GetClips() {
                 <div key={v.uid}>
                   <Link
                     href={{
-                      pathname: `/clip/[id]`,
+                      pathname: `clip/[id]`,
                       query: {
                         id: `${v.uid}`,
                       },
