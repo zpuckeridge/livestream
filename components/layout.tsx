@@ -1,11 +1,13 @@
 import ThemeSwitch from "./switchTheme";
 import { Home } from "react-feather";
 import Link from "next/link";
+import Notification from "./notification";
 
 export default function Layout({ children }: { children: any }) {
   return (
     <>
-      <div>
+      <Notification />
+      <div className="dark:bg-[#111111]">
         <nav className="p-8 flex justify-between w-full border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100">
           <Link href="/">
             <button

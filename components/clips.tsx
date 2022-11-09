@@ -11,7 +11,10 @@ const fetcher = (arg: any, ...args: any) =>
 
 export default function GetClips() {
   const [loading, setLoading] = useState(true);
-  const { data, error } = UseSWR("/api/cloudflare", fetcher);
+  const { data, error } = UseSWR(
+    `https://stream.zacchary7124.workers.dev`,
+    fetcher
+  );
 
   useEffect(() => {
     if (data) {
@@ -43,15 +46,11 @@ export default function GetClips() {
                 <div key={v.uid}>
                   <Link
                     href={{
-                      pathname: `video/[id]`,
+                      pathname: `clip/[id]`,
                       query: {
                         id: `${v.uid}`,
-                        name: `${v.meta.name}`,
-                        uploaded: `${v.uploaded}`,
-                        duration: `${v.duration}`,
                       },
                     }}
-                    as={`clip/${v.meta.name}`}
                   >
                     <div className="transform hover:scale-[1.05] transition-all">
                       <Image
