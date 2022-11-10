@@ -15,6 +15,10 @@ export async function getServerSideProps() {
 }
 
 export default function Home({ data }: { data: any }) {
+  const startArrayIndex = 0;
+  const numRecords = 4;
+  // array.slice(startArrayIndex, numRecords);
+
   return (
     <>
       <Head>
@@ -25,38 +29,40 @@ export default function Home({ data }: { data: any }) {
           <CloudflareStream videoIdOrSignedUrl="4d4f99dc7903820b7fcd0c821a4880cf" />
         </div>
         <div className="mt-10 justify-items-center grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-4 m-4">
-          {data.result.map((video: any) => (
-            <div key={video.uid}>
-              <Link
-                href={{
-                  pathname: `clip/[id]`,
-                  query: {
-                    id: `${video.uid}`,
-                  },
-                }}
-              >
-                <div className="transform hover:scale-[1.05] transition-all">
-                  <Image
-                    src={video.thumbnail}
-                    alt={video.meta.name}
-                    width={640}
-                    height={360}
-                    className="rounded-2xl"
-                    priority
-                  />
-                  <p className="font-bold mt-2 text-lg truncate w-64">
-                    {video.meta.name}
-                  </p>
-                  <div className="flex justify-between">
-                    <p className="text-sm">
-                      {dateFormat(video.uploaded, "dS mmm yy")} ・ 🤫 views
+          {data.result
+            .map((video: any) => (
+              <div key={video.uid}>
+                <Link
+                  href={{
+                    pathname: `clip/[id]`,
+                    query: {
+                      id: `${video.uid}`,
+                    },
+                  }}
+                >
+                  <div className="transform hover:scale-[1.05] transition-all">
+                    <Image
+                      src={video.thumbnail}
+                      alt={video.meta.name}
+                      width={640}
+                      height={360}
+                      className="rounded-2xl"
+                      priority
+                    />
+                    <p className="font-bold mt-2 text-lg truncate w-64">
+                      {video.meta.name}
                     </p>
-                    <p className="text-sm">{secondsToTime(video.duration)}</p>
+                    <div className="flex justify-between">
+                      <p className="text-sm">
+                        {dateFormat(video.uploaded, "dS mmm yy")} ・ 🤫 views
+                      </p>
+                      <p className="text-sm">{secondsToTime(video.duration)}</p>
+                    </div>
                   </div>
-                </div>
-              </Link>
-            </div>
-          ))}
+                </Link>
+              </div>
+            ))
+            .slice(0, 4)}
         </div>
         <div className="flex justify-end mr-4">
           <Link href="/clip">
