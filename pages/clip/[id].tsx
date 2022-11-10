@@ -23,6 +23,7 @@ function Clip({ data }: { data: any }) {
   return (
     <>
       <Head>
+        <title>{`${data.result.meta.name}`}</title>
         <meta property="og:title" content={`${data.result.meta.name}`} />
         <meta property="og:site_name" content="sdelta.xyz" />
         <meta property="og:type" content="video.other" />
@@ -48,6 +49,14 @@ function Clip({ data }: { data: any }) {
         <meta property="og:video:type" content="text/html" />
         <meta property="og:video:width" content="1280" />
         <meta property="og:video:height" content="720" />
+        <meta
+          property="og:video:release_date"
+          content={`${data.result.uploaded}`}
+        />
+        <meta
+          property="og:video:duration"
+          content={`${data.result.duration}`}
+        />
       </Head>
       <div className="xl:max-w-6xl mx-auto mt-10 mb-20">
         <div className="m-4 border-4 rounded-md shadow-xl">
