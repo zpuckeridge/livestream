@@ -15,10 +15,6 @@ export async function getServerSideProps() {
 }
 
 export default function Home({ data }: { data: any }) {
-  const startArrayIndex = 0;
-  const numRecords = 4;
-  // array.slice(startArrayIndex, numRecords);
-
   return (
     <>
       <Head>
