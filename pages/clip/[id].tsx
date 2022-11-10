@@ -69,7 +69,7 @@ function Clip({ data }: { data: any }) {
           <h1 className="text-2xl font-bold mt-2">{data.result.meta.name}</h1>
           <div className="flex justify-between">
             <h1>
-              {dateFormat(data.result.uploaded, "dS mmmm yyyy")} | 🤫 views
+              {dateFormat(data.result.uploaded, "dS mmmm yyyy")} ・ 🤫 views
             </h1>
             <h1>{secondsToTime(data.result.duration)}</h1>
           </div>
