@@ -4,6 +4,7 @@ import Link from "next/link";
 import { secondsToTime } from "../../components/time";
 import dateFormat from "dateformat";
 import { Search } from "react-feather";
+import { useState } from "react";
 
 export async function getServerSideProps() {
   const res = await fetch(`${process.env.CLOUDFLARE_WORKER}`);
@@ -15,6 +16,11 @@ export async function getServerSideProps() {
 }
 
 export default function Home({ data }: { data: any }) {
+  const [searchValue, setSearchValue] = useState("");
+  const filteredVideos = data.result.filter((search: any) =>
+    search.meta.name.toLowerCase().includes(searchValue.toLowerCase())
+  );
+
   return (
     <>
       <Head>
@@ -26,7 +32,7 @@ export default function Home({ data }: { data: any }) {
             <input
               aria-label="Search videos"
               type="text"
-              // onChange={(e) => setSearchValue(e.target.value)}
+              onChange={(e) => setSearchValue(e.target.value)}
               placeholder="Search videos"
               className="block w-full px-4 py-2 text-black border border-gray-200 dark:border-gray-700 rounded-xl bg-gray-200 dark:bg-[#1d1f22] dark:text-gray-100 hover:ring-2 ring-gray-300 transition-all"
             />
@@ -45,7 +51,7 @@ export default function Home({ data }: { data: any }) {
           </div>
         </div>
         <div className="mt-10 justify-items-center grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-4 m-4">
-          {data.result.map((video: any) => (
+          {filteredVideos.map((video: any) => (
             <div key={video.uid}>
               <Link
                 href={{
