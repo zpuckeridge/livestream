@@ -3,7 +3,7 @@ import Head from "next/head";
 import { secondsToTime } from "../../components/time";
 import CloudflareStream from "../../lib/stream";
 
-export async function getStaticPaths() {
+export async function fetchUID() {
   const res = await fetch(`${process.env.CLOUDFLARE_WORKER}`);
   const data = await res.json();
   const paths = data.result.map((data: { uid: any }) => ({
@@ -13,7 +13,7 @@ export async function getStaticPaths() {
   return { paths, fallback: false };
 }
 
-export async function getStaticProps({ params }: { params: any }) {
+export async function getServerSideProps({ params }: { params: any }) {
   const res = await fetch(`${process.env.CLOUDFLARE_WORKER}/${params.id}`);
   const data = await res.json();
   return { props: { data } };
