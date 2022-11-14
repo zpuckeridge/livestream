@@ -7,7 +7,7 @@ const CloudflareStream = ({
 }) => {
   return (
     <div>
-      <Stream preload controls src={videoIdOrSignedUrl} />
+      <Stream controls src={videoIdOrSignedUrl} />
     </div>
   );
 };
