@@ -13,7 +13,6 @@ const CloudflareStream = ({
         height="720"
         width="100%"
         allow="accelerometer; gyroscope; encrypted-media; picture-in-picture;"
-        allowfullscreen="true"
       ></iframe>
     </div>
   );
