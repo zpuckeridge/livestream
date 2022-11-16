@@ -7,7 +7,14 @@ const CloudflareStream = ({
 }) => {
   return (
     <div>
-      <Stream controls src={videoIdOrSignedUrl} />
+      <iframe
+        title="Video Player"
+        src={`https://customer-ldcl3cff16n8d346.cloudflarestream.com/${videoIdOrSignedUrl}/iframe`}
+        height="720"
+        width="100%"
+        allow="accelerometer; gyroscope; encrypted-media; picture-in-picture;"
+        allowfullscreen="true"
+      ></iframe>
     </div>
   );
 };

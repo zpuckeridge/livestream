@@ -19,6 +19,11 @@ export default function Home({ data }: { data: any }) {
     <>
       <Head>
         <title>sdelta</title>
+        <meta
+          name="description"
+          content="Personal Livestream and Clip Hosting for Video Games and related
+          Media."
+        />
       </Head>
       <div className="xl:max-w-6xl mx-auto mt-10 mb-20">
         <div className="m-4 border-4 rounded-md shadow-xl">
