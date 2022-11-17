@@ -1,11 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  experimental: {
+    runtime: "experimental-edge",
+  },
   i18n: {
     locales: ["en"],
     defaultLocale: "en",
-  },
-  experimental: {
-    runtime: "experimental-edge",
   },
   reactStrictMode: true,
   swcMinify: true,
