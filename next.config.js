@@ -4,6 +4,9 @@ const nextConfig = {
     locales: ["en"],
     defaultLocale: "en",
   },
+  experimental: {
+    runtime: "experimental-edge",
+  },
   reactStrictMode: true,
   swcMinify: true,
   images: {
