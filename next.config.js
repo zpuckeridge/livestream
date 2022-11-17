@@ -3,10 +3,10 @@ const nextConfig = {
   experimental: {
     runtime: "experimental-edge",
   },
-  i18n: {
-    locales: ["en"],
-    defaultLocale: "en",
-  },
+  // i18n: {
+  //   locales: ["en"],
+  //   defaultLocale: "en",
+  // },
   reactStrictMode: true,
   swcMinify: true,
   images: {
