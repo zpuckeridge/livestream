@@ -1,23 +1,41 @@
 import ThemeSwitch from "./switchTheme";
 import { Home } from "react-feather";
 import Link from "next/link";
-import Notification from "./notification";
+import LoginButton from "../components/login-btn";
 
 export default function Layout({ children }: { children: any }) {
   return (
     <>
-      <Notification />
+      <div className="bg-[#e5e7eb] dark:bg-black flex justify-between border-b border-black">
+        <div className="font-semibold m-3 ml-4 flex">
+          You are currently viewing a{" "}
+          <p className="ml-1 mr-1 font-bold">work in progress</p>page
+        </div>
+        <Link
+          className="font-semibold m-3 mr-4 flex hover:text-gray-800 dark:hover:text-gray-200"
+          href={"https://github.com/zpuckeridge/livestream"}
+        >
+          See <p className="ml-1 font-bold">GitHub →</p>
+        </Link>
+      </div>
       <div className="dark:bg-[#111111]">
         <nav className="p-8 flex justify-between w-full border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100">
           <Link href="/">
             <button
               aria-label="Home"
-              className="w-9 h-9 rounded-lg flex items-center justify-center bg-gray-200 dark:bg-[#1d1f22] hover:ring-2 ring-gray-300  transition-all"
+              className="p-2 rounded-lg flex items-center justify-center bg-gray-200 dark:bg-[#1d1f22] hover:ring-2 ring-gray-300  transition-all"
             >
               <Home />
             </button>
           </Link>
-          <ThemeSwitch />
+          <div className="inline-flex">
+            <div className="mr-2">
+              <LoginButton />
+            </div>
+            <div>
+              <ThemeSwitch />
+            </div>
+          </div>
         </nav>
         <main>{children}</main>
         <footer className="p-2 text-center">

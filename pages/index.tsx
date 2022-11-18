@@ -53,9 +53,8 @@ export default function Home({ data }: { data: any }) {
                     {video.meta.name}
                   </p>
                   <div className="flex justify-between">
-                    <p className="text-sm">
-                      {dateFormat(video.uploaded, "dS mmm yy")} ・ 🤫 views
-                    </p>
+                    {dateFormat(video.uploaded, "dS mmm yy")}
+
                     <p className="text-sm">{secondsToTime(video.duration)}</p>
                   </div>
                 </div>
