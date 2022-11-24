@@ -1,9 +1,8 @@
 import { useSession, getSession } from "next-auth/react";
+import { FormEvent } from "react";
 import Link from "next/link";
-import { Save } from "react-feather";
-import LoginButton from "../../components/login-btn";
 
-export default function Admin() {
+export default function Upload() {
   const { data: session, status }: { data: any; status: any } = useSession();
 
   if (status === "loading") {
@@ -32,7 +31,7 @@ export default function Admin() {
                 </div>
               </div>
               <div className="mt-5 md:col-span-2 md:mt-0">
-                <form action="#" method="POST">
+                <form>
                   <div className="shadow sm:overflow-hidden sm:rounded-md">
                     <div className="space-y-6 border border-gray-200 dark:border-[#333] rounded-xl px-4 py-5 sm:p-6">
                       <div className="grid grid-cols-3 gap-6">
@@ -48,6 +47,9 @@ export default function Admin() {
                               type="text"
                               name="video-name"
                               id="video-name"
+                              required
+                              minLength={3}
+                              maxLength={50}
                               className="p-2 block w-full rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                               placeholder="Cool video #3000"
                             />
@@ -69,7 +71,8 @@ export default function Admin() {
                             rows={3}
                             className="p-2 mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                             placeholder="Jim and I shot down an A-10!"
-                            defaultValue={""}
+                            required
+                            maxLength={200}
                           />
                         </div>
                         <p className="mt-2 text-sm text-black-500">
@@ -142,6 +145,7 @@ export default function Admin() {
                                   name="video-upload"
                                   type="file"
                                   className="sr-only"
+                                  required
                                 />
                               </label>
                               <p className="pl-1">or drag and drop</p>
@@ -154,6 +158,7 @@ export default function Admin() {
                       </div>
                     </div>
                   </div>
+                  <button type="submit">Submit</button>
                 </form>
               </div>
             </div>
