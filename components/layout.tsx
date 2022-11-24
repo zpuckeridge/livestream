@@ -20,14 +20,29 @@ export default function Layout({ children }: { children: any }) {
       </div>
       <div className="dark:bg-[#111111]">
         <nav className="p-8 flex justify-between w-full border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100">
-          <Link href="/">
-            <button
-              aria-label="Home"
-              className="p-2 rounded-lg flex items-center justify-center bg-gray-200 dark:bg-[#1d1f22] hover:ring-2 ring-gray-300  transition-all"
-            >
-              <Home />
-            </button>
-          </Link>
+          <div className="inline-flex">
+            <div>
+              <Link href="/">
+                <button
+                  aria-label="Home"
+                  className="p-2 rounded-lg flex items-center justify-center bg-gray-200 dark:bg-[#1d1f22] hover:ring-2 ring-gray-300  transition-all"
+                >
+                  <Home />
+                </button>
+              </Link>
+            </div>
+
+            <div>
+              <Link href="/dashboard">
+                <button
+                  aria-label="Dashboard"
+                  className="ml-2 p-2 rounded-lg flex items-center justify-center bg-gray-200 dark:bg-[#1d1f22] hover:ring-2 ring-gray-300  transition-all"
+                >
+                  Dashboard
+                </button>
+              </Link>
+            </div>
+          </div>
           <div className="inline-flex">
             <div className="mr-2">
               <LoginButton />
