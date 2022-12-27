@@ -1,5 +1,3 @@
-import { Stream } from "@cloudflare/stream-react";
-
 const CloudflareStream = ({
   videoIdOrSignedUrl,
 }: {
@@ -8,10 +6,9 @@ const CloudflareStream = ({
   return (
     <div>
       <iframe
+        className="w-full h-full aspect-video"
         title="Video Player"
         src={`https://customer-ldcl3cff16n8d346.cloudflarestream.com/${videoIdOrSignedUrl}/iframe`}
-        height="720"
-        width="100%"
         allow="accelerometer; gyroscope; encrypted-media; picture-in-picture;"
       ></iframe>
     </div>

@@ -2,7 +2,7 @@ import CloudflareStream from "../lib/stream";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
-import { secondsToTime } from "../components/time";
+import { secondsToTime } from "../components/TimeConverter";
 import dateFormat from "dateformat";
 
 export async function getServerSideProps() {
@@ -64,7 +64,7 @@ export default function Home({ data }: { data: any }) {
         </div>
         <div className="flex justify-end mr-4 mt-6">
           <Link href="/clip">
-            <button className="px-4 py-1 text-sm font-semibold rounded-full border bg-gray-200 dark:bg-[#111111] border-gray-200 dark:border-gray-700 hover:ring-2 ring-gray-300 transition-all hover:dark:bg-[#1d1f22] hover:border-transparent focus:outline-none focus:ring-1 focus:ring-gray-300 focus:ring-offset-2">
+            <button className="p-2 rounded-lg flex items-center justify-center bg-white dark:bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all">
               View More →
             </button>
           </Link>

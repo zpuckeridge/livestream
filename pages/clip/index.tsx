@@ -1,7 +1,7 @@
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
-import { secondsToTime } from "../../components/time";
+import { secondsToTime } from "../../components/TimeConverter";
 import dateFormat from "dateformat";
 import { Search } from "react-feather";
 import { useState } from "react";
@@ -34,18 +34,18 @@ export default function Home({ data }: { data: any }) {
               type="text"
               onChange={(e) => setSearchValue(e.target.value)}
               placeholder="Search videos"
-              className="block w-full px-4 py-2 text-black border border-gray-200 dark:border-gray-700 rounded-xl bg-gray-200 dark:bg-[#1d1f22] dark:text-gray-100 hover:ring-2 ring-gray-300 transition-all"
+              className="block w-full px-4 py-2 text-white bg-white dark:bg-white/5 border border-zinc-800/50 rounded-lg hover:ring-2 ring-gray-300 transition-all"
             />
             <Search className="absolute w-5 h-5 text-gray-400 right-3 top-3 dark:text-gray-300" />
           </div>
           <div className="flex gap-2">
-            <button className="px-4 py-1 text-sm font-semibold rounded-full border bg-gray-200 dark:bg-[#111111] border-gray-200 dark:border-gray-700 hover:ring-2 ring-gray-300 transition-all hover:dark:bg-[#1d1f22] hover:border-transparent focus:outline-none focus:ring-1 focus:ring-gray-300 focus:ring-offset-2">
+            <button className="p-2 rounded-lg flex items-center justify-center bg-white dark:bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all">
               ARMA
             </button>
-            <button className="px-4 py-1 text-sm font-semibold rounded-full border bg-gray-200 dark:bg-[#111111] border-gray-200 dark:border-gray-700 hover:ring-2 ring-gray-300 transition-all hover:dark:bg-[#1d1f22] hover:border-transparent focus:outline-none focus:ring-1 focus:ring-gray-300 focus:ring-offset-2">
+            <button className="p-2 rounded-lg flex items-center justify-center bg-white dark:bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all">
               CSGO
             </button>
-            <button className="px-4 py-1 text-sm font-semibold rounded-full border bg-gray-200 dark:bg-[#111111] border-gray-200 dark:border-gray-700 hover:ring-2 ring-gray-300 transition-all hover:dark:bg-[#1d1f22] hover:border-transparent focus:outline-none focus:ring-1 focus:ring-gray-300 focus:ring-offset-2">
+            <button className="p-2 rounded-lg flex items-center justify-center bg-white dark:bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all">
               Other
             </button>
           </div>

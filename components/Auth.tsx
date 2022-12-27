@@ -6,7 +6,7 @@ export default function LoginButton() {
     return (
       <>
         <button
-          className="p-2 rounded-lg flex items-center justify-center bg-gray-200 dark:bg-[#1d1f22] hover:ring-2 ring-gray-300  transition-all"
+          className="p-2 rounded-lg flex items-center justify-center bg-white dark:bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all"
           onClick={() => signOut()}
         >
           Sign out {session.user.email}
@@ -17,7 +17,7 @@ export default function LoginButton() {
   return (
     <>
       <button
-        className="p-2 rounded-lg flex items-center justify-center bg-gray-200 dark:bg-[#1d1f22] hover:ring-2 ring-gray-300  transition-all"
+        className="p-2 rounded-lg flex items-center justify-center bg-white dark:bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all"
         onClick={() => signIn()}
       >
         Sign in

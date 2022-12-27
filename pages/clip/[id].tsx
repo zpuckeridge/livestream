@@ -1,6 +1,7 @@
 import dateFormat from "dateformat";
 import Head from "next/head";
-import { secondsToTime } from "../../components/time";
+import CopyLink from "../../components/CopyLink";
+import { secondsToTime } from "../../components/TimeConverter";
 import CloudflareStream from "../../lib/stream";
 
 export async function fetchUID() {
@@ -58,15 +59,19 @@ function Clip({ data }: { data: any }) {
           content={`${data.result.duration}`}
         />
       </Head>
-      <div className="xl:max-w-6xl mx-auto mt-10 mb-20">
+      <div className="xl:max-w-6xl mx-auto">
         <div className="m-4 border-4 rounded-md shadow-xl">
           <CloudflareStream
             videoIdOrSignedUrl={data.result.uid}
             key={data.result.uid}
           />
         </div>
+
         <div className="m-4">
-          <h1 className="text-2xl font-bold mt-2">{data.result.meta.name}</h1>
+          <div className="flex justify-between">
+            <h1 className="text-2xl font-bold mt-2">{data.result.meta.name}</h1>
+            <CopyLink />
+          </div>
           <div className="flex justify-between">
             <h1>
               {dateFormat(data.result.uploaded, "dS mmmm yyyy")} ・ 🤫 views

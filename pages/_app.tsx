@@ -1,4 +1,5 @@
-import Layout from "../components/layout";
+import Layout from "../components/Layout";
+import TransitionEffect from "../components/TransitionEffect";
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import { ThemeProvider } from "next-themes";
@@ -9,7 +10,9 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
     <SessionProvider session={session}>
       <ThemeProvider>
         <Layout>
-          <Component {...pageProps} />
+          <TransitionEffect>
+            <Component {...pageProps} />
+          </TransitionEffect>
         </Layout>
       </ThemeProvider>
     </SessionProvider>
