@@ -7,7 +7,7 @@ import { Search } from "react-feather";
 import { useState } from "react";
 
 export async function getServerSideProps() {
-  const res = await fetch(`${process.env.CLOUDFLARE_WORKER}`);
+  const res = await fetch(`${process.env.PAGE_URL}/api/stream`);
   const data = await res.json();
 
   return {

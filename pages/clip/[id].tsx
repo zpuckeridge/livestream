@@ -4,7 +4,7 @@ import { secondsToTime } from "../../components/time";
 import CloudflareStream from "../../lib/stream";
 
 export async function fetchUID() {
-  const res = await fetch(`${process.env.CLOUDFLARE_WORKER}`);
+  const res = await fetch(`${process.env.PAGE_URL}/api/stream`);
   const data = await res.json();
   const paths = data.result.map((data: { uid: any }) => ({
     params: { id: data.uid },

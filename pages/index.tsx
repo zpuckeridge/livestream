@@ -6,7 +6,7 @@ import { secondsToTime } from "../components/time";
 import dateFormat from "dateformat";
 
 export async function getServerSideProps() {
-  const res = await fetch(`${process.env.CLOUDFLARE_WORKER}`);
+  const res = await fetch(`${process.env.PAGE_URL}/api/stream`);
   const data = await res.json();
 
   return {
