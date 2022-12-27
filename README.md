@@ -13,8 +13,6 @@
   <br />
 </div>
 
-![Personal Livestream](https://www.site-shot.com/cached_image/a1xfwmO5Ee2gbwJCrBEAAw)
-
 ## 🚀 Install
 
 To get started locally running the project:
@@ -37,8 +35,6 @@ npm run dev
 ```
 
 ## 🚩 Features
-
-To view the documentation on how to use each module, view the README.md for each module:
 
 - 🌙 Dark Mode
 - 📡 Embeds out of the box (clips are playable in Discord!)
