@@ -1,8 +1,10 @@
 import dateFormat from "dateformat";
 import Head from "next/head";
+import { useEffect } from "react";
 import CopyLink from "../../components/CopyLink";
 import { secondsToTime } from "../../components/TimeConverter";
 import CloudflareStream from "../../lib/stream";
+import ClipViews from "../../components/ClipViews";
 
 export async function fetchUID() {
   const res = await fetch(`${process.env.PAGE_URL}/api/stream`);
@@ -21,6 +23,12 @@ export async function getServerSideProps({ params }: { params: any }) {
 }
 
 function Clip({ data }: { data: any }) {
+  useEffect(() => {
+    fetch(`/api/views/${data.result.uid}`, {
+      method: "POST",
+    });
+  }, [data.result.uid]);
+
   return (
     <>
       <Head>
@@ -74,7 +82,8 @@ function Clip({ data }: { data: any }) {
           </div>
           <div className="flex justify-between">
             <h1>
-              {dateFormat(data.result.uploaded, "dS mmmm yyyy")} ・ 🤫 views
+              {dateFormat(data.result.uploaded, "dS mmmm yyyy")} ・{" "}
+              <ClipViews slug={data.result.uid} />
             </h1>
             <h1>{secondsToTime(data.result.duration)}</h1>
           </div>

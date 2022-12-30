@@ -5,6 +5,7 @@ import { secondsToTime } from "../../components/TimeConverter";
 import dateFormat from "dateformat";
 import { Search } from "react-feather";
 import { useState } from "react";
+import ClipViews from "../../components/ClipViews";
 
 export async function getServerSideProps() {
   const res = await fetch(`${process.env.PAGE_URL}/api/stream`);
@@ -75,7 +76,8 @@ export default function Home({ data }: { data: any }) {
                   </p>
                   <div className="flex justify-between">
                     <p className="text-sm">
-                      {dateFormat(video.uploaded, "dS mmm yy")} ・ 🤫 views
+                      {dateFormat(video.uploaded, "dS mmm yy")} ・{" "}
+                      <ClipViews slug={video.uid} />
                     </p>
                     <p className="text-sm">{secondsToTime(video.duration)}</p>
                   </div>
