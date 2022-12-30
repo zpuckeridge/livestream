@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { secondsToTime } from "../components/TimeConverter";
 import dateFormat from "dateformat";
+import ClipViews from "../components/ClipViews";
 
 export async function getServerSideProps() {
   const res = await fetch(`${process.env.PAGE_URL}/api/stream`);
@@ -53,8 +54,10 @@ export default function Home({ data }: { data: any }) {
                     {video.meta.name}
                   </p>
                   <div className="flex justify-between">
-                    {dateFormat(video.uploaded, "dS mmm yy")}
-
+                    <p className="text-sm">
+                      {dateFormat(video.uploaded, "dS mmm yy")} ・{" "}
+                      <ClipViews slug={video.uid} />
+                    </p>
                     <p className="text-sm">{secondsToTime(video.duration)}</p>
                   </div>
                 </div>
