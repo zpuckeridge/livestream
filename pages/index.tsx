@@ -7,9 +7,17 @@ import dateFormat from "dateformat";
 import ClipViews from "../components/ClipViews";
 
 export async function getServerSideProps() {
+  // Make a request to your API to fetch the video data
   const res = await fetch(`${process.env.PAGE_URL}/api/stream`);
   const data = await res.json();
 
+  // Convert time to readable format
+  data.result.forEach((video: any) => {
+    video.uploaded = dateFormat(video.uploaded, "mmmm dS, yyyy");
+    video.duration = secondsToTime(video.duration);
+  });
+
+  // Pass the data as a prop to your component
   return {
     props: { data },
   };
@@ -40,6 +48,7 @@ export default function Home({ data }: { data: any }) {
                     id: `${video.uid}`,
                   },
                 }}
+                passHref
               >
                 <div className="transform hover:scale-[1.05] transition-all">
                   <Image
@@ -55,10 +64,9 @@ export default function Home({ data }: { data: any }) {
                   </p>
                   <div className="flex justify-between">
                     <p className="text-sm">
-                      {dateFormat(video.uploaded, "dS mmm yy")} ・{" "}
-                      <ClipViews slug={video.uid} />
+                      {video.uploaded}・ <ClipViews slug={video.uid} />
                     </p>
-                    <p className="text-sm">{secondsToTime(video.duration)}</p>
+                    <p className="text-sm">{video.duration}</p>
                   </div>
                 </div>
               </Link>
@@ -66,7 +74,7 @@ export default function Home({ data }: { data: any }) {
           ))}
         </div>
         <div className="flex justify-end mr-4 mt-6">
-          <Link href="/clip">
+          <Link href="/clip" passHref>
             <button className="p-2 rounded-lg flex items-center justify-center bg-white dark:bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all">
               View More →
             </button>

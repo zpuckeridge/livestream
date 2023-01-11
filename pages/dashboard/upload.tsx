@@ -13,7 +13,7 @@ export default function Upload() {
     return (
       <>
         <div className="xl:max-w-6xl mx-auto mt-10 mb-20">
-          <Link href="/dashboard">
+          <Link href="/dashboard" passHref>
             <button className="mb-10 px-4 py-1 text-sm font-semibold rounded-full border bg-gray-200 dark:bg-[#111111] border-gray-200 dark:border-gray-700 hover:ring-2 ring-gray-300 transition-all hover:dark:bg-[#1d1f22] hover:border-transparent focus:outline-none focus:ring-1 focus:ring-gray-300 focus:ring-offset-2">
               ← Back to Dashboard
             </button>

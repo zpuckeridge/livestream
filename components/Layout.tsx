@@ -10,7 +10,7 @@ export default function Layout({ children }: { children: any }) {
         <nav className="flex justify-between w-full border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100">
           <div className="inline-flex">
             <div>
-              <Link href="/">
+              <Link href="/" passHref>
                 <button
                   aria-label="Home"
                   className="p-2 rounded-lg flex items-center justify-center bg-white dark:bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all"
@@ -21,7 +21,7 @@ export default function Layout({ children }: { children: any }) {
             </div>
 
             <div>
-              <Link href="/dashboard">
+              <Link href="/dashboard" passHref>
                 <button
                   aria-label="Dashboard"
                   className="ml-2 p-2 rounded-lg flex items-center justify-center bg-white dark:bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all"

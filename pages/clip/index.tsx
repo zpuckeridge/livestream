@@ -8,9 +8,17 @@ import { useState } from "react";
 import ClipViews from "../../components/ClipViews";
 
 export async function getServerSideProps() {
+  // Make a request to your API to fetch the video data
   const res = await fetch(`${process.env.PAGE_URL}/api/stream`);
   const data = await res.json();
 
+  // Convert time to readable format
+  data.result.forEach((video: any) => {
+    video.uploaded = dateFormat(video.uploaded, "mmmm dS, yyyy");
+    video.duration = secondsToTime(video.duration);
+  });
+
+  // Pass the data as a prop to your component
   return {
     props: { data },
   };
@@ -18,6 +26,7 @@ export async function getServerSideProps() {
 
 export default function Home({ data }: { data: any }) {
   const [searchValue, setSearchValue] = useState("");
+  // Filter the videos based on the search value
   const filteredVideos = data.result.filter((search: any) =>
     search.meta.name.toLowerCase().includes(searchValue.toLowerCase())
   );
@@ -61,6 +70,7 @@ export default function Home({ data }: { data: any }) {
                     id: `${video.uid}`,
                   },
                 }}
+                passHref
               >
                 <div className="transform hover:scale-[1.05] transition-all">
                   <Image
@@ -76,10 +86,9 @@ export default function Home({ data }: { data: any }) {
                   </p>
                   <div className="flex justify-between">
                     <p className="text-sm">
-                      {dateFormat(video.uploaded, "dS mmm yy")} ・{" "}
-                      <ClipViews slug={video.uid} />
+                      {video.uploaded}・ <ClipViews slug={video.uid} />
                     </p>
-                    <p className="text-sm">{secondsToTime(video.duration)}</p>
+                    <p className="text-sm">{video.duration}</p>
                   </div>
                 </div>
               </Link>

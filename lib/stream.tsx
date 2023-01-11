@@ -10,6 +10,7 @@ const CloudflareStream = ({
         title="Video Player"
         src={`https://customer-ldcl3cff16n8d346.cloudflarestream.com/${videoIdOrSignedUrl}/iframe`}
         allow="accelerometer; gyroscope; encrypted-media; picture-in-picture;"
+        allowFullScreen={true}
       ></iframe>
     </div>
   );

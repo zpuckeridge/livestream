@@ -15,14 +15,14 @@ export default function Admin() {
         <div className="xl:max-w-6xl mx-auto mt-10 mb-20">
           <div className="justify-items-center text-center grid grid-cols-2 gap-4">
             <div>
-              <Link href="/dashboard/profile">
+              <Link href="/dashboard/profile" passHref>
                 <button className="p-10 rounded-lg flex items-center justify-center bg-gray-200 dark:bg-[#1d1f22] hover:ring-2 ring-gray-300  transition-all">
                   Profile <User className="ml-2" />
                 </button>
               </Link>
             </div>
             <div>
-              <Link href="/dashboard/upload">
+              <Link href="/dashboard/upload" passHref>
                 <button className="p-10 rounded-lg flex items-center justify-center bg-gray-200 dark:bg-[#1d1f22] hover:ring-2 ring-gray-300  transition-all">
                   Upload <UploadCloud className="ml-2" />
                 </button>

@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+const Stream = async (req: NextApiRequest, res: NextApiResponse) => {
   const response = await fetch(
     `https://api.cloudflare.com/client/v4/accounts/${process.env.CLOUDFLARE_ID}/stream/`,
     {
@@ -15,3 +15,5 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   const data = await response.json();
   res.status(200).json(data);
 };
+
+export default Stream;
