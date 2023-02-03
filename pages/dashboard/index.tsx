@@ -35,7 +35,7 @@ export default function Admin() {
   } else {
     return (
       <div className="justify-center text-center xl:max-w-6xl mx-auto mt-10 mb-20">
-        <h1 className="font-bold text-2xl">
+        <h1 className="font-bold text-2xl text-white">
           Sorry! You are not authorised to view this page!
         </h1>
       </div>

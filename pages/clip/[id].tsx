@@ -76,16 +76,16 @@ function Clip({ data }: { data: any }) {
         </div>
 
         <div className="m-4">
-          <div className="flex justify-between">
+          <div className="flex justify-between text-white">
             <h1 className="text-2xl font-bold mt-2">{data.result.meta.name}</h1>
             <CopyLink />
           </div>
-          <div className="flex justify-between">
-            <h1>
+          <div className="flex justify-between text-[#888888]">
+            <p>
               {dateFormat(data.result.uploaded, "dS mmmm yyyy")} ・{" "}
               <ClipViews slug={data.result.uid} />
-            </h1>
-            <h1>{secondsToTime(data.result.duration)}</h1>
+            </p>
+            <p>{secondsToTime(data.result.duration)}</p>
           </div>
         </div>
       </div>

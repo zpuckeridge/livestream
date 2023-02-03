@@ -44,18 +44,18 @@ export default function Home({ data }: { data: any }) {
               type="text"
               onChange={(e) => setSearchValue(e.target.value)}
               placeholder="Search videos"
-              className="block w-full px-4 py-2 text-white bg-white dark:bg-white/5 border border-zinc-800/50 rounded-lg hover:ring-2 ring-gray-300 transition-all"
+              className="block w-full placeholder:text-[#888888] px-4 py-2 bg-white/5 border border-zinc-800/50 rounded-lg hover:ring-2 ring-gray-300 transition-all text-white"
             />
-            <Search className="absolute w-5 h-5 text-gray-400 right-3 top-3 dark:text-gray-300" />
+            <Search className="absolute w-5 h-5 right-3 top-3 text-[#888888]" />
           </div>
-          <div className="flex gap-2">
-            <button className="p-2 rounded-lg flex items-center justify-center bg-white dark:bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all">
+          <div className="flex gap-2 text-white">
+            <button className="p-2 rounded-lg flex items-center justify-center bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all">
               ARMA
             </button>
-            <button className="p-2 rounded-lg flex items-center justify-center bg-white dark:bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all">
+            <button className="p-2 rounded-lg flex items-center justify-center bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all">
               CSGO
             </button>
-            <button className="p-2 rounded-lg flex items-center justify-center bg-white dark:bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all">
+            <button className="p-2 rounded-lg flex items-center justify-center bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all">
               Other
             </button>
           </div>
@@ -63,15 +63,7 @@ export default function Home({ data }: { data: any }) {
         <div className="mt-10 justify-items-center grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-4 m-4">
           {filteredVideos.map((video: any) => (
             <div key={video.uid}>
-              <Link
-                href={{
-                  pathname: `clip/[id]`,
-                  query: {
-                    id: `${video.uid}`,
-                  },
-                }}
-                passHref
-              >
+              <Link href={`/clip/${video.uid}`}>
                 <div className="transform hover:scale-[1.05] transition-all">
                   <Image
                     src={video.thumbnail}
@@ -79,16 +71,17 @@ export default function Home({ data }: { data: any }) {
                     width={640}
                     height={360}
                     className="rounded-2xl"
-                    priority
                   />
-                  <p className="font-bold mt-2 text-lg truncate w-64">
+                  <p className="font-bold mt-2 text-lg truncate w-64 text-white">
                     {video.meta.name}
                   </p>
                   <div className="flex justify-between">
-                    <p className="text-sm">
+                    <p className="text-sm text-[#888888] font-semibold">
                       {video.uploaded}・ <ClipViews slug={video.uid} />
                     </p>
-                    <p className="text-sm">{video.duration}</p>
+                    <p className="text-sm text-[#888888] font-semibold">
+                      {video.duration}
+                    </p>
                   </div>
                 </div>
               </Link>

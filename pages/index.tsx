@@ -34,22 +34,14 @@ export default function Home({ data }: { data: any }) {
           Media."
         />
       </Head>
-      <div className="xl:max-w-6xl mx-auto mt-10 mb-20">
+      <div className="xl:max-w-6xl mx-auto mt-10 mb-20 text-white">
         <div className="m-4 border-4 rounded-md shadow-xl">
           <CloudflareStream videoIdOrSignedUrl="4d4f99dc7903820b7fcd0c821a4880cf" />
         </div>
         <div className="mt-10 justify-items-center grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-4 m-4">
           {data.result.slice(0, 8).map((video: any) => (
             <div key={video.uid}>
-              <Link
-                href={{
-                  pathname: `clip/[id]`,
-                  query: {
-                    id: `${video.uid}`,
-                  },
-                }}
-                passHref
-              >
+              <Link href={`/clip/${video.uid}`}>
                 <div className="transform hover:scale-[1.05] transition-all">
                   <Image
                     src={video.thumbnail}
@@ -63,10 +55,12 @@ export default function Home({ data }: { data: any }) {
                     {video.meta.name}
                   </p>
                   <div className="flex justify-between">
-                    <p className="text-sm">
+                    <p className="text-sm text-[#888888] font-semibold">
                       {video.uploaded}・ <ClipViews slug={video.uid} />
                     </p>
-                    <p className="text-sm">{video.duration}</p>
+                    <p className="text-sm text-[#888888] font-semibold">
+                      {video.duration}
+                    </p>
                   </div>
                 </div>
               </Link>
@@ -75,7 +69,7 @@ export default function Home({ data }: { data: any }) {
         </div>
         <div className="flex justify-end mr-4 mt-6">
           <Link href="/clip" passHref>
-            <button className="p-2 rounded-lg flex items-center justify-center bg-white dark:bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all">
+            <button className="p-2 text-white rounded-lg flex items-center justify-center bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all">
               View More →
             </button>
           </Link>
