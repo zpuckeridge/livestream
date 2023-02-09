@@ -5,14 +5,14 @@ import LoginButton from "./Auth";
 export default function Layout({ children }: { children: any }) {
   return (
     <>
-      <div className="p-4 flex flex-col min-h-screen justify-between bg-[#111111]">
+      <div className="p-4 flex flex-col min-h-screen bg-[#111111]">
         <nav className="flex justify-between w-fullborder-gray-700 text-gray-100">
           <div className="inline-flex">
             <div>
               <Link href="/" passHref>
                 <button
                   aria-label="Home"
-                  className="p-2 rounded-lg flex items-center justify-center bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all"
+                  className="px-6 py-1 rounded-lg flex items-center justify-center bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all"
                 >
                   <Home />
                 </button>
@@ -23,7 +23,7 @@ export default function Layout({ children }: { children: any }) {
               <Link href="/dashboard" passHref>
                 <button
                   aria-label="Dashboard"
-                  className="ml-2 p-2 rounded-lg flex items-center justify-center bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all"
+                  className="ml-2 px-6 py-1 rounded-lg flex items-center justify-center bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all"
                 >
                   Dashboard
                 </button>

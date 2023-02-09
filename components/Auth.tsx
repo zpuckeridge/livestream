@@ -9,7 +9,7 @@ export default function LoginButton() {
     return (
       <>
         <button
-          className="p-2 rounded-lg flex items-center justify-center bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all"
+          className="px-6 py-1 rounded-lg flex items-center justify-center bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all"
           onClick={() => signOut()}
         >
           <Image
@@ -27,7 +27,7 @@ export default function LoginButton() {
   return (
     <>
       <button
-        className="p-2 rounded-lg flex items-center justify-center bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all"
+        className="px-6 py-1 rounded-lg flex items-center justify-center bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all"
         onClick={() => signIn()}
       >
         <FaDiscord className="mr-2 h-6 w-6" />

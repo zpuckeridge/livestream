@@ -69,7 +69,7 @@ export default function Home({ data }: { data: any }) {
         </div>
         <div className="flex justify-end mr-4 mt-6">
           <Link href="/clip" passHref>
-            <button className="p-2 text-white rounded-lg flex items-center justify-center bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all">
+            <button className="px-6 py-1 rounded-lg flex items-center justify-center bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all">
               View More →
             </button>
           </Link>
