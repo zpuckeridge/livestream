@@ -7,10 +7,7 @@ const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
   images: {
-    domains: [
-      "customer-ldcl3cff16n8d346.cloudflarestream.com",
-      "cdn.discordapp.com",
-    ],
+    domains: ["customer-ldcl3cff16n8d346.cloudflarestream.com"],
   },
 };
 

@@ -49,13 +49,13 @@ export default function Home({ data }: { data: any }) {
             <Search className="absolute w-5 h-5 right-3 top-3 text-[#888888]" />
           </div>
           <div className="flex gap-2 text-white">
-            <button className="px-6 py-1 rounded-lg flex items-center justify-center bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all">
+            <button className="p-2 rounded-lg flex items-center justify-center bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all">
               ARMA
             </button>
-            <button className="px-6 py-1 rounded-lg flex items-center justify-center bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all">
+            <button className="p-2 rounded-lg flex items-center justify-center bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all">
               CSGO
             </button>
-            <button className="px-6 py-1 rounded-lg flex items-center justify-center bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all">
+            <button className="p-2 rounded-lg flex items-center justify-center bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all">
               Other
             </button>
           </div>
