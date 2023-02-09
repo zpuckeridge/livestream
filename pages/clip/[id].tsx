@@ -90,7 +90,7 @@ function Clip({ data }: { data: any }) {
           </div>
         </div>
         <Link href="/clip">
-          <button className="m-4 py-1 px-6 text-white rounded-lg flex items-center justify-center bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all">
+          <button className="m-4 py-1 px-6 text-white rounded-lg bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all">
             ← Back to Clips
           </button>
         </Link>
