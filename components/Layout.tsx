@@ -12,7 +12,7 @@ export default function Layout({ children }: { children: any }) {
               <Link href="/" passHref>
                 <button
                   aria-label="Home"
-                  className="p-2 rounded-lg flex items-center justify-center bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all"
+                  className="py-1 px-6 rounded-lg flex items-center justify-center bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all"
                 >
                   <Home />
                 </button>
@@ -23,7 +23,7 @@ export default function Layout({ children }: { children: any }) {
               <Link href="/dashboard" passHref>
                 <button
                   aria-label="Dashboard"
-                  className="ml-2 p-2 rounded-lg flex items-center justify-center bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all"
+                  className="ml-2 py-1 px-6 rounded-lg flex items-center justify-center bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all"
                 >
                   Dashboard
                 </button>

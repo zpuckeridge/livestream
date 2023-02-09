@@ -3,8 +3,9 @@ import Head from "next/head";
 import { useEffect } from "react";
 import CopyLink from "../../components/CopyLink";
 import { secondsToTime } from "../../components/TimeConverter";
-import CloudflareStream from "../../lib/stream";
+import CloudflareStream from "../../lib/cloudflare";
 import ClipViews from "../../components/ClipViews";
+import Link from "next/link";
 
 export async function fetchUID() {
   const res = await fetch(`${process.env.PAGE_URL}/api/stream`);
@@ -88,6 +89,11 @@ function Clip({ data }: { data: any }) {
             <p>{secondsToTime(data.result.duration)}</p>
           </div>
         </div>
+        <Link href="/clip">
+          <button className="m-4 py-1 px-6 text-white rounded-lg flex items-center justify-center bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all">
+            ← Back to Clips
+          </button>
+        </Link>
       </div>
     </>
   );

@@ -1,4 +1,4 @@
-import CloudflareStream from "../lib/stream";
+import CloudflareStream from "../lib/cloudflare";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
@@ -6,7 +6,7 @@ import { secondsToTime } from "../components/TimeConverter";
 import dateFormat from "dateformat";
 import ClipViews from "../components/ClipViews";
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   // Make a request to your API to fetch the video data
   const res = await fetch(`${process.env.PAGE_URL}/api/stream`);
   const data = await res.json();
@@ -69,7 +69,7 @@ export default function Home({ data }: { data: any }) {
         </div>
         <div className="flex justify-end mr-4 mt-6">
           <Link href="/clip" passHref>
-            <button className="p-2 text-white rounded-lg flex items-center justify-center bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all">
+            <button className="py-1 px-6 text-white rounded-lg flex items-center justify-center bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all">
               View More →
             </button>
           </Link>
