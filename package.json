@@ -10,10 +10,13 @@
   },
   "dependencies": {
     "@cloudflare/stream-react": "^1.8.0",
+    "@mux/mux-node": "^7.3.0",
+    "@mux/upchunk": "^3.0.2",
     "@next/font": "^13.1.6",
     "@supabase/supabase-js": "^2.4.0",
     "dateformat": "^5.0.3",
     "framer-motion": "^9.0.1",
+    "fs": "^0.0.1-security",
     "next": "^13.1.6",
     "next-auth": "^4.19.2",
     "next-themes": "^0.2.1",

@@ -64,12 +64,12 @@ export default function Home({ data }: { data: any }) {
           {filteredVideos.map((video: any) => (
             <div key={video.uid}>
               <Link href={`/clip/${video.uid}`}>
-                <div className="transform hover:scale-[1.05] transition-all">
+                <div className="transform hover:scale-[1.05] h-full w-full transition-all">
                   <Image
                     src={video.thumbnail}
                     alt={video.meta.name}
-                    width={640}
-                    height={360}
+                    width={400}
+                    height={400}
                     className="rounded-2xl"
                   />
                   <p className="font-bold mt-2 text-lg truncate w-64 text-white">

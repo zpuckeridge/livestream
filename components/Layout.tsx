@@ -5,8 +5,8 @@ import LoginButton from "./Auth";
 export default function Layout({ children }: { children: any }) {
   return (
     <>
-      <div className="p-4 flex flex-col min-h-screen justify-between bg-[#111111]">
-        <nav className="flex justify-between w-fullborder-gray-700 text-gray-100">
+      <div className="p-4 flex flex-col min-h-screen justify-between text-white bg-[#111111]">
+        <nav className="flex justify-between w-fullborder-gray-700">
           <div className="inline-flex">
             <div>
               <Link href="/" passHref>

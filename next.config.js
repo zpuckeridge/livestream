@@ -9,7 +9,7 @@ const nextConfig = {
   images: {
     domains: [
       "customer-ldcl3cff16n8d346.cloudflarestream.com",
-      "cdn.discord.com",
+      "cdn.discordapp.com",
     ],
   },
 };

@@ -7,7 +7,7 @@ import CloudflareStream from "../../lib/cloudflare";
 import ClipViews from "../../components/ClipViews";
 import Link from "next/link";
 
-export async function fetchUID() {
+export async function getStaticPaths() {
   const res = await fetch(`${process.env.PAGE_URL}/api/stream`);
   const data = await res.json();
   const paths = data.result.map((data: { uid: any }) => ({
@@ -17,7 +17,7 @@ export async function fetchUID() {
   return { paths, fallback: false };
 }
 
-export async function getServerSideProps({ params }: { params: any }) {
+export async function getStaticProps({ params }: { params: any }) {
   const res = await fetch(`${process.env.CLOUDFLARE_WORKER}/${params.id}`);
   const data = await res.json();
   return { props: { data } };
@@ -69,7 +69,7 @@ function Clip({ data }: { data: any }) {
         />
       </Head>
       <div className="xl:max-w-6xl mx-auto">
-        <div className="m-4 border-4 rounded-md shadow-xl">
+        <div className="m-4 border border-zinc-800/50 rounded-2xl drop-shadow-lg">
           <CloudflareStream
             videoIdOrSignedUrl={data.result.uid}
             key={data.result.uid}

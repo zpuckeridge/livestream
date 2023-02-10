@@ -6,7 +6,7 @@ const CloudflareStream = ({
   return (
     <div>
       <iframe
-        className="w-full h-full aspect-video"
+        className="w-full h-full aspect-video rounded-2xl"
         title="Video Player"
         src={`https://customer-ldcl3cff16n8d346.cloudflarestream.com/${videoIdOrSignedUrl}/iframe`}
         allow="accelerometer; gyroscope; encrypted-media; picture-in-picture;"
