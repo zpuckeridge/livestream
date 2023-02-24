@@ -48,17 +48,6 @@ export default function Home({ data }: { data: any }) {
             />
             <Search className="absolute w-5 h-5 right-3 top-3 text-[#888888]" />
           </div>
-          <div className="flex gap-2 text-white">
-            <button className="py-1 px-6 rounded-lg flex items-center justify-center bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all">
-              ARMA
-            </button>
-            <button className="py-1 px-6 rounded-lg flex items-center justify-center bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all">
-              CSGO
-            </button>
-            <button className="py-1 px-6 rounded-lg flex items-center justify-center bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all">
-              Other
-            </button>
-          </div>
         </div>
         <div className="mt-10 justify-items-center grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-4 m-4">
           {filteredVideos.map((video: any) => (

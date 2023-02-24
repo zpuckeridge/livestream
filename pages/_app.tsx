@@ -3,6 +3,7 @@ import TransitionEffect from "../components/TransitionEffect";
 import type { AppProps } from "next/app";
 import { Inter } from "@next/font/google";
 import { SessionProvider } from "next-auth/react";
+import { Analytics } from "@vercel/analytics/react";
 import "../styles/globals.css";
 
 const inter = Inter({
@@ -17,6 +18,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
         <Layout>
           <TransitionEffect>
             <Component {...pageProps} />
+            <Analytics />
           </TransitionEffect>
         </Layout>
       </main>

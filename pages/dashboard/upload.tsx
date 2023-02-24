@@ -6,7 +6,6 @@ import router from "next/router";
 const UploadForm = () => {
   const [isUploading, setIsUploading] = useState(false);
   const [selectedFile, setSelectedFile] = useState({});
-  const [uploadId, setUploadId] = useState({});
   const [progress, setProgress] = useState<Number | null>(null);
   const [errorMessage, setErrorMessage] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
@@ -18,9 +17,8 @@ const UploadForm = () => {
         method: "POST",
       })
         .then((res) => res.json())
-        .then(({ id, url }) => {
-          setUploadId(id);
-          return url;
+        .then(({ url, playback_id }) => {
+          return { url, playback_id };
         });
     } catch (e) {
       console.error("Error in createUpload", e);
@@ -44,8 +42,21 @@ const UploadForm = () => {
       return;
     }
 
+    const response = await createUpload();
+
+    if (
+      typeof response !== "object" ||
+      !response.hasOwnProperty("url") ||
+      !response.hasOwnProperty("playback_id")
+    ) {
+      setErrorMessage("Error creating upload");
+      return;
+    }
+
+    const { url, playback_id } = response;
+
     const upload = UpChunk.createUpload({
-      endpoint: createUpload,
+      endpoint: url,
       file: files[0],
     });
 
@@ -57,10 +68,10 @@ const UploadForm = () => {
       setProgress(Math.floor(progress.detail));
     });
 
-    // need to figure out how to insert playback_id here
     upload.on("success", async () => {
-      setFormData({ ...formData });
-      await supabase.from("livestream").insert(formData);
+      console.log(playback_id);
+      const updatedForm = { ...formData, playback_id: playback_id };
+      await supabase.from("livestream").insert(updatedForm);
       setTimeout(() => {
         router.push("/dashboard");
       }, 5000);
