@@ -6,7 +6,7 @@
     <br />
   </h1>
   <sup>
-    A Next.JS project leveraging Cloudflare Stream, Cloudflare Workers, Tailwind CSS all hosted on Cloudflare Pages. </em>
+    A Next.JS project leveraging Cloudflare Stream, Cloudflare Workers, Tailwind CSS hosted using Vercel.</em>
     <br />
   </sup>
   <br />
