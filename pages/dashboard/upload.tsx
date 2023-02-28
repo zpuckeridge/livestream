@@ -16,7 +16,6 @@ const UploadForm = () => {
   const [progress, setProgress] = useState<Number | null>(null);
   const [errorMessage, setErrorMessage] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
-  const [formData, setFormData] = useState({});
 
   const { data, error } = useSwr(
     () => (isPreparing ? `/api/upload/${uploadId}` : null),

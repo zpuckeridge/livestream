@@ -32,4 +32,4 @@ export default async function assetHandler(
 }
 
 // This file queries the Mux API grabbing the asset id, asset status, errors and importantly, the playback_id.
-// It is using req.query.id to grab the upload id from the url.
+// It is using req.query.id to grab the asset id from the url as specified in /pages/dashboard/upload.tsx.

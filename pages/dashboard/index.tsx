@@ -33,3 +33,8 @@ export default function Admin() {
     );
   }
 }
+
+// Uploaded Videos should appear here
+// User should be able to control whether or not the video is private/public and should appear on the site
+// It should also list if the video is still processing or has finished. If video is processing, it
+// shouldn't appear on the site.

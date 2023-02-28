@@ -67,3 +67,7 @@ export default function Asset() {
 }
 
 // This file queries /api/asset/[id].ts checking every 5 seconds if the asset has finished processing.
+// Instead of redirecting the user directly to the finished processing video, it should prompt
+// the user to add a title to the video. The user should be able to change whether or not the
+// video is public or private. This is where data should be committed to Supabase (as we now have all the
+// information we need here)
