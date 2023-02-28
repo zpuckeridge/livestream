@@ -11,10 +11,12 @@
   "dependencies": {
     "@cloudflare/stream-react": "^1.8.0",
     "@mux/mux-node": "^7.3.0",
+    "@mux/mux-player-react": "^1.8.0",
     "@mux/upchunk": "^3.0.2",
     "@next/font": "^13.1.6",
     "@supabase/supabase-js": "^2.4.0",
     "@vercel/analytics": "^0.1.10",
+    "@vidstack/react": "^0.3.3",
     "dateformat": "^5.0.3",
     "framer-motion": "^9.0.1",
     "fs": "^0.0.1-security",
@@ -25,7 +27,9 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-feather": "^2.0.10",
-    "react-icons": "^4.7.1"
+    "react-icons": "^4.7.1",
+    "swr": "^2.0.4",
+    "vidstack": "^0.3.3"
   },
   "devDependencies": {
     "@cloudflare/next-on-pages": "^0.2.0",

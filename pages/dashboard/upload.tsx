@@ -1,15 +1,38 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as UpChunk from "@mux/upchunk";
+import Spinner from "../../components/Spinner";
+import useSwr from "swr";
+import Router from "next/router";
 import supabase from "../../lib/supabase";
-import router from "next/router";
+
+const fetcher = (url: string) => {
+  return fetch(url).then((res) => res.json());
+};
 
 const UploadForm = () => {
   const [isUploading, setIsUploading] = useState(false);
-  const [selectedFile, setSelectedFile] = useState({});
+  const [isPreparing, setIsPreparing] = useState(false);
+  const [uploadId, setUploadId] = useState(null);
   const [progress, setProgress] = useState<Number | null>(null);
   const [errorMessage, setErrorMessage] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
   const [formData, setFormData] = useState({});
+
+  const { data, error } = useSwr(
+    () => (isPreparing ? `/api/upload/${uploadId}` : null),
+    fetcher,
+    { refreshInterval: 5000 }
+  );
+
+  const upload = data && data.upload;
+
+  useEffect(() => {
+    if (upload && upload.asset_id) {
+      Router.push({
+        pathname: `/asset/${upload.asset_id}`,
+      });
+    }
+  }, [upload]);
 
   const createUpload = async () => {
     try {
@@ -17,8 +40,9 @@ const UploadForm = () => {
         method: "POST",
       })
         .then((res) => res.json())
-        .then(({ url, playback_id }) => {
-          return { url, playback_id };
+        .then(({ id, url }) => {
+          setUploadId(id);
+          return url;
         });
     } catch (e) {
       console.error("Error in createUpload", e);
@@ -26,37 +50,17 @@ const UploadForm = () => {
     }
   };
 
-  const handleSubmit = async (event: any) => {
-    event.preventDefault();
-
-    if (!selectedFile) {
-      alert("Please attach a video before submitting!");
-      return;
-    }
-
+  const startUpload = () => {
     setIsUploading(true);
 
     const files = inputRef.current?.files;
     if (!files) {
-      setErrorMessage("An unexpected error has occurred.");
+      setErrorMessage("An unexpected issue occurred");
       return;
     }
-
-    const response = await createUpload();
-
-    if (
-      typeof response !== "object" ||
-      !response.hasOwnProperty("url") ||
-      !response.hasOwnProperty("playback_id")
-    ) {
-      setErrorMessage("Error creating upload");
-      return;
-    }
-
-    const { url, playback_id } = response;
 
     const upload = UpChunk.createUpload({
-      endpoint: url,
+      endpoint: createUpload,
       file: files[0],
     });
 
@@ -68,20 +72,8 @@ const UploadForm = () => {
       setProgress(Math.floor(progress.detail));
     });
 
-    upload.on("success", async () => {
-      console.log(playback_id);
-      const updatedForm = { ...formData, playback_id: playback_id };
-      await supabase.from("livestream").insert(updatedForm);
-      setTimeout(() => {
-        router.push("/dashboard");
-      }, 5000);
-    });
-  };
-
-  const handleChange = (event: any) => {
-    setFormData({
-      ...formData,
-      [event.target.name]: event.target.value,
+    upload.on("success", () => {
+      setIsPreparing(true);
     });
   };
 
@@ -92,43 +84,19 @@ const UploadForm = () => {
       <div className="text-white bg-white/5 border border-zinc-800/50 rounded-lg p-10">
         {isUploading ? (
           <>
-            <div>Uploading...{progress ? `${progress}%` : ""}</div>
+            {isPreparing ? (
+              <div>Preparing...</div>
+            ) : (
+              <div>Uploading...{progress ? `${progress}%` : ""}</div>
+            )}
+            <Spinner />
           </>
         ) : (
-          <form onSubmit={handleSubmit}>
-            <div className="space-y-4">
-              <div className="space-y-1">
-                <label className="font-semibold">Name</label>
-                <input
-                  type="text"
-                  name="title"
-                  className="block w-full placeholder:text-[#888888] px-4 py-2 bg-white/5 border border-zinc-800/50 rounded-lg hover:ring-2 ring-gray-300 transition-all text-white"
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="space-y-1">
-                <label className="font-semibold">Select a video file</label>
-                <div className="flex justify-between">
-                  <input
-                    type="file"
-                    ref={inputRef}
-                    onChange={(event) => {
-                      if (event.target.files) {
-                        setSelectedFile(event.target.files[0]);
-                      }
-                    }}
-                  />
-                  <button
-                    onClick={handleSubmit}
-                    type="submit"
-                    className="px-6 py-1 rounded-lg flex items-center justify-center bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all"
-                  >
-                    Submit
-                  </button>
-                </div>
-              </div>
-            </div>
-          </form>
+          <>
+            <label>
+              <input type="file" onChange={startUpload} ref={inputRef} />
+            </label>
+          </>
         )}
       </div>
     </>

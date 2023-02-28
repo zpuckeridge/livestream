@@ -71,8 +71,8 @@ function Clip({ data }: { data: any }) {
       <div className="xl:max-w-6xl mx-auto">
         <div className="m-4 border border-zinc-800/50 rounded-2xl drop-shadow-lg">
           <CloudflareStream
-            videoIdOrSignedUrl={data.result.uid}
-            key={data.result.uid}
+            videoIdOrSignedUrl={data.result.playback.hls}
+            key={data.result.playback.hls}
           />
         </div>
 
