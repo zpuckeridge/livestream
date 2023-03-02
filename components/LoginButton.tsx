@@ -9,9 +9,9 @@ export default function LoginButton() {
     return (
       <>
         <button
+          title="Logout"
           className="py-1 px-6 rounded-lg flex items-center justify-center bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all"
-          onClick={() => signOut()}
-        >
+          onClick={() => signOut()}>
           <Image
             src={session.user.image}
             alt="Discord Profile Picture"
@@ -27,9 +27,9 @@ export default function LoginButton() {
   return (
     <>
       <button
+        title="Login"
         className="py-1 px-6 rounded-lg flex items-center justify-center bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all"
-        onClick={() => signIn()}
-      >
+        onClick={() => signIn()}>
         <FaDiscord className="mr-2 h-6 w-6" />
         Login
       </button>

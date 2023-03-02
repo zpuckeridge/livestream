@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import * as UpChunk from "@mux/upchunk";
 import Spinner from "../../components/Spinner";
 import useSwr from "swr";
-import Router from "next/router";
+import router from "next/router";
 import supabase from "../../lib/supabase";
 
 const fetcher = (url: string) => {
@@ -16,6 +16,9 @@ const UploadForm = () => {
   const [progress, setProgress] = useState<Number | null>(null);
   const [errorMessage, setErrorMessage] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
+  const [title, setTitle] = useState("");
+  const [isPublic, setIsPublic] = useState(true);
+  const [showModal, setShowModal] = useState(false);
 
   const { data, error } = useSwr(
     () => (isPreparing ? `/api/upload/${uploadId}` : null),
@@ -23,15 +26,33 @@ const UploadForm = () => {
     { refreshInterval: 5000 }
   );
 
-  const upload = data && data.upload;
-
   useEffect(() => {
-    if (upload && upload.asset_id) {
-      Router.push({
-        pathname: `/asset/${upload.asset_id}`,
-      });
+    if (data && data.upload) {
+      const finishUpload = async () => {
+        await supabase.from("livestream").insert({
+          title: title,
+          data: data.upload.asset_id,
+          public: isPublic,
+        });
+
+        setTimeout(() => {
+          router.push("/dashboard");
+        }, 5000);
+      };
+
+      finishUpload();
     }
-  }, [upload]);
+  }, [data]);
+
+  if (data && data.upload) {
+    return (
+      <p className="text-center">
+        Successfully uploaded!
+        <br />
+        Asset ID: {data.upload.asset_id}
+      </p>
+    );
+  }
 
   const createUpload = async () => {
     try {
@@ -50,13 +71,14 @@ const UploadForm = () => {
   };
 
   const startUpload = () => {
-    setIsUploading(true);
-
     const files = inputRef.current?.files;
-    if (!files) {
-      setErrorMessage("An unexpected issue occurred");
+
+    if (!title || !files) {
+      setShowModal(true);
       return;
     }
+
+    setIsUploading(true);
 
     const upload = UpChunk.createUpload({
       endpoint: createUpload,
@@ -80,21 +102,71 @@ const UploadForm = () => {
 
   return (
     <>
+      {showModal && (
+        <>
+          <div className="absolute inset-0 bg-black/50"></div>
+          <div className="fixed inset-0 flex items-center justify-center">
+            <div className="text-white bg-[#1d1d1d] border border-zinc-800/50 rounded-lg p-10">
+              <p className="text-lg font-medium mb-4">
+                Please enter a title and/or select a file.
+              </p>
+              <button
+                title="OK"
+                className="mt-4 py-1 px-6 rounded-lg flex items-center justify-center bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all"
+                onClick={() => setShowModal(false)}>
+                OK
+              </button>
+            </div>
+          </div>
+        </>
+      )}
+
       <div className="text-white bg-white/5 border border-zinc-800/50 rounded-lg p-10">
         {isUploading ? (
           <>
             {isPreparing ? (
-              <div>Preparing...</div>
+              <div className="text-center">Preparing...</div>
             ) : (
-              <div>Uploading...{progress ? `${progress}%` : ""}</div>
+              <div className="text-center">
+                Uploading...{progress ? `${progress}%` : ""}
+              </div>
             )}
             <Spinner />
           </>
         ) : (
           <>
             <label>
-              <input type="file" onChange={startUpload} ref={inputRef} />
+              <span className="font-bold">Choose a title</span>
+              <input
+                type="text"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                className="w-full p-2 mb-4 rounded-lg bg-white/5 text-sm placeholder:text-[#888888]"
+              />
             </label>
+            <span className="font-bold">Select a video file</span>
+            <label>
+              <input
+                type="file"
+                ref={inputRef}
+                className="w-full p-2 mb-4 rounded-lg bg-white/5 text-sm placeholder:text-[#888888]"
+              />
+            </label>
+            <label>
+              <input
+                type="checkbox"
+                checked={isPublic}
+                onChange={(e) => setIsPublic(e.target.checked)}
+                className="mr-2"
+              />
+              <span>Public</span>
+            </label>
+            <button
+              onClick={startUpload}
+              title="Upload"
+              className="mt-4 py-1 px-6 rounded-lg flex items-center justify-center bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all">
+              Upload
+            </button>
           </>
         )}
       </div>

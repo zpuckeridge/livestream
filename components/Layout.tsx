@@ -1,6 +1,6 @@
-import { Home } from "react-feather";
 import Link from "next/link";
-import LoginButton from "./Auth";
+import LoginButton from "./LoginButton";
+import { FiGrid, FiHome } from "react-icons/fi";
 
 export default function Layout({ children }: { children: any }) {
   return (
@@ -11,10 +11,10 @@ export default function Layout({ children }: { children: any }) {
             <div>
               <Link href="/" passHref>
                 <button
-                  aria-label="Home"
-                  className="py-1 px-6 rounded-lg flex items-center justify-center bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all"
-                >
-                  <Home />
+                  title="Home"
+                  className="py-1 px-6 rounded-lg flex items-center justify-center bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all">
+                  <FiHome className="mr-1" />
+                  Home
                 </button>
               </Link>
             </div>
@@ -22,16 +22,16 @@ export default function Layout({ children }: { children: any }) {
             <div>
               <Link href="/dashboard" passHref>
                 <button
-                  aria-label="Dashboard"
-                  className="ml-2 py-1 px-6 rounded-lg flex items-center justify-center bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all"
-                >
+                  title="Dashboard"
+                  className="ml-2 py-1 px-6 rounded-lg flex items-center justify-center bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all">
+                  <FiGrid className="mr-1" />
                   Dashboard
                 </button>
               </Link>
             </div>
           </div>
           <div className="inline-flex">
-            <div className="mr-2">
+            <div>
               <LoginButton />
             </div>
           </div>
@@ -42,29 +42,25 @@ export default function Layout({ children }: { children: any }) {
             Made with{" "}
             <a
               href="https://nextjs.org/"
-              className="hover:text-white transition-all"
-            >
+              className="hover:text-white transition-all duration-200">
               Next.JS
             </a>
             ,{" "}
             <a
               href="https://reactjs.org/"
-              className="hover:text-white transition-all"
-            >
+              className="hover:text-white transition-all duration-200">
               React
             </a>
             ,{" "}
             <a
               href="https://tailwindcss.com/"
-              className="hover:text-white transition-all"
-            >
+              className="hover:text-white transition-all duration-200">
               Tailwind CSS
             </a>{" "}
             and{" "}
             <a
               href="https://github.com/zpuckeridge/livestream"
-              className="hover:text-white transition-all"
-            >
+              className="hover:text-[#ff0000] transition-all duration-200">
               ❤
             </a>
           </div>

@@ -1,24 +1,19 @@
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
-import { secondsToTime } from "../../components/TimeConverter";
-import dateFormat from "dateformat";
-import { Search } from "react-feather";
+import { FiSearch } from "react-icons/fi";
 import { useState } from "react";
 import ClipViews from "../../components/ClipViews";
+import supabase from "../../lib/supabase";
 
-export async function getStaticProps() {
-  // Make a request to your API to fetch the video data
-  const res = await fetch(`${process.env.PAGE_URL}/api/stream`);
-  const data = await res.json();
+export async function getServerSideProps() {
+  const { data, error } = await supabase.from("livestream").select("*");
 
-  // Convert time to readable format
-  data.result.forEach((video: any) => {
-    video.uploaded = dateFormat(video.uploaded, "mmmm dS, yyyy");
-    video.duration = secondsToTime(video.duration);
-  });
+  if (error) {
+    console.log(error);
+    return;
+  }
 
-  // Pass the data as a prop to your component
   return {
     props: { data },
   };
@@ -27,8 +22,8 @@ export async function getStaticProps() {
 export default function Home({ data }: { data: any }) {
   const [searchValue, setSearchValue] = useState("");
   // Filter the videos based on the search value
-  const filteredVideos = data.result.filter((search: any) =>
-    search.meta.name.toLowerCase().includes(searchValue.toLowerCase())
+  const filteredVideos = data.filter((search: any) =>
+    search.title.toLowerCase().includes(searchValue.toLowerCase())
   );
 
   return (
@@ -46,30 +41,20 @@ export default function Home({ data }: { data: any }) {
               placeholder="Search videos"
               className="block w-full placeholder:text-[#888888] px-4 py-2 bg-white/5 border border-zinc-800/50 rounded-lg hover:ring-2 ring-gray-300 transition-all text-white"
             />
-            <Search className="absolute w-5 h-5 right-3 top-3 text-[#888888]" />
+            <FiSearch className="absolute w-5 h-5 right-3 top-3 text-[#888888]" />
           </div>
         </div>
         <div className="mt-10 justify-items-center grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-4 m-4">
-          {filteredVideos.map((video: any) => (
-            <div key={video.uid}>
-              <Link href={`/clip/${video.uid}`}>
+          {filteredVideos.map((data: any) => (
+            <div key={data.id}>
+              <Link href={`/clip/${data.data}`}>
                 <div className="transform hover:scale-[1.05] h-full w-full transition-all">
-                  <Image
-                    src={video.thumbnail}
-                    alt={video.meta.name}
-                    width={400}
-                    height={400}
-                    className="rounded-2xl"
-                  />
                   <p className="font-bold mt-2 text-lg truncate w-64 text-white">
-                    {video.meta.name}
+                    {data.title}
                   </p>
                   <div className="flex justify-between">
                     <p className="text-sm text-[#888888] font-semibold">
-                      {video.uploaded}・ <ClipViews slug={video.uid} />
-                    </p>
-                    <p className="text-sm text-[#888888] font-semibold">
-                      {video.duration}
+                      {data.timestamp}・ <ClipViews slug={data.id} />
                     </p>
                   </div>
                 </div>
