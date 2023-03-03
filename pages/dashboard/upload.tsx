@@ -42,7 +42,7 @@ const UploadForm = () => {
 
       finishUpload();
     }
-  }, [data]);
+  }, [data, isPublic, title]);
 
   if (data && data.upload) {
     return (
