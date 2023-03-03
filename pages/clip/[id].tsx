@@ -7,7 +7,7 @@ import Head from "next/head";
 
 export async function getServerSideProps(context: any) {
   const { id } = context.query;
-  const response = await fetch(`http://localhost:3000/api/asset/${id}`);
+  const response = await fetch(`${process.env.PAGE_URL}/api/asset/${id}`);
   const asset = await response.json();
 
   const { data, error } = await supabase

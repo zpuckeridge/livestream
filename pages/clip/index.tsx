@@ -7,7 +7,7 @@ import ClipViews from "../../components/ClipViews";
 import supabase from "../../lib/supabase";
 
 export async function getServerSideProps() {
-  const response = await fetch(`http://localhost:3000/api/asset`);
+  const response = await fetch(`${process.env.PAGE_URL}/api/asset`);
   const { asset } = await response.json();
 
   const { data, error } = await supabase.from("livestream").select("*");
