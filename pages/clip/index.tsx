@@ -1,13 +1,10 @@
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
-import { FiSearch } from "react-icons/fi";
-import { useState } from "react";
-import ClipViews from "../../components/ClipViews";
 import supabase from "../../lib/supabase";
 
 export async function getServerSideProps() {
-  const response = await fetch(`${process.env.PAGE_URL}/api/asset`);
+  const response = await fetch(`${process.env.DEV_PAGE_URL}/api/asset`);
   const { asset } = await response.json();
 
   const { data, error } = await supabase.from("livestream").select("*");
