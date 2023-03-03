@@ -39,19 +39,19 @@ export default function Clip({
   const [liked, setLiked] = useState(false);
   const [buttonDisabled, setButtonDisabled] = useState(false);
 
-  const router = useRouter();
-
-  // If the page is still loading, display a spinner component
-  if (router.isFallback) {
-    return <Spinner />;
-  }
-
+  // Add one to view count
   useEffect(() => {
     fetch(`/api/views/${data.asset_id}`, {
       method: "POST",
     });
   }, [data.asset_id]);
 
+  const router = useRouter();
+  if (router.isFallback) {
+    return <Spinner />;
+  }
+
+  // Like button logic
   const handleClick = async () => {
     await supabase.rpc("vote", {
       quote_id: data.asset_id,
