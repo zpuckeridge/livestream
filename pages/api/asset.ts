@@ -16,15 +16,13 @@ export default async function uploadHandler(
   switch (method) {
     case "GET":
       try {
-        // Call the Mux Video API to get information about an upload
-        const asset = await Video.Assets.get(req.query.id as string);
+        // Call the Mux Video API to retrieve list of uploads
+        const params = {};
+        const asset = await Video.Assets.list(params);
 
-        // Send a JSON response containing information about the upload
-        if (asset.playback_ids)
-          res.json({
-            playback_id: asset.playback_ids[0].id,
-            // We can return additional information here if required
-          });
+        res.json({
+          asset,
+        });
       } catch (e) {
         // If there was an error, log it and send an error response
         console.error("Request error", e);

@@ -7,54 +7,48 @@ import ClipViews from "../../components/ClipViews";
 import supabase from "../../lib/supabase";
 
 export async function getServerSideProps() {
+  const response = await fetch(`http://localhost:3000/api/asset`);
+  const { asset } = await response.json();
+
   const { data, error } = await supabase.from("livestream").select("*");
 
-  if (error) {
-    console.log(error);
-    return;
-  }
-
   return {
-    props: { data },
+    props: {
+      data: data
+        ? data.map((item: any) => ({
+            ...item,
+            asset: asset.find((a: any) => a.id === item.asset_id),
+          }))
+        : [],
+    },
   };
 }
 
-export default function Home({ data }: { data: any }) {
-  const [searchValue, setSearchValue] = useState("");
-  // Filter the videos based on the search value
-  const filteredVideos = data.filter((search: any) =>
-    search.title.toLowerCase().includes(searchValue.toLowerCase())
-  );
-
+export default function Home({ asset, data }: { asset: any; data: any }) {
   return (
     <>
       <Head>
         <title>sdelta | Clips</title>
       </Head>
       <div className="xl:max-w-6xl mx-auto mt-10 mb-20">
-        <div className="m-4">
-          <div className="relative w-full mb-4">
-            <input
-              aria-label="Search videos"
-              type="text"
-              onChange={(e) => setSearchValue(e.target.value)}
-              placeholder="Search videos"
-              className="block w-full placeholder:text-[#888888] px-4 py-2 bg-white/5 border border-zinc-800/50 rounded-lg hover:ring-2 ring-gray-300 transition-all text-white"
-            />
-            <FiSearch className="absolute w-5 h-5 right-3 top-3 text-[#888888]" />
-          </div>
-        </div>
         <div className="mt-10 justify-items-center grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-4 m-4">
-          {filteredVideos.map((data: any) => (
-            <div key={data.id}>
-              <Link href={`/clip/${data.data}`}>
+          {data.map((data: any) => (
+            <div key={data.asset_id}>
+              <Link href={`/clip/${data.asset_id}`}>
                 <div className="transform hover:scale-[1.05] h-full w-full transition-all">
+                  <Image
+                    src={`https://image.mux.com/${data.asset.playback_ids[0].id}/thumbnail.png`}
+                    alt={data.title}
+                    width={400}
+                    height={400}
+                    className="rounded-2xl"
+                  />
                   <p className="font-bold mt-2 text-lg truncate w-64 text-white">
                     {data.title}
                   </p>
                   <div className="flex justify-between">
                     <p className="text-sm text-[#888888] font-semibold">
-                      {data.timestamp}・ <ClipViews slug={data.id} />
+                      {data.timestamp}
                     </p>
                   </div>
                 </div>

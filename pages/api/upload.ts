@@ -15,7 +15,10 @@ export default async function uploadHandler(
       try {
         // Creating a new asset on Mux using the Mux API
         const upload = await Video.Uploads.create({
-          new_asset_settings: { playback_policy: "public" },
+          new_asset_settings: {
+            playback_policy: "public",
+            mp4_support: "standard",
+          },
           cors_origin: "*",
         });
 

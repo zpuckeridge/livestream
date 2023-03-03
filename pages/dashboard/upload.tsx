@@ -31,7 +31,7 @@ const UploadForm = () => {
       const finishUpload = async () => {
         await supabase.from("livestream").insert({
           title: title,
-          data: data.upload.asset_id,
+          asset_id: data.upload.asset_id,
           public: isPublic,
         });
 
