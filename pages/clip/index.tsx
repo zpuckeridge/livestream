@@ -2,12 +2,21 @@ import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import supabase from "../../lib/supabase";
+import { secondsToTime } from "../../components/TimeConverter";
+import { useState } from "react";
+import { FiHeart, FiSearch } from "react-icons/fi";
+import dateFormat from "dateformat";
+import ClipViews from "../../components/ClipViews";
 
 export async function getServerSideProps() {
   const response = await fetch(`${process.env.DEV_PAGE_URL}/api/asset`);
   const { asset } = await response.json();
 
   const { data, error } = await supabase.from("livestream").select("*");
+
+  data?.forEach((data: any) => {
+    data.timestamp = dateFormat(data.timestamp, "mmmm dS, yyyy");
+  });
 
   return {
     props: {
@@ -21,18 +30,42 @@ export async function getServerSideProps() {
   };
 }
 
-export default function Home({ asset, data }: { asset: any; data: any }) {
+export default function Home({ data }: { data: any }) {
+  const [searchValue, setSearchValue] = useState("");
+  // Filter the videos based on the search value
+  const filteredVideos = data.filter((search: any) =>
+    search.title.toLowerCase().includes(searchValue.toLowerCase())
+  );
+
   return (
     <>
       <Head>
         <title>sdelta | Clips</title>
       </Head>
       <div className="xl:max-w-6xl mx-auto mt-10 mb-20">
+        <div className="m-4">
+          <div className="relative w-full mb-4">
+            <input
+              aria-label="Search videos"
+              type="text"
+              onChange={(e) => setSearchValue(e.target.value)}
+              placeholder="Search videos"
+              className="block w-full placeholder:text-[#888888] px-4 py-2 bg-white/5 border border-zinc-800/50 rounded-lg hover:ring-2 ring-gray-300 transition-all text-white"
+            />
+            <FiSearch className="absolute w-5 h-5 right-3 top-3 text-[#888888]" />
+          </div>
+        </div>
         <div className="mt-10 justify-items-center grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-4 m-4">
-          {data.map((data: any) => (
+          {filteredVideos.map((data: any) => (
             <div key={data.asset_id}>
               <Link href={`/clip/${data.asset_id}`}>
                 <div className="transform hover:scale-[1.05] h-full w-full transition-all">
+                  <div className="absolute top-2 left-2 rounded-md bg-black/75 p-1 text-xs font-semibold">
+                    {data.tag}
+                  </div>
+                  <div className="absolute top-2 right-2 rounded-md bg-black/75 p-1 text-xs font-semibold">
+                    {secondsToTime(data.asset.duration)}
+                  </div>
                   <Image
                     src={`https://image.mux.com/${data.asset.playback_ids[0].id}/thumbnail.png`}
                     alt={data.title}
@@ -40,13 +73,18 @@ export default function Home({ asset, data }: { asset: any; data: any }) {
                     height={400}
                     className="rounded-2xl"
                   />
-                  <p className="font-bold mt-2 text-lg truncate w-64 text-white">
-                    {data.title}
-                  </p>
                   <div className="flex justify-between">
-                    <p className="text-sm text-[#888888] font-semibold">
-                      {data.timestamp}
-                    </p>
+                    <div className="font-bold mt-2 text-lg text-white">
+                      {data.title}
+                    </div>
+                    <div className="inline-flex my-auto">
+                      {data.likes}
+                      <FiHeart className="my-auto ml-2" />
+                    </div>
+                  </div>
+                  <div className="flex justify-between text-sm text-[#888888] font-semibold">
+                    <p>{data.timestamp}</p>
+                    <ClipViews slug={data.asset_id} />
                   </div>
                 </div>
               </Link>

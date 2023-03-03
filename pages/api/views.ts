@@ -2,10 +2,10 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import Mux from "@mux/mux-node";
 
 // Initialize a new instance of Mux Video
-const { Video } = new Mux();
+const { Data } = new Mux();
 
 // Define the function that handles the API endpoint
-export default async function assetHandler(
+export default async function viewHandler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
@@ -16,12 +16,11 @@ export default async function assetHandler(
   switch (method) {
     case "GET":
       try {
-        // Call the Mux Video API to retrieve list of uploads
-        const params = {};
-        const asset = await Video.Assets.list(params);
+        // Call the Mux Data API to retrieve view counts
+        const views = await Data.Dimensions.get("playback_id"); // need to add timeframe here -- is it possible to do infinite?
 
         res.json({
-          asset,
+          views,
         });
       } catch (e) {
         // If there was an error, log it and send an error response

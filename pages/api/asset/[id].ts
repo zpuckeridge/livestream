@@ -23,6 +23,7 @@ export default async function uploadHandler(
         if (asset.playback_ids)
           res.json({
             playback_id: asset.playback_ids[0].id,
+            duration: asset.duration,
             // We can return additional information here if required
           });
       } catch (e) {

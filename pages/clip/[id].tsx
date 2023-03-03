@@ -1,9 +1,15 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import supabase from "../../lib/supabase";
 import MuxPlayer from "@mux/mux-player-react";
 import { useRouter } from "next/router";
 import Spinner from "../../components/Spinner";
 import Head from "next/head";
+import CopyLink from "../../components/CopyLink";
+import dateFormat from "dateformat";
+import { secondsToTime } from "../../components/TimeConverter";
+import Link from "next/link";
+import ClipViews from "../../components/ClipViews";
+import { FiHeart } from "react-icons/fi";
 
 export async function getServerSideProps(context: any) {
   const { id } = context.query;
@@ -16,22 +22,44 @@ export async function getServerSideProps(context: any) {
     .eq("asset_id", id)
     .single();
 
-  return { props: { playbackId: asset.playback_id, data } };
+  return {
+    props: { playbackId: asset.playback_id, duration: asset.duration, data },
+  };
 }
 
 export default function Clip({
   playbackId,
+  duration,
   data,
 }: {
   playbackId: any;
+  duration: any;
   data: any;
 }) {
+  const [liked, setLiked] = useState(false);
+  const [buttonDisabled, setButtonDisabled] = useState(false);
+
   const router = useRouter();
 
   // If the page is still loading, display a spinner component
   if (router.isFallback) {
     return <Spinner />;
   }
+
+  useEffect(() => {
+    fetch(`/api/views/${data.asset_id}`, {
+      method: "POST",
+    });
+  }, [data.asset_id]);
+
+  const handleClick = async () => {
+    await supabase.rpc("vote", {
+      quote_id: data.asset_id,
+      increment_num: 1,
+    });
+    setLiked(true);
+    setButtonDisabled(true);
+  };
 
   return (
     <>
@@ -65,9 +93,7 @@ export default function Clip({
         <meta property="og:video:release_date" content={`${data.timestamp}`} />
         <meta property="og:video:duration" content={`${data.duration}`} />
       </Head>
-      <div>
-        <h1>Playback ID: {playbackId}</h1>
-        <h1>Title: {data.title}</h1>
+      <div className="max-w-6xl mx-auto m-4">
         <MuxPlayer
           streamType="on-demand"
           thumbnailTime={5}
@@ -76,6 +102,42 @@ export default function Clip({
             video_title: data.title,
           }}
         />
+        <div>
+          <div className="flex justify-between text-white">
+            <h1 className="text-2xl font-bold mt-2">{data.title}</h1>
+            <div className="inline-flex space-x-2">
+              <button
+                onClick={handleClick}
+                title="Like"
+                disabled={buttonDisabled}>
+                {liked ? (
+                  <div className="text-red-500 inline-flex">
+                    {data.likes + 1}
+                    <FiHeart className="my-auto ml-2" />
+                  </div>
+                ) : (
+                  <div className="inline-flex space-x-2">
+                    <div>{data.likes}</div>
+                    <FiHeart className="my-auto hover:text-red-500 transition-all duration-200" />
+                  </div>
+                )}
+              </button>
+              <CopyLink />
+            </div>
+          </div>
+          <div className="flex justify-between text-[#888888]">
+            <p>
+              {dateFormat(data.timestamp, "mmmm dS, yyyy")}・
+              <ClipViews slug={data.asset_id} />
+            </p>
+            <p>{secondsToTime(duration)}</p>
+          </div>
+        </div>
+        <Link href="/clip">
+          <button className="mt-4 py-1 px-6 text-white rounded-lg bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all">
+            ← Back to Clips
+          </button>
+        </Link>
       </div>
     </>
   );

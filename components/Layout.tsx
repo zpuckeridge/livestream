@@ -60,7 +60,7 @@ export default function Layout({ children }: { children: any }) {
             and{" "}
             <a
               href="https://github.com/zpuckeridge/livestream"
-              className="hover:text-[#ff0000] transition-all duration-200">
+              className="hover:text-red-500 transition-all duration-200">
               ❤
             </a>
           </div>
