@@ -82,7 +82,7 @@ export default function Clips({ data }: { data: any }) {
       <Head>
         <title>sdelta | Clips</title>
       </Head>
-      <div className="xl:max-w-6xl mx-auto mt-10 mb-20">
+      <div className="xl:max-w-6xl mx-auto">
         <div className="relative w-full mb-4">
           <input
             aria-label="Search videos"
@@ -107,7 +107,7 @@ export default function Clips({ data }: { data: any }) {
             ))}
           </div>
         </div>
-        <div className="mt-10 justify-items-center grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-4">
+        <div className="my-10 justify-items-center grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-4">
           {currentVideos.map((data: any) => (
             <div key={data.asset_id}>
               <Link href={`/clip/${data.asset_id}`} title={data.title}>
@@ -124,6 +124,7 @@ export default function Clips({ data }: { data: any }) {
                     width={400}
                     height={400}
                     className="rounded-2xl aspect-video"
+                    priority={true}
                   />
                   <div className="flex justify-between mt-1">
                     <div className="font-bold text-lg truncate w-56 text-white">
@@ -165,5 +166,5 @@ export default function Clips({ data }: { data: any }) {
   );
 }
 
-// Should only display 16 videos per page, and use pagination, search might not work then
 // Need to make sure videos are sorted by created date.
+// Need to grab view count from same db to prevent drop in
