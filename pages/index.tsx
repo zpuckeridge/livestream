@@ -7,7 +7,6 @@ import { FiHeart } from "react-icons/fi";
 import ClipViews from "../components/ClipViews";
 import dateFormat from "dateformat";
 import supabase from "../lib/supabase";
-import "plyr-react/plyr.css";
 
 const plyrProps = {
   source:
