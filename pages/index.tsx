@@ -7,6 +7,14 @@ import { FiHeart } from "react-icons/fi";
 import ClipViews from "../components/ClipViews";
 import dateFormat from "dateformat";
 import supabase from "../lib/supabase";
+import "plyr-react/plyr.css";
+
+const plyrProps = {
+  source:
+    "https://stream.mux.com/uMUIc7h4eYacNhlOdC4BB0000ySvS6nCPNBjn8G8C499w.m3u8", // https://github.com/sampotts/plyr#the-source-setter
+  options: undefined, // https://github.com/sampotts/plyr#options
+  // Direct props for inner video tag (mdn.io/video)
+};
 
 export async function getServerSideProps() {
   try {
@@ -62,6 +70,7 @@ export default function Home({ data }: { data: any }) {
           metadata={{
             video_title: "Glitterbeard's Cave",
           }}
+          className={"w-full h-full aspect-video"}
         />
         <div className="my-4 justify-items-center grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-4">
           {data.slice(0, 4).map((data: any) => (

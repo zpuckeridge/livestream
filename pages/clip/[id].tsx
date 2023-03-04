@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { memo, useCallback, useEffect, useState } from "react";
 import supabase from "../../lib/supabase";
 import MuxPlayer from "@mux/mux-player-react";
-import { useRouter } from "next/router";
-import Spinner from "../../components/Spinner";
 import Head from "next/head";
 import CopyLink from "../../components/CopyLink";
 import dateFormat from "dateformat";
@@ -27,6 +25,12 @@ export async function getServerSideProps(context: any) {
   };
 }
 
+// This prevents re-render when the like button is pressed
+const MemoizedMuxPlayer = memo(MuxPlayer, (prevProps, nextProps) => {
+  // Only re-render if the playbackId changes
+  return prevProps.playbackId === nextProps.playbackId;
+});
+
 export default function Clip({
   playbackId,
   duration,
@@ -46,12 +50,6 @@ export default function Clip({
     });
   }, [data.asset_id]);
 
-  const router = useRouter();
-  if (router.isFallback) {
-    return <Spinner />;
-  }
-
-  // Like button logic
   const handleClick = async () => {
     await supabase.rpc("vote", {
       quote_id: data.asset_id,
@@ -60,7 +58,6 @@ export default function Clip({
     setLiked(true);
     setButtonDisabled(true);
   };
-  // For some reason, click this resets the Mux playback 0_0
 
   return (
     <>
@@ -95,13 +92,14 @@ export default function Clip({
         <meta property="og:video:duration" content={`${data.duration}`} />
       </Head>
       <div className="max-w-6xl mx-auto m-4">
-        <MuxPlayer
+        <MemoizedMuxPlayer
           streamType="on-demand"
           thumbnailTime={5}
           playbackId={playbackId}
           metadata={{
             video_title: data.title,
           }}
+          className={"w-full h-full aspect-video"}
         />
         <div>
           <div className="flex justify-between text-white">

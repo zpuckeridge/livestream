@@ -168,3 +168,4 @@ export default function Clips({ data }: { data: any }) {
 
 // Need to make sure videos are sorted by created date.
 // Need to grab view count from same db to prevent drop in
+// Need to add ability to unclick tags
