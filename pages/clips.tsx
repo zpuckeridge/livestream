@@ -9,33 +9,73 @@ import dateFormat from "dateformat";
 import ClipViews from "../components/ClipViews";
 
 export async function getServerSideProps() {
-  const response = await fetch(`${process.env.DEV_PAGE_URL}/api/asset`);
-  const { asset } = await response.json();
+  try {
+    const response = await fetch(`${process.env.DEV_PAGE_URL}/api/asset`);
+    const { asset } = await response.json();
 
-  const { data, error } = await supabase.from("livestream").select("*");
+    const { data, error } = await supabase.from("livestream").select("*");
 
-  data?.forEach((data: any) => {
-    data.timestamp = dateFormat(data.timestamp, "mmmm dS, yyyy");
-  });
+    if (error) {
+      throw new Error(error.message);
+    }
 
-  return {
-    props: {
-      data: data
-        ? data.map((item: any) => ({
-            ...item,
-            asset: asset.find((a: any) => a.id === item.asset_id),
-          }))
-        : [],
-    },
-  };
+    data?.forEach((data: any) => {
+      data.timestamp = dateFormat(data.timestamp, "mmmm dS, yyyy");
+    });
+
+    return {
+      props: {
+        data: data
+          ? data.map((item: any) => ({
+              ...item,
+              asset: asset.find((a: any) => a.id === item.asset_id),
+            }))
+          : [],
+      },
+    };
+  } catch (error) {
+    console.error(error);
+    return {
+      props: {
+        data: [],
+      },
+    };
+  }
 }
 
-export default function Home({ data }: { data: any }) {
+export default function Clips({ data }: { data: any }) {
   const [searchValue, setSearchValue] = useState("");
+  const [selectedTag, setSelectedTag] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const videosPerPage = 16;
+  const indexOfLastVideo = currentPage * videosPerPage;
+  const indexOfFirstVideo = indexOfLastVideo - videosPerPage;
+
   // Filter the videos based on the search value
-  const filteredVideos = data.filter((search: any) =>
-    search.title.toLowerCase().includes(searchValue.toLowerCase())
+  const filteredVideos = data.filter((video: any) => {
+    const matchesSearch = video.title
+      .toLowerCase()
+      .includes(searchValue.toLowerCase());
+    const matchesTag = selectedTag === "" || video.tag === selectedTag;
+    return matchesSearch && matchesTag;
+  });
+
+  const currentVideos = filteredVideos.slice(
+    indexOfFirstVideo,
+    indexOfLastVideo
   );
+
+  function handlePageClick(pageNumber: number) {
+    setCurrentPage(pageNumber);
+  }
+
+  // Filter by tag
+  const tags = data.reduce((acc: any, curr: any) => {
+    if (!acc.includes(curr.tag)) {
+      acc.push(curr.tag);
+    }
+    return acc;
+  }, []);
 
   return (
     <>
@@ -53,19 +93,22 @@ export default function Home({ data }: { data: any }) {
           />
           <FiSearch className="absolute w-5 h-5 right-3 top-3 text-[#888888]" />
           <div className="inline-flex space-x-2 mt-2">
-            <button className="py-1 px-6 rounded-lg flex items-center justify-center bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all">
-              Gaming
-            </button>
-            <button className="py-1 px-6 rounded-lg flex items-center justify-center bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all">
-              Life
-            </button>
-            <button className="py-1 px-6 rounded-lg flex items-center justify-center bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all">
-              Other
-            </button>
+            {tags.map((tag: any) => (
+              <button
+                key={tag}
+                className={`py-1 px-6 rounded-lg flex items-center justify-center ${
+                  selectedTag === tag
+                    ? "bg-white/50 border-zinc-800 ring-2 ring-gray-300"
+                    : "bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300"
+                } transition-all`}
+                onClick={() => setSelectedTag(tag)}>
+                {tag}
+              </button>
+            ))}
           </div>
         </div>
         <div className="mt-10 justify-items-center grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-4">
-          {filteredVideos.map((data: any) => (
+          {currentVideos.map((data: any) => (
             <div key={data.asset_id}>
               <Link href={`/clip/${data.asset_id}`} title={data.title}>
                 <div className="transform hover:scale-[1.05] h-full w-full transition-all">
@@ -101,10 +144,26 @@ export default function Home({ data }: { data: any }) {
           ))}
         </div>
       </div>
+      <div className="flex justify-center">
+        {Array.from(
+          { length: Math.ceil(filteredVideos.length / videosPerPage) },
+          (_, i) => (
+            <button
+              key={i}
+              className={`py-1 px-3 rounded-lg m-1 ${
+                currentPage === i + 1
+                  ? "bg-white/50 border-zinc-800 ring-2 ring-gray-300"
+                  : "bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300"
+              } transition-all`}
+              onClick={() => handlePageClick(i + 1)}>
+              {i + 1}
+            </button>
+          )
+        )}
+      </div>
     </>
   );
 }
 
-// Tag buttons on press should only show videos with same tag
 // Should only display 16 videos per page, and use pagination, search might not work then
 // Need to make sure videos are sorted by created date.
