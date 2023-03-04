@@ -4,6 +4,7 @@ import Spinner from "../../components/Spinner";
 import useSwr from "swr";
 import router from "next/router";
 import supabase from "../../lib/supabase";
+import { FiCheckCircle } from "react-icons/fi";
 
 const fetcher = (url: string) => {
   return fetch(url).then((res) => res.json());
@@ -17,6 +18,7 @@ const UploadForm = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
   const [title, setTitle] = useState("");
+  const [tag, setTag] = useState("");
   const [isPublic, setIsPublic] = useState(true);
   const [showModal, setShowModal] = useState(false);
 
@@ -33,11 +35,10 @@ const UploadForm = () => {
           title: title,
           asset_id: data.upload.asset_id,
           public: isPublic,
+          tag: tag,
         });
 
-        setTimeout(() => {
-          router.push("/dashboard");
-        }, 5000);
+        router.push(`/clip/${data.upload.asset_id}`);
       };
 
       finishUpload();
@@ -46,11 +47,14 @@ const UploadForm = () => {
 
   if (data && data.upload) {
     return (
-      <p className="text-center">
-        Successfully uploaded!
-        <br />
-        Asset ID: {data.upload.asset_id}
-      </p>
+      <>
+        <div className="text-white bg-white/5 border border-zinc-800/50 rounded-lg p-10 max-w-2xl mx-auto">
+          <div className="flex justify-center">
+            <FiCheckCircle className="text-green-500 w-14 h-14" />
+          </div>
+          <p className="text-xs text-center mt-2">Redirecting...</p>
+        </div>
+      </>
     );
   }
 
@@ -121,7 +125,7 @@ const UploadForm = () => {
         </>
       )}
 
-      <div className="text-white bg-white/5 border border-zinc-800/50 rounded-lg p-10">
+      <div className="text-white bg-white/5 border border-zinc-800/50 rounded-lg p-10 max-w-2xl mx-auto">
         {isUploading ? (
           <>
             {isPreparing ? (
@@ -153,11 +157,20 @@ const UploadForm = () => {
               />
             </label>
             <label>
+              <span className="font-bold">Add a tag for the video</span>
+              <input
+                type="text"
+                value={tag}
+                onChange={(e) => setTag(e.target.value)}
+                className="w-full p-2 mb-4 rounded-lg bg-white/5 text-sm placeholder:text-[#888888]"
+              />
+            </label>
+            <label>
               <input
                 type="checkbox"
                 checked={isPublic}
                 onChange={(e) => setIsPublic(e.target.checked)}
-                className="mr-2"
+                className="mr-2 my-auto"
               />
               <span>Public</span>
             </label>

@@ -13,7 +13,7 @@ export default function Home({ data }: { data: any }) {
           Media."
         />
       </Head>
-      <div className="xl:max-w-6xl mx-auto mt-10 mb-20 text-white">
+      <div className="xl:max-w-6xl mx-auto">
         <MuxPlayer
           streamType="on-demand"
           thumbnailTime={142}
@@ -22,8 +22,9 @@ export default function Home({ data }: { data: any }) {
             video_title: "Glitterbeard's Cave",
           }}
         />
-        <div className="flex justify-end mr-4 mt-6">
-          <Link href="/clip" passHref>
+        {/* Live player should go here... Live chat too! Alternatively, have it detect if live and the display relevant stuff */}
+        <div className="flex justify-end mt-6">
+          <Link href="/clips" passHref>
             <button className="py-1 px-6 text-white rounded-lg flex items-center justify-center bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all">
               View More →
             </button>

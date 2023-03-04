@@ -60,6 +60,7 @@ export default function Clip({
     setLiked(true);
     setButtonDisabled(true);
   };
+  // For some reason, click this resets the Mux playback 0_0
 
   return (
     <>
@@ -133,7 +134,7 @@ export default function Clip({
             <p>{secondsToTime(duration)}</p>
           </div>
         </div>
-        <Link href="/clip">
+        <Link href="/clips">
           <button className="mt-4 py-1 px-6 text-white rounded-lg bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all">
             ← Back to Clips
           </button>
@@ -142,3 +143,5 @@ export default function Clip({
     </>
   );
 }
+
+// If user is signed in and has permissions, allow data editing here. Comments should go here as well.

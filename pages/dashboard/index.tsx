@@ -12,7 +12,7 @@ export default function Dashboard() {
   if (session && session.user.email === `contact@sdelta.xyz`) {
     return (
       <>
-        <div className="xl:max-w-6xl mx-auto mt-10 mb-20">
+        <div className="xl:max-w-6xl mx-auto">
           <div>
             <Link href="/dashboard/upload" passHref>
               <button
@@ -36,7 +36,7 @@ export default function Dashboard() {
   }
 }
 
-// Uploaded Videos should appear here
+// Uploaded Videos should appear here maybe don't need the video preview, just a table with buttons?
 // User should be able to control whether or not the video is private/public and should appear on the site
 // It should also list if the video is still processing or has finished. If video is processing, it
 // shouldn't appear on the site.
