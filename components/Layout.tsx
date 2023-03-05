@@ -13,8 +13,8 @@ export default function Layout({ children }: { children: any }) {
                 <button
                   title="Home"
                   className="py-1 px-6 rounded-lg flex items-center justify-center bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all">
-                  <FiHome className="mr-1" />
-                  Home
+                  <FiHome className="h-6 w-6" />
+                  <p className="hidden sm:flex ml-1">Home</p>
                 </button>
               </Link>
             </div>
@@ -24,8 +24,8 @@ export default function Layout({ children }: { children: any }) {
                 <button
                   title="Dashboard"
                   className="ml-2 py-1 px-6 rounded-lg flex items-center justify-center bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all">
-                  <FiGrid className="mr-1" />
-                  Dashboard
+                  <FiGrid className="h-6 w-6" />
+                  <p className="hidden sm:flex ml-1">Dashboard</p>
                 </button>
               </Link>
             </div>

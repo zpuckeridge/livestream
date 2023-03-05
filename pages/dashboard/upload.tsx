@@ -31,9 +31,16 @@ const UploadForm = () => {
   useEffect(() => {
     if (data && data.upload) {
       const finishUpload = async () => {
+        const response = await fetch(`/api/asset/${data.upload.asset_id}`);
+
+        const asset = await response.json();
+        console.log(asset);
+
         await supabase.from("livestream").insert({
           title: title,
           asset_id: data.upload.asset_id,
+          playback_id: asset.playback_id,
+          duration: asset.duration,
           public: isPublic,
           tag: tag,
         });
@@ -48,7 +55,7 @@ const UploadForm = () => {
   if (data && data.upload) {
     return (
       <>
-        <div className="text-white bg-white/5 border border-zinc-800/50 rounded-lg p-10 max-w-2xl mx-auto">
+        <div className="text-white mx-auto">
           <div className="flex justify-center">
             <FiCheckCircle className="text-green-500 w-14 h-14" />
           </div>

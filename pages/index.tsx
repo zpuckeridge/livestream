@@ -71,11 +71,11 @@ export default function Home({ data }: { data: any }) {
           }}
           className={"w-full h-full aspect-video"}
         />
-        <div className="my-4 justify-items-center grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-4">
+        <div className="my-10 justify-items-center grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-2 lg:gap-4">
           {data.slice(0, 4).map((data: any) => (
             <div key={data.asset_id}>
               <Link href={`/clip/${data.asset_id}`} title={data.title}>
-                <div className="transform hover:scale-[1.05] h-full w-full transition-all">
+                <div className="transform hover:scale-[1.05] transition-all">
                   <div className="absolute top-2 left-2 rounded-md bg-black/75 p-1 text-xs font-semibold">
                     {data.tag}
                   </div>

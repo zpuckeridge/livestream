@@ -11,8 +11,6 @@ import { FiHeart } from "react-icons/fi";
 
 export async function getServerSideProps(context: any) {
   const { id } = context.query;
-  const response = await fetch(`${process.env.DEV_PAGE_URL}/api/asset/${id}`);
-  const asset = await response.json();
 
   const { data, error } = await supabase
     .from("livestream")
@@ -21,7 +19,9 @@ export async function getServerSideProps(context: any) {
     .single();
 
   return {
-    props: { playbackId: asset.playback_id, duration: asset.duration, data },
+    props: {
+      data: data,
+    },
   };
 }
 
@@ -31,15 +31,7 @@ const MemoizedMuxPlayer = memo(MuxPlayer, (prevProps, nextProps) => {
   return prevProps.playbackId === nextProps.playbackId;
 });
 
-export default function Clip({
-  playbackId,
-  duration,
-  data,
-}: {
-  playbackId: any;
-  duration: any;
-  data: any;
-}) {
+export default function Clip({ data }: { data: any }) {
   const [liked, setLiked] = useState(false);
   const [buttonDisabled, setButtonDisabled] = useState(false);
 
@@ -68,7 +60,7 @@ export default function Clip({
         <meta property="og:type" content="video.other" />
         <meta
           property="og:image"
-          content={`https://image.mux.com/${playbackId}/thumbnail.png`}
+          content={`https://image.mux.com/${data.playback_id}/thumbnail.png`}
         />
         <meta property="og:image:type" content="image/jpeg" />
         <meta property="og:image:width" content="1280" />
@@ -79,11 +71,11 @@ export default function Clip({
         />
         <meta
           property="og:video"
-          content={`https://stream.mux.com/${playbackId}/medium.mp4`}
+          content={`https://stream.mux.com/${data.playback_id}/medium.mp4`}
         />
         <meta
           property="og:video:url"
-          content={`https://stream.mux.com/${playbackId}/medium.mp4`}
+          content={`https://stream.mux.com/${data.playback_id}/medium.mp4`}
         />
         <meta property="og:video:type" content="text/html" />
         <meta property="og:video:width" content="1280" />
@@ -95,7 +87,7 @@ export default function Clip({
         <MemoizedMuxPlayer
           streamType="on-demand"
           thumbnailTime={5}
-          playbackId={playbackId}
+          playbackId={data.playback_id}
           metadata={{
             video_title: data.title,
           }}
@@ -129,7 +121,7 @@ export default function Clip({
               {dateFormat(data.timestamp, "mmmm dS, yyyy")}・
               <ClipViews slug={data.asset_id} />
             </p>
-            <p>{secondsToTime(duration)}</p>
+            <p>{secondsToTime(data.duration)}</p>
           </div>
         </div>
         <Link href="/clips">

@@ -9,38 +9,22 @@ import dateFormat from "dateformat";
 import ClipViews from "../components/ClipViews";
 
 export async function getServerSideProps() {
-  try {
-    const response = await fetch(`${process.env.DEV_PAGE_URL}/api/asset`);
-    const { asset } = await response.json();
+  const { data, error } = await supabase.from("livestream").select("*");
 
-    const { data, error } = await supabase.from("livestream").select("*");
-
-    if (error) {
-      throw new Error(error.message);
-    }
-
-    data?.forEach((data: any) => {
-      data.timestamp = dateFormat(data.timestamp, "mmmm dS, yyyy");
-    });
-
-    return {
-      props: {
-        data: data
-          ? data.map((item: any) => ({
-              ...item,
-              asset: asset.find((a: any) => a.id === item.asset_id),
-            }))
-          : [],
-      },
-    };
-  } catch (error) {
-    console.error(error);
-    return {
-      props: {
-        data: [],
-      },
-    };
+  if (error) {
+    throw new Error(error.message);
   }
+
+  data?.forEach((data: any) => {
+    data.timestamp = dateFormat(data.timestamp, "mmmm dS, yyyy");
+    data.duration = secondsToTime(data.duration);
+  });
+
+  return {
+    props: {
+      data: data,
+    },
+  };
 }
 
 export default function Clips({ data }: { data: any }) {
@@ -82,7 +66,7 @@ export default function Clips({ data }: { data: any }) {
       <Head>
         <title>sdelta | Clips</title>
       </Head>
-      <div className="xl:max-w-6xl mx-auto">
+      <div className="xl:max-w-6xl mx-auto my-10">
         <div className="relative w-full mb-4">
           <input
             aria-label="Search videos"
@@ -107,19 +91,19 @@ export default function Clips({ data }: { data: any }) {
             ))}
           </div>
         </div>
-        <div className="my-10 justify-items-center grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-4">
+        <div className="my-10 justify-items-center grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-2 lg:gap-4">
           {currentVideos.map((data: any) => (
             <div key={data.asset_id}>
               <Link href={`/clip/${data.asset_id}`} title={data.title}>
-                <div className="transform hover:scale-[1.05] h-full w-full transition-all">
+                <div className="transform hover:scale-[1.05] transition-all">
                   <div className="absolute top-2 left-2 rounded-md bg-black/75 p-1 text-xs font-semibold">
                     {data.tag}
                   </div>
                   <div className="absolute top-2 right-2 rounded-md bg-black/75 p-1 text-xs font-semibold">
-                    {secondsToTime(data.asset.duration)}
+                    {data.duration}
                   </div>
                   <Image
-                    src={`https://image.mux.com/${data.asset.playback_ids[0].id}/thumbnail.png`}
+                    src={`https://image.mux.com/${data.playback_id}/thumbnail.png`}
                     alt={data.title}
                     width={400}
                     height={400}
@@ -144,23 +128,23 @@ export default function Clips({ data }: { data: any }) {
             </div>
           ))}
         </div>
-      </div>
-      <div className="flex justify-center">
-        {Array.from(
-          { length: Math.ceil(filteredVideos.length / videosPerPage) },
-          (_, i) => (
-            <button
-              key={i}
-              className={`py-1 px-3 rounded-lg m-1 ${
-                currentPage === i + 1
-                  ? "bg-white/50 border-zinc-800 ring-2 ring-gray-300"
-                  : "bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300"
-              } transition-all`}
-              onClick={() => handlePageClick(i + 1)}>
-              {i + 1}
-            </button>
-          )
-        )}
+        <div className="flex justify-center">
+          {Array.from(
+            { length: Math.ceil(filteredVideos.length / videosPerPage) },
+            (_, i) => (
+              <button
+                key={i}
+                className={`py-1 px-3 rounded-lg m-1 ${
+                  currentPage === i + 1
+                    ? "bg-white/50 border-zinc-800 ring-2 ring-gray-300"
+                    : "bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300"
+                } transition-all`}
+                onClick={() => handlePageClick(i + 1)}>
+                {i + 1}
+              </button>
+            )
+          )}
+        </div>
       </div>
     </>
   );
