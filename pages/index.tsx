@@ -9,7 +9,10 @@ import dateFormat from "dateformat";
 import supabase from "../lib/supabase";
 
 export async function getServerSideProps() {
-  const { data, error } = await supabase.from("livestream").select("*");
+  const { data, error } = await supabase
+    .from("livestream")
+    .select("*")
+    .order("timestamp", { ascending: false });
 
   if (error) {
     throw new Error(error.message);
