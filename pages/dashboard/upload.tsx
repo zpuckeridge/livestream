@@ -5,12 +5,15 @@ import useSwr from "swr";
 import router from "next/router";
 import supabase from "../../lib/supabase";
 import { FiCheckCircle } from "react-icons/fi";
+import { useSession } from "next-auth/react";
 
 const fetcher = (url: string) => {
   return fetch(url).then((res) => res.json());
 };
 
 const UploadForm = () => {
+  const { data: session, status }: { data: any; status: any } = useSession();
+
   const [isUploading, setIsUploading] = useState(false);
   const [isPreparing, setIsPreparing] = useState(false);
   const [uploadId, setUploadId] = useState(null);
@@ -111,87 +114,97 @@ const UploadForm = () => {
 
   if (errorMessage) return <p>{errorMessage}</p>;
 
-  return (
-    <>
-      {showModal && (
-        <>
-          <div className="absolute inset-0 bg-black/50"></div>
-          <div className="fixed inset-0 flex items-center justify-center">
-            <div className="text-white bg-[#1d1d1d] border border-zinc-800/50 rounded-lg p-10">
-              <p className="text-lg font-medium mb-4">
-                Please enter a title and/or select a file.
-              </p>
-              <button
-                title="OK"
-                className="mt-4 py-1 px-6 rounded-lg flex items-center justify-center bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all"
-                onClick={() => setShowModal(false)}>
-                OK
-              </button>
-            </div>
-          </div>
-        </>
-      )}
-
-      <div className="text-white bg-white/5 border border-zinc-800/50 rounded-lg p-10 max-w-2xl mx-auto">
-        {isUploading ? (
+  if (session && session.user.email === `contact@sdelta.xyz`) {
+    return (
+      <>
+        {showModal && (
           <>
-            {isPreparing ? (
-              <div className="text-center">Preparing...</div>
-            ) : (
-              <div className="text-center">
-                Uploading...{progress ? `${progress}%` : ""}
+            <div className="absolute inset-0 bg-black/50"></div>
+            <div className="fixed inset-0 flex items-center justify-center">
+              <div className="text-white bg-[#1d1d1d] border border-zinc-800/50 rounded-lg p-10">
+                <p className="text-lg font-medium mb-4">
+                  Please enter a title and/or select a file.
+                </p>
+                <button
+                  title="OK"
+                  className="mt-4 py-1 px-6 rounded-lg flex items-center justify-center bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all"
+                  onClick={() => setShowModal(false)}>
+                  OK
+                </button>
               </div>
-            )}
-            <Spinner />
-          </>
-        ) : (
-          <>
-            <label>
-              <span className="font-bold">Choose a title</span>
-              <input
-                type="text"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                className="w-full p-2 mb-4 rounded-lg bg-white/5 text-sm placeholder:text-[#888888]"
-              />
-            </label>
-            <span className="font-bold">Select a video file</span>
-            <label>
-              <input
-                type="file"
-                ref={inputRef}
-                className="w-full p-2 mb-4 rounded-lg bg-white/5 text-sm placeholder:text-[#888888]"
-              />
-            </label>
-            <label>
-              <span className="font-bold">Add a tag for the video</span>
-              <input
-                type="text"
-                value={tag}
-                onChange={(e) => setTag(e.target.value)}
-                className="w-full p-2 mb-4 rounded-lg bg-white/5 text-sm placeholder:text-[#888888]"
-              />
-            </label>
-            <label>
-              <input
-                type="checkbox"
-                checked={isPublic}
-                onChange={(e) => setIsPublic(e.target.checked)}
-                className="mr-2 my-auto"
-              />
-              <span>Public</span>
-            </label>
-            <button
-              onClick={startUpload}
-              title="Upload"
-              className="mt-4 py-1 px-6 rounded-lg flex items-center justify-center bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all">
-              Upload
-            </button>
+            </div>
           </>
         )}
+
+        <div className="text-white bg-white/5 border border-zinc-800/50 rounded-lg p-10 max-w-2xl mx-auto">
+          {isUploading ? (
+            <>
+              {isPreparing ? (
+                <div className="text-center">Preparing...</div>
+              ) : (
+                <div className="text-center">
+                  Uploading...{progress ? `${progress}%` : ""}
+                </div>
+              )}
+              <Spinner />
+            </>
+          ) : (
+            <>
+              <label>
+                <span className="font-bold">Choose a title</span>
+                <input
+                  type="text"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  className="w-full p-2 mb-4 rounded-lg bg-white/5 text-sm placeholder:text-[#888888]"
+                />
+              </label>
+              <span className="font-bold">Select a video file</span>
+              <label>
+                <input
+                  type="file"
+                  ref={inputRef}
+                  className="w-full p-2 mb-4 rounded-lg bg-white/5 text-sm placeholder:text-[#888888]"
+                />
+              </label>
+              <label>
+                <span className="font-bold">Add a tag for the video</span>
+                <input
+                  type="text"
+                  value={tag}
+                  onChange={(e) => setTag(e.target.value)}
+                  className="w-full p-2 mb-4 rounded-lg bg-white/5 text-sm placeholder:text-[#888888]"
+                />
+              </label>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={isPublic}
+                  onChange={(e) => setIsPublic(e.target.checked)}
+                  className="mr-2 my-auto"
+                />
+                <span>Public</span>
+              </label>
+              <button
+                onClick={startUpload}
+                title="Upload"
+                className="mt-4 py-1 px-6 rounded-lg flex items-center justify-center bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all">
+                Upload
+              </button>
+            </>
+          )}
+        </div>
+      </>
+    );
+  } else {
+    return (
+      <div className="justify-center text-center xl:max-w-6xl mx-auto mt-10 mb-20">
+        <h1 className="font-bold text-2xl text-white">
+          Sorry! You are not authorised to view this page!
+        </h1>
       </div>
-    </>
-  );
+    );
+  }
 };
 
 export default UploadForm;

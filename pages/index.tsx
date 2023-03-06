@@ -8,46 +8,23 @@ import ClipViews from "../components/ClipViews";
 import dateFormat from "dateformat";
 import supabase from "../lib/supabase";
 
-const plyrProps = {
-  source:
-    "https://stream.mux.com/uMUIc7h4eYacNhlOdC4BB0000ySvS6nCPNBjn8G8C499w.m3u8", // https://github.com/sampotts/plyr#the-source-setter
-  options: undefined, // https://github.com/sampotts/plyr#options
-  // Direct props for inner video tag (mdn.io/video)
-};
-
 export async function getServerSideProps() {
-  try {
-    const response = await fetch(`${process.env.DEV_PAGE_URL}/api/asset`);
-    const { asset } = await response.json();
+  const { data, error } = await supabase.from("livestream").select("*");
 
-    const { data, error } = await supabase.from("livestream").select("*");
-
-    if (error) {
-      throw new Error(error.message);
-    }
-
-    data?.forEach((data: any) => {
-      data.timestamp = dateFormat(data.timestamp, "mmmm dS, yyyy");
-    });
-
-    return {
-      props: {
-        data: data
-          ? data.map((item: any) => ({
-              ...item,
-              asset: asset.find((a: any) => a.id === item.asset_id),
-            }))
-          : [],
-      },
-    };
-  } catch (error) {
-    console.error(error);
-    return {
-      props: {
-        data: [],
-      },
-    };
+  if (error) {
+    throw new Error(error.message);
   }
+
+  data?.forEach((data: any) => {
+    data.timestamp = dateFormat(data.timestamp, "mmmm dS, yyyy");
+    data.duration = secondsToTime(data.duration);
+  });
+
+  return {
+    props: {
+      data: data,
+    },
+  };
 }
 
 export default function Home({ data }: { data: any }) {
@@ -65,7 +42,7 @@ export default function Home({ data }: { data: any }) {
         <MuxPlayer
           streamType="on-demand"
           thumbnailTime={142}
-          playbackId="nVyLXd02sO52jmR68LMYcwedQQaHd1CzkKuq1dmoQyWs"
+          playbackId="16mLGoj2uixoYcy5oeQ7vzwGPAQvc1sbVqvt01uHnjS8"
           metadata={{
             video_title: "Glitterbeard's Cave",
           }}
@@ -80,10 +57,10 @@ export default function Home({ data }: { data: any }) {
                     {data.tag}
                   </div>
                   <div className="absolute top-2 right-2 rounded-md bg-black/75 p-1 text-xs font-semibold">
-                    {secondsToTime(data.asset.duration)}
+                    {data.duration}
                   </div>
                   <Image
-                    src={`https://image.mux.com/${data.asset.playback_ids[0].id}/thumbnail.png`}
+                    src={`https://image.mux.com/${data.playback_id}/thumbnail.png`}
                     alt={data.title}
                     width={400}
                     height={400}
@@ -108,7 +85,6 @@ export default function Home({ data }: { data: any }) {
             </div>
           ))}
         </div>
-        {/* Live player should go here... Live chat too! Alternatively, have it detect if live and the display relevant stuff */}
         <div className="flex justify-end mt-6">
           <Link href="/clips" passHref>
             <button className="py-1 px-6 text-white rounded-lg flex items-center justify-center bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all">
@@ -120,3 +96,5 @@ export default function Home({ data }: { data: any }) {
     </>
   );
 }
+
+// Live player should go here... Live chat too! Alternatively, have it detect if live and the display relevant stuff
