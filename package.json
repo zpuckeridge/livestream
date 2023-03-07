@@ -16,7 +16,7 @@
     "@supabase/supabase-js": "^2.4.0",
     "@vercel/analytics": "^0.1.10",
     "dateformat": "^5.0.3",
-    "framer-motion": "^9.0.1",
+    "framer-motion": "^10.1.0",
     "next": "^13.1.6",
     "next-auth": "^4.19.2",
     "npm": "^9.4.1",
@@ -28,7 +28,7 @@
   "devDependencies": {
     "@types/dateformat": "^5.0.0",
     "@types/node": "18.14.6",
-    "@types/react": "18.0.26",
+    "@types/react": "18.0.28",
     "@types/react-dom": "18.0.10",
     "autoprefixer": "^10.4.13",
     "eslint": "8.33.0",
@@ -36,6 +36,6 @@
     "postcss": "^8.4.21",
     "tailwindcss": "^3.2.4",
     "typescript": "4.9.5",
-    "vercel": "^28.15.0"
+    "vercel": "^28.16.13"
   }
 }
