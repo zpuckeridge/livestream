@@ -79,7 +79,7 @@ export default function Clips({ data }: { data: any }) {
             className="block w-full placeholder:text-[#888888] px-4 py-2 bg-white/5 border border-zinc-800/50 rounded-lg hover:ring-2 ring-gray-300 transition-all text-white"
           />
           <FiSearch className="absolute w-5 h-5 right-3 top-3 text-[#888888]" />
-          <div className="inline-flex space-x-2 mt-2">
+          <div className="md:inline-flex gap-2 grid grid-cols-2 mt-2">
             {tags.map((tag: any) => (
               <button
                 key={tag}
