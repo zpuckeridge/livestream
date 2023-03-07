@@ -6,7 +6,7 @@
     <br />
   </h1>
   <sup>
-    A Next.JS project leveraging Cloudflare Stream, Cloudflare Workers, Tailwind CSS hosted using Vercel.</em>
+    A Next.JS project leveraging Mux, Tailwind CSS hosted on Vercel.</em>
     <br />
   </sup>
   <br />
@@ -39,15 +39,15 @@ npm run dev
 
 ## 🚩 Features
 
-- 🌙 Dark Mode
+- 🌙 Dark by default (no one wants to be blinded when watching video!)
 - 📡 Embeds out of the box (clips are playable in Discord!)
+- 📈 Analytics
+- ☁ Upload Functionality
+- ♥ Like Button
 
 ## 👀 Coming soon
 
 These features are due to be implemented soon / are worked in being added
 
-- 🚦 Stronger Caching
-- 📈 Analytics including view count, original poster and more!
 - 💌 Notifications when live or when new upload complete
-- 💬 Live Chat
-
+- 💬 Live Chat and Comments
