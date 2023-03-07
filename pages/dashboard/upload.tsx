@@ -1,15 +1,72 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as UpChunk from "@mux/upchunk";
-import supabase from "../../lib/supabase";
+import Spinner from "../../components/Spinner";
+import useSwr from "swr";
 import router from "next/router";
+import supabase from "../../lib/supabase";
+import { FiCheckCircle } from "react-icons/fi";
+import { useSession } from "next-auth/react";
+
+const fetcher = (url: string) => {
+  return fetch(url).then((res) => res.json());
+};
 
 const UploadForm = () => {
+  const { data: session, status }: { data: any; status: any } = useSession();
+
   const [isUploading, setIsUploading] = useState(false);
-  const [selectedFile, setSelectedFile] = useState({});
+  const [isPreparing, setIsPreparing] = useState(false);
+  const [uploadId, setUploadId] = useState(null);
   const [progress, setProgress] = useState<Number | null>(null);
   const [errorMessage, setErrorMessage] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
-  const [formData, setFormData] = useState({});
+  const [title, setTitle] = useState("");
+  const [tag, setTag] = useState("");
+  const [isPublic, setIsPublic] = useState(true);
+  const [showModal, setShowModal] = useState(false);
+
+  const { data, error } = useSwr(
+    () => (isPreparing ? `/api/upload/${uploadId}` : null),
+    fetcher,
+    { refreshInterval: 5000 }
+  );
+
+  useEffect(() => {
+    if (data && data.upload) {
+      const finishUpload = async () => {
+        const response = await fetch(`/api/asset/${data.upload.asset_id}`);
+
+        const asset = await response.json();
+        console.log(asset);
+
+        await supabase.from("livestream").insert({
+          title: title,
+          asset_id: data.upload.asset_id,
+          playback_id: asset.playback_id,
+          duration: asset.duration,
+          public: isPublic,
+          tag: tag,
+        });
+
+        router.push(`/clip/${data.upload.asset_id}`);
+      };
+
+      finishUpload();
+    }
+  }, [data, isPublic, title]);
+
+  if (data && data.upload) {
+    return (
+      <>
+        <div className="text-white mx-auto">
+          <div className="flex justify-center">
+            <FiCheckCircle className="text-green-500 w-14 h-14" />
+          </div>
+          <p className="text-xs text-center mt-2">Redirecting...</p>
+        </div>
+      </>
+    );
+  }
 
   const createUpload = async () => {
     try {
@@ -17,8 +74,9 @@ const UploadForm = () => {
         method: "POST",
       })
         .then((res) => res.json())
-        .then(({ url, playback_id }) => {
-          return { url, playback_id };
+        .then(({ id, url }) => {
+          setUploadId(id);
+          return url;
         });
     } catch (e) {
       console.error("Error in createUpload", e);
@@ -26,37 +84,18 @@ const UploadForm = () => {
     }
   };
 
-  const handleSubmit = async (event: any) => {
-    event.preventDefault();
+  const startUpload = () => {
+    const files = inputRef.current?.files;
 
-    if (!selectedFile) {
-      alert("Please attach a video before submitting!");
+    if (!title || !files) {
+      setShowModal(true);
       return;
     }
 
     setIsUploading(true);
 
-    const files = inputRef.current?.files;
-    if (!files) {
-      setErrorMessage("An unexpected error has occurred.");
-      return;
-    }
-
-    const response = await createUpload();
-
-    if (
-      typeof response !== "object" ||
-      !response.hasOwnProperty("url") ||
-      !response.hasOwnProperty("playback_id")
-    ) {
-      setErrorMessage("Error creating upload");
-      return;
-    }
-
-    const { url, playback_id } = response;
-
     const upload = UpChunk.createUpload({
-      endpoint: url,
+      endpoint: createUpload,
       file: files[0],
     });
 
@@ -68,71 +107,104 @@ const UploadForm = () => {
       setProgress(Math.floor(progress.detail));
     });
 
-    upload.on("success", async () => {
-      console.log(playback_id);
-      const updatedForm = { ...formData, playback_id: playback_id };
-      await supabase.from("livestream").insert(updatedForm);
-      setTimeout(() => {
-        router.push("/dashboard");
-      }, 5000);
-    });
-  };
-
-  const handleChange = (event: any) => {
-    setFormData({
-      ...formData,
-      [event.target.name]: event.target.value,
+    upload.on("success", () => {
+      setIsPreparing(true);
     });
   };
 
   if (errorMessage) return <p>{errorMessage}</p>;
 
-  return (
-    <>
-      <div className="text-white bg-white/5 border border-zinc-800/50 rounded-lg p-10">
-        {isUploading ? (
+  if (session && session.user.email === `contact@sdelta.xyz`) {
+    return (
+      <>
+        {showModal && (
           <>
-            <div>Uploading...{progress ? `${progress}%` : ""}</div>
-          </>
-        ) : (
-          <form onSubmit={handleSubmit}>
-            <div className="space-y-4">
-              <div className="space-y-1">
-                <label className="font-semibold">Name</label>
-                <input
-                  type="text"
-                  name="title"
-                  className="block w-full placeholder:text-[#888888] px-4 py-2 bg-white/5 border border-zinc-800/50 rounded-lg hover:ring-2 ring-gray-300 transition-all text-white"
-                  onChange={handleChange}
-                />
-              </div>
-              <div className="space-y-1">
-                <label className="font-semibold">Select a video file</label>
-                <div className="flex justify-between">
-                  <input
-                    type="file"
-                    ref={inputRef}
-                    onChange={(event) => {
-                      if (event.target.files) {
-                        setSelectedFile(event.target.files[0]);
-                      }
-                    }}
-                  />
-                  <button
-                    onClick={handleSubmit}
-                    type="submit"
-                    className="px-6 py-1 rounded-lg flex items-center justify-center bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all"
-                  >
-                    Submit
-                  </button>
-                </div>
+            <div className="absolute inset-0 bg-black/50"></div>
+            <div className="fixed inset-0 flex items-center justify-center">
+              <div className="text-white bg-[#1d1d1d] border border-zinc-800/50 rounded-lg p-10">
+                <p className="text-lg font-medium mb-4">
+                  Please enter a title and/or select a file.
+                </p>
+                <button
+                  title="OK"
+                  className="mt-4 py-1 px-6 rounded-lg flex items-center justify-center bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all"
+                  onClick={() => setShowModal(false)}>
+                  OK
+                </button>
               </div>
             </div>
-          </form>
+          </>
         )}
+
+        <div className="text-white bg-white/5 border border-zinc-800/50 rounded-lg p-10 max-w-2xl mx-auto">
+          {isUploading ? (
+            <>
+              {isPreparing ? (
+                <div className="text-center">Preparing...</div>
+              ) : (
+                <div className="text-center">
+                  Uploading...{progress ? `${progress}%` : ""}
+                </div>
+              )}
+              <Spinner />
+            </>
+          ) : (
+            <>
+              <label>
+                <span className="font-bold">Choose a title</span>
+                <input
+                  type="text"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+                  className="w-full p-2 mb-4 rounded-lg bg-white/5 text-sm placeholder:text-[#888888]"
+                />
+              </label>
+              <span className="font-bold">Select a video file</span>
+              <label>
+                <input
+                  type="file"
+                  ref={inputRef}
+                  className="w-full p-2 mb-4 rounded-lg bg-white/5 text-sm placeholder:text-[#888888]"
+                />
+              </label>
+              <label>
+                <span className="font-bold">Add a tag for the video</span>
+                <input
+                  type="text"
+                  value={tag}
+                  onChange={(e) => setTag(e.target.value)}
+                  className="w-full p-2 mb-4 rounded-lg bg-white/5 text-sm placeholder:text-[#888888]"
+                />
+              </label>
+              <label>
+                <input
+                  type="checkbox"
+                  checked={isPublic}
+                  onChange={(e) => setIsPublic(e.target.checked)}
+                  className="mr-2 my-auto"
+                />
+                <span>Public</span>
+              </label>
+              <button
+                onClick={startUpload}
+                title="Upload"
+                className="mt-4 py-1 px-6 rounded-lg flex items-center justify-center bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all">
+                Upload
+              </button>
+            </>
+          )}
+        </div>
+      </>
+    );
+  } else {
+    return (
+      <div className="justify-center text-center xl:max-w-6xl mx-auto mt-10 mb-20">
+        <h1 className="font-bold text-2xl text-white">
+          Sorry! You are not authorised to view this page!
+        </h1>
       </div>
-    </>
-  );
+    );
+  }
 };
 
 export default UploadForm;

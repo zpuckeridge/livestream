@@ -1,96 +1,131 @@
-import dateFormat from "dateformat";
+import { memo, useCallback, useEffect, useState } from "react";
+import supabase from "../../lib/supabase";
+import MuxPlayer from "@mux/mux-player-react";
 import Head from "next/head";
-import { useEffect } from "react";
 import CopyLink from "../../components/CopyLink";
+import dateFormat from "dateformat";
 import { secondsToTime } from "../../components/TimeConverter";
-import CloudflareStream from "../../lib/cloudflare";
-import ClipViews from "../../components/ClipViews";
 import Link from "next/link";
+import ClipViews from "../../components/ClipViews";
+import { FiHeart } from "react-icons/fi";
 
-export async function getStaticPaths() {
-  const res = await fetch(`${process.env.PAGE_URL}/api/stream`);
-  const data = await res.json();
-  const paths = data.result.map((data: { uid: any }) => ({
-    params: { id: data.uid },
-  }));
+export async function getServerSideProps(context: any) {
+  const { id } = context.query;
 
-  return { paths, fallback: false };
+  const { data, error } = await supabase
+    .from("livestream")
+    .select("*")
+    .eq("asset_id", id)
+    .single();
+
+  return {
+    props: {
+      data: data,
+    },
+  };
 }
 
-export async function getStaticProps({ params }: { params: any }) {
-  const res = await fetch(`${process.env.CLOUDFLARE_WORKER}/${params.id}`);
-  const data = await res.json();
-  return { props: { data } };
-}
+// This prevents re-render when the like button is pressed
+const MemoizedMuxPlayer = memo(MuxPlayer, (prevProps, nextProps) => {
+  // Only re-render if the playbackId changes
+  return prevProps.playbackId === nextProps.playbackId;
+});
 
-function Clip({ data }: { data: any }) {
+export default function Clip({ data }: { data: any }) {
+  const [liked, setLiked] = useState(false);
+  const [buttonDisabled, setButtonDisabled] = useState(false);
+
+  // Add one to view count
   useEffect(() => {
-    fetch(`/api/views/${data.result.uid}`, {
+    fetch(`/api/views/${data.asset_id}`, {
       method: "POST",
     });
-  }, [data.result.uid]);
+  }, [data.asset_id]);
+
+  const handleClick = async () => {
+    await supabase.rpc("vote", {
+      quote_id: data.asset_id,
+      increment_num: 1,
+    });
+    setLiked(true);
+    setButtonDisabled(true);
+  };
 
   return (
     <>
       <Head>
-        <title>{`${data.result.meta.name}`}</title>
-        <meta property="og:title" content={`${data.result.meta.name}`} />
+        <title>{`${data.title}`}</title>
+        <meta property="og:title" content={`${data.title}`} />
         <meta property="og:site_name" content="sdelta.xyz" />
         <meta property="og:type" content="video.other" />
         <meta
           property="og:image"
-          content={`https://customer-ldcl3cff16n8d346.cloudflarestream.com/${data.result.uid}/thumbnails/thumbnail.jpg`}
+          content={`https://image.mux.com/${data.playback_id}/thumbnail.png`}
         />
         <meta property="og:image:type" content="image/jpeg" />
         <meta property="og:image:width" content="1280" />
         <meta property="og:image:height" content="720" />
         <meta
           property="og:url"
-          content={`https://sdelta.xyz/clip/${data.result.uid}`}
+          content={`https://sdelta.xyz/clip/${data.asset_id}`}
         />
         <meta
           property="og:video"
-          content={`https://customer-ldcl3cff16n8d346.cloudflarestream.com/${data.result.uid}/downloads/default.mp4`}
+          content={`https://stream.mux.com/${data.playback_id}/medium.mp4`}
         />
         <meta
           property="og:video:url"
-          content={`https://customer-ldcl3cff16n8d346.cloudflarestream.com/${data.result.uid}/downloads/default.mp4`}
+          content={`https://stream.mux.com/${data.playback_id}/medium.mp4`}
         />
         <meta property="og:video:type" content="text/html" />
         <meta property="og:video:width" content="1280" />
         <meta property="og:video:height" content="720" />
-        <meta
-          property="og:video:release_date"
-          content={`${data.result.uploaded}`}
-        />
-        <meta
-          property="og:video:duration"
-          content={`${data.result.duration}`}
-        />
+        <meta property="og:video:release_date" content={`${data.timestamp}`} />
+        <meta property="og:video:duration" content={`${data.duration}`} />
       </Head>
-      <div className="xl:max-w-6xl mx-auto">
-        <div className="m-4 border border-zinc-800/50 rounded-2xl drop-shadow-lg">
-          <CloudflareStream
-            videoIdOrSignedUrl={data.result.uid}
-            key={data.result.uid}
-          />
-        </div>
-
-        <div className="m-4">
+      <div className="max-w-6xl mx-auto m-4">
+        <MemoizedMuxPlayer
+          streamType="on-demand"
+          thumbnailTime={5}
+          playbackId={data.playback_id}
+          metadata={{
+            video_title: data.title,
+          }}
+          className={"w-full h-full aspect-video"}
+        />
+        <div>
           <div className="flex justify-between text-white">
-            <h1 className="text-2xl font-bold mt-2">{data.result.meta.name}</h1>
-            <CopyLink />
+            <h1 className="text-2xl font-bold mt-2">{data.title}</h1>
+            <div className="inline-flex space-x-2">
+              <button
+                onClick={handleClick}
+                title="Like"
+                disabled={buttonDisabled}>
+                {liked ? (
+                  <div className="text-red-500 inline-flex">
+                    {data.likes + 1}
+                    <FiHeart className="my-auto ml-2" />
+                  </div>
+                ) : (
+                  <div className="inline-flex space-x-2">
+                    <div>{data.likes}</div>
+                    <FiHeart className="my-auto hover:text-red-500 transition-all duration-200" />
+                  </div>
+                )}
+              </button>
+              <CopyLink />
+            </div>
           </div>
           <div className="flex justify-between text-[#888888]">
             <p>
-              {dateFormat(data.result.uploaded, "dS mmmm yyyy")} ・{" "}
-              <ClipViews slug={data.result.uid} />
+              {dateFormat(data.timestamp, "mmmm dS, yyyy")}・
+              <ClipViews slug={data.asset_id} />
             </p>
-            <p>{secondsToTime(data.result.duration)}</p>
+            <p>{secondsToTime(data.duration)}</p>
           </div>
         </div>
-        <Link href="/clip">
-          <button className="m-4 py-1 px-6 text-white rounded-lg bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all">
+        <Link href="/clips">
+          <button className="mt-4 py-1 px-6 text-white rounded-lg bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all">
             ← Back to Clips
           </button>
         </Link>
@@ -99,4 +134,4 @@ function Clip({ data }: { data: any }) {
   );
 }
 
-export default Clip;
+// If user is signed in and has permissions, allow data editing here. Comments should go here as well.

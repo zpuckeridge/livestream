@@ -1,25 +1,32 @@
-import CloudflareStream from "../lib/cloudflare";
 import Head from "next/head";
-import Image from "next/image";
 import Link from "next/link";
+import Image from "next/image";
+import MuxPlayer from "@mux/mux-player-react";
 import { secondsToTime } from "../components/TimeConverter";
-import dateFormat from "dateformat";
+import { FiHeart } from "react-icons/fi";
 import ClipViews from "../components/ClipViews";
+import dateFormat from "dateformat";
+import supabase from "../lib/supabase";
 
-export async function getStaticProps() {
-  // Make a request to your API to fetch the video data
-  const res = await fetch(`${process.env.PAGE_URL}/api/stream`);
-  const data = await res.json();
+export async function getServerSideProps() {
+  const { data, error } = await supabase
+    .from("livestream")
+    .select("*")
+    .order("timestamp", { ascending: false });
 
-  // Convert time to readable format
-  data.result.forEach((video: any) => {
-    video.uploaded = dateFormat(video.uploaded, "mmmm dS, yyyy");
-    video.duration = secondsToTime(video.duration);
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  data?.forEach((data: any) => {
+    data.timestamp = dateFormat(data.timestamp, "mmmm dS, yyyy");
+    data.duration = secondsToTime(data.duration);
   });
 
-  // Pass the data as a prop to your component
   return {
-    props: { data },
+    props: {
+      data: data,
+    },
   };
 }
 
@@ -34,41 +41,55 @@ export default function Home({ data }: { data: any }) {
           Media."
         />
       </Head>
-      <div className="xl:max-w-6xl mx-auto mt-10 mb-20 text-white">
-        <div className="m-4 border border-zinc-800/50 rounded-2xl drop-shadow-lg aspect-video">
-          <CloudflareStream videoIdOrSignedUrl="4d4f99dc7903820b7fcd0c821a4880cf" />
-        </div>
-        <div className="mt-10 justify-items-center grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-4 m-4">
-          {data.result.slice(0, 8).map((video: any) => (
-            <div key={video.uid}>
-              <Link href={`/clip/${video.uid}`}>
-                <div className="transform hover:scale-[1.05] h-full w-full transition-all">
+      <div className="xl:max-w-6xl mx-auto my-10">
+        <MuxPlayer
+          streamType="on-demand"
+          thumbnailTime={142}
+          playbackId="16mLGoj2uixoYcy5oeQ7vzwGPAQvc1sbVqvt01uHnjS8"
+          metadata={{
+            video_title: "Glitterbeard's Cave",
+          }}
+          className={"w-full h-full aspect-video"}
+        />
+        <div className="my-10 justify-items-center grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-2 lg:gap-4">
+          {data.slice(0, 4).map((data: any) => (
+            <div key={data.asset_id}>
+              <Link href={`/clip/${data.asset_id}`} title={data.title}>
+                <div className="transform hover:scale-[1.05] transition-all">
+                  <div className="absolute top-2 left-2 rounded-md bg-black/75 p-1 text-xs font-semibold">
+                    {data.tag}
+                  </div>
+                  <div className="absolute top-2 right-2 rounded-md bg-black/75 p-1 text-xs font-semibold">
+                    {data.duration}
+                  </div>
                   <Image
-                    src={video.thumbnail}
-                    alt={video.meta.name}
+                    src={`https://image.mux.com/${data.playback_id}/thumbnail.png`}
+                    alt={data.title}
                     width={400}
                     height={400}
-                    className="rounded-2xl"
-                    priority
+                    className="rounded-2xl aspect-video"
+                    priority={true}
                   />
-                  <p className="font-bold mt-2 text-lg truncate w-64">
-                    {video.meta.name}
-                  </p>
-                  <div className="flex justify-between">
-                    <p className="text-sm text-[#888888] font-semibold">
-                      {video.uploaded}・ <ClipViews slug={video.uid} />
-                    </p>
-                    <p className="text-sm text-[#888888] font-semibold">
-                      {video.duration}
-                    </p>
+                  <div className="flex justify-between mt-1">
+                    <div className="font-bold text-lg truncate w-56 text-white">
+                      {data.title}
+                    </div>
+                    <div className="inline-flex my-auto">
+                      {data.likes}
+                      <FiHeart className="my-auto ml-2" />
+                    </div>
+                  </div>
+                  <div className="flex justify-between text-sm text-[#888888] font-semibold">
+                    <p>{data.timestamp}</p>
+                    <ClipViews slug={data.asset_id} />
                   </div>
                 </div>
               </Link>
             </div>
           ))}
         </div>
-        <div className="flex justify-end mr-4 mt-6">
-          <Link href="/clip" passHref>
+        <div className="flex justify-end mt-6">
+          <Link href="/clips" passHref>
             <button className="py-1 px-6 text-white rounded-lg flex items-center justify-center bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all">
               View More →
             </button>
@@ -78,3 +99,5 @@ export default function Home({ data }: { data: any }) {
     </>
   );
 }
+
+// Live player should go here... Live chat too! Alternatively, have it detect if live and the display relevant stuff
