@@ -44,6 +44,8 @@ npm run dev
 - 📈 Analytics
 - ☁ Upload Functionality
 - ♥ Like Button
+- 🗂 Tags
+- ▶ Pagination
 
 ## 👀 Coming soon
 

@@ -1,6 +1,7 @@
 import { memo, useCallback, useEffect, useState } from "react";
 import supabase from "../../lib/supabase";
 import MuxPlayer from "@mux/mux-player-react";
+import muxBlurHash from "@mux/blurhash";
 import Head from "next/head";
 import CopyLink from "../../components/CopyLink";
 import dateFormat from "dateformat";
@@ -18,9 +19,20 @@ export async function getServerSideProps(context: any) {
     .eq("asset_id", id)
     .single();
 
+  // Returns a 404 is data cannot be found
+  if (!data) {
+    return {
+      notFound: true,
+    };
+  }
+
+  // This generates a blurred placeholder
+  const { blurHashBase64 } = await muxBlurHash(data.playback_id);
+
   return {
     props: {
       data: data,
+      blurHashBase64,
     },
   };
 }
@@ -31,7 +43,13 @@ const MemoizedMuxPlayer = memo(MuxPlayer, (prevProps, nextProps) => {
   return prevProps.playbackId === nextProps.playbackId;
 });
 
-export default function Clip({ data }: { data: any }) {
+export default function Clip({
+  data,
+  blurHashBase64,
+}: {
+  data: any;
+  blurHashBase64: any;
+}) {
   const [liked, setLiked] = useState(false);
   const [buttonDisabled, setButtonDisabled] = useState(false);
 
@@ -91,6 +109,7 @@ export default function Clip({ data }: { data: any }) {
           metadata={{
             video_title: data.title,
           }}
+          placeholder={blurHashBase64}
           className={"w-full h-full aspect-video"}
         />
         <div>

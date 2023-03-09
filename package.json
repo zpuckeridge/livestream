@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@cloudflare/stream-react": "^1.8.0",
+    "@mux/blurhash": "^0.1.2",
     "@mux/mux-node": "^7.3.0",
     "@mux/mux-player-react": "^1.8.0",
     "@mux/upchunk": "^3.0.2",

@@ -1,7 +1,8 @@
 import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
-import MuxPlayer from "@mux/mux-player-react";
+import MuxPlayer from "@mux/mux-player-react/lazy";
+import muxBlurHash from "@mux/blurhash";
 import { secondsToTime } from "../components/TimeConverter";
 import { FiHeart } from "react-icons/fi";
 import ClipViews from "../components/ClipViews";
@@ -23,14 +24,33 @@ export async function getServerSideProps() {
     data.duration = secondsToTime(data.duration);
   });
 
+  // Returns a 404 is data cannot be found
+  if (!data) {
+    return {
+      notFound: true,
+    };
+  }
+
+  // This generates a blurred placeholder
+  const { blurHashBase64 } = await muxBlurHash(
+    "16mLGoj2uixoYcy5oeQ7vzwGPAQvc1sbVqvt01uHnjS8"
+  );
+
   return {
     props: {
       data: data,
+      blurHashBase64,
     },
   };
 }
 
-export default function Home({ data }: { data: any }) {
+export default function Home({
+  data,
+  blurHashBase64,
+}: {
+  data: any;
+  blurHashBase64: any;
+}) {
   return (
     <>
       <Head>
@@ -49,6 +69,7 @@ export default function Home({ data }: { data: any }) {
           metadata={{
             video_title: "Glitterbeard's Cave",
           }}
+          placeholder={blurHashBase64}
           className={"w-full h-full aspect-video"}
         />
         <div className="my-10 justify-items-center grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-2 lg:gap-4">
