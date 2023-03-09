@@ -1,6 +1,6 @@
 import { memo, useCallback, useEffect, useState } from "react";
 import supabase from "../../lib/supabase";
-import MuxPlayer from "@mux/mux-player-react";
+import MuxPlayer from "@mux/mux-player-react/lazy";
 import muxBlurHash from "@mux/blurhash";
 import Head from "next/head";
 import CopyLink from "../../components/CopyLink";
