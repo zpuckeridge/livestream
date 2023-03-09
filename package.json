@@ -17,26 +17,26 @@
     "@supabase/supabase-js": "^2.4.0",
     "@vercel/analytics": "^0.1.10",
     "dateformat": "^5.0.3",
-    "framer-motion": "^9.0.1",
+    "framer-motion": "^10.2.3",
     "next": "^13.1.6",
     "next-auth": "^4.19.2",
     "npm": "^9.4.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-icons": "^4.7.1",
-    "swr": "^2.0.4"
+    "react-icons": "^4.8.0",
+    "swr": "^2.1.0"
   },
   "devDependencies": {
     "@types/dateformat": "^5.0.0",
-    "@types/node": "18.11.18",
-    "@types/react": "18.0.26",
-    "@types/react-dom": "18.0.10",
+    "@types/node": "18.14.6",
+    "@types/react": "18.0.28",
+    "@types/react-dom": "18.0.11",
     "autoprefixer": "^10.4.13",
-    "eslint": "8.33.0",
+    "eslint": "8.35.0",
     "eslint-config-next": "^13.1.6",
     "postcss": "^8.4.21",
     "tailwindcss": "^3.2.4",
     "typescript": "4.9.5",
-    "vercel": "^28.15.0"
+    "vercel": "^28.16.15"
   }
 }
