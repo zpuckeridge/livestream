@@ -73,6 +73,7 @@ export default function Clip({
     <>
       <Head>
         <title>{`${data.title}`}</title>
+        <meta name="description" content={`${data.title}`} />
         <meta property="og:title" content={`${data.title}`} />
         <meta property="og:site_name" content="sdelta.xyz" />
         <meta property="og:type" content="video.other" />
