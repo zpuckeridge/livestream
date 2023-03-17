@@ -17,7 +17,7 @@
     "@supabase/supabase-js": "^2.11.0",
     "@vercel/analytics": "^0.1.10",
     "dateformat": "^5.0.3",
-    "framer-motion": "^10.3.2",
+    "framer-motion": "^10.3.4",
     "next": "^13.2.4",
     "next-auth": "^4.19.2",
     "npm": "^9.6.2",
