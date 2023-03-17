@@ -7,12 +7,18 @@ import CopyLink from "../../components/CopyLink";
 import dateFormat from "dateformat";
 import { secondsToTime } from "../../components/TimeConverter";
 import Link from "next/link";
-import ClipViews from "../../components/ClipViews";
 import { FiHeart } from "react-icons/fi";
 
 export async function getServerSideProps(context: any) {
   const { id } = context.query;
 
+  // Increment the view count for this asset
+  await supabase.rpc("views", {
+    quote_id: id,
+    increment_num: 1,
+  });
+
+  // Fetch data for the page
   const { data, error } = await supabase
     .from("livestream")
     .select("*")
@@ -53,15 +59,8 @@ export default function Clip({
   const [liked, setLiked] = useState(false);
   const [buttonDisabled, setButtonDisabled] = useState(false);
 
-  // Add one to view count
-  useEffect(() => {
-    fetch(`/api/views/${data.asset_id}`, {
-      method: "POST",
-    });
-  }, [data.asset_id]);
-
   const handleClick = async () => {
-    await supabase.rpc("vote", {
+    await supabase.rpc("likes", {
       quote_id: data.asset_id,
       increment_num: 1,
     });
@@ -138,8 +137,7 @@ export default function Clip({
           </div>
           <div className="flex justify-between text-[#888888]">
             <p>
-              {dateFormat(data.timestamp, "mmmm dS, yyyy")}・
-              <ClipViews slug={data.asset_id} />
+              {dateFormat(data.timestamp, "mmmm dS, yyyy")}・{data.views} views
             </p>
             <p>{secondsToTime(data.duration)}</p>
           </div>

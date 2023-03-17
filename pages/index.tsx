@@ -5,7 +5,6 @@ import MuxPlayer from "@mux/mux-player-react/lazy";
 import muxBlurHash from "@mux/blurhash";
 import { secondsToTime } from "../components/TimeConverter";
 import { FiHeart } from "react-icons/fi";
-import ClipViews from "../components/ClipViews";
 import dateFormat from "dateformat";
 import supabase from "../lib/supabase";
 
@@ -102,7 +101,7 @@ export default function Home({
                   </div>
                   <div className="flex justify-between text-sm text-[#888888] font-semibold">
                     <p>{data.timestamp}</p>
-                    <ClipViews slug={data.asset_id} />
+                    {data.views} views
                   </div>
                 </div>
               </Link>

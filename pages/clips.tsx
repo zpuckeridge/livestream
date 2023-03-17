@@ -6,7 +6,6 @@ import { secondsToTime } from "../components/TimeConverter";
 import { useState } from "react";
 import { FiHeart, FiSearch } from "react-icons/fi";
 import dateFormat from "dateformat";
-import ClipViews from "../components/ClipViews";
 
 export async function getServerSideProps() {
   const { data, error } = await supabase
@@ -124,7 +123,7 @@ export default function Clips({ data }: { data: any }) {
                   </div>
                   <div className="flex justify-between text-sm text-[#888888] font-semibold">
                     <p>{data.timestamp}</p>
-                    <ClipViews slug={data.asset_id} />
+                    {data.views} views
                   </div>
                 </div>
               </Link>
