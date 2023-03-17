@@ -1,13 +1,9 @@
-import { useSession, getSession } from "next-auth/react";
+import { useSession } from "@supabase/auth-helpers-react";
 import Link from "next/link";
 import { FiUploadCloud } from "react-icons/fi";
 
 export default function Dashboard() {
-  const { data: session, status }: { data: any; status: any } = useSession();
-
-  if (status === "loading") {
-    return <p>Loading...</p>;
-  }
+  const session = useSession();
 
   if (session && session.user.email === `contact@sdelta.xyz`) {
     return (

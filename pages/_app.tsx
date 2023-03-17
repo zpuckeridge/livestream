@@ -2,18 +2,29 @@ import Layout from "../components/Layout";
 import TransitionEffect from "../components/TransitionEffect";
 import type { AppProps } from "next/app";
 import { Inter } from "next/font/google";
-import { SessionProvider } from "next-auth/react";
 import { Analytics } from "@vercel/analytics/react";
 import "../styles/globals.css";
+import { useState } from "react";
+import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs";
+import { SessionContextProvider, Session } from "@supabase/auth-helpers-react";
 
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
 });
 
-function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
+function MyApp({
+  Component,
+  pageProps,
+}: AppProps<{
+  initialSession: Session;
+}>) {
+  const [supabase] = useState(() => createBrowserSupabaseClient());
+
   return (
-    <SessionProvider session={session}>
+    <SessionContextProvider
+      supabaseClient={supabase}
+      initialSession={pageProps.initialSession}>
       <main className={inter.className}>
         <Layout>
           <TransitionEffect>
@@ -22,7 +33,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
           </TransitionEffect>
         </Layout>
       </main>
-    </SessionProvider>
+    </SessionContextProvider>
   );
 }
 

@@ -5,14 +5,14 @@ import useSwr from "swr";
 import router from "next/router";
 import supabase from "../../lib/supabase";
 import { FiCheckCircle } from "react-icons/fi";
-import { useSession } from "next-auth/react";
+import { useSession } from "@supabase/auth-helpers-react";
 
 const fetcher = (url: string) => {
   return fetch(url).then((res) => res.json());
 };
 
 const UploadForm = () => {
-  const { data: session, status }: { data: any; status: any } = useSession();
+  const session = useSession();
 
   const [isUploading, setIsUploading] = useState(false);
   const [isPreparing, setIsPreparing] = useState(false);
