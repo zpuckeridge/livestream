@@ -12,7 +12,8 @@ export async function getServerSideProps() {
   const { data, error } = await supabase
     .from("livestream")
     .select("*")
-    .order("timestamp", { ascending: false });
+    .order("timestamp", { ascending: false })
+    .range(0, 3); // Retrieves only the first 4 results, reducing page load
 
   if (error) {
     throw new Error(error.message);
