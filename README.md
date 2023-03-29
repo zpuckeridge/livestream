@@ -6,7 +6,7 @@
     <br />
   </h1>
   <sup>
-    A Next.JS project leveraging Mux, Tailwind CSS hosted on Vercel.</em>
+    A video hosting and streaming site leveraging Next.JS, Supabase, Mux, Framer Motion and Tailwind CSS hosted through Vercel.</em>
     <br />
   </sup>
   <br />
@@ -24,14 +24,14 @@ To get started locally running the project:
 # Clone the repository
 git clone https://github.com/zpuckeridge/livestream
 
+# Copy the .env.example and make the relevant changes
+cp .env.example .env.local
+
 # Navigate to the cloned files
 cd livestream/
 
 # Install packages
 npm install
-
-# Or with Yarn
-yarn
 
 # Run the server
 npm run dev
