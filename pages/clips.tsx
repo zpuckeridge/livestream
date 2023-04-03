@@ -7,7 +7,7 @@ import { useState } from "react";
 import { FiHeart, FiSearch } from "react-icons/fi";
 import dateFormat from "dateformat";
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const { data, error } = await supabase
     .from("livestream")
     .select("*")
@@ -26,6 +26,7 @@ export async function getServerSideProps() {
     props: {
       data: data,
     },
+    revalidate: 60,
   };
 }
 

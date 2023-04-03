@@ -9,8 +9,25 @@ import { secondsToTime } from "../../components/TimeConverter";
 import Link from "next/link";
 import { FiHeart } from "react-icons/fi";
 
-export async function getServerSideProps(context: any) {
-  const { id } = context.query;
+export async function getStaticPaths() {
+  const { data, error } = await supabase.from("livestream").select("asset_id");
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  const paths = data.map((item: any) => ({
+    params: { id: item.asset_id.toString() },
+  }));
+
+  return {
+    paths,
+    fallback: "blocking",
+  };
+}
+
+export async function getStaticProps({ params }: any) {
+  const { id } = params;
 
   // Increment the view count for this asset
   await supabase.rpc("views", {
@@ -40,6 +57,7 @@ export async function getServerSideProps(context: any) {
       data: data,
       blurHashBase64,
     },
+    revalidate: 60,
   };
 }
 
