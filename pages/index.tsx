@@ -8,7 +8,7 @@ import { FiHeart } from "react-icons/fi";
 import dateFormat from "dateformat";
 import supabase from "../lib/supabase";
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const { data, error } = await supabase
     .from("livestream")
     .select("*")
@@ -24,13 +24,6 @@ export async function getServerSideProps() {
     data.duration = secondsToTime(data.duration);
   });
 
-  // Returns a 404 is data cannot be found
-  if (!data) {
-    return {
-      notFound: true,
-    };
-  }
-
   // This generates a blurred placeholder
   const { blurHashBase64 } = await muxBlurHash(
     "16mLGoj2uixoYcy5oeQ7vzwGPAQvc1sbVqvt01uHnjS8"
@@ -41,6 +34,7 @@ export async function getServerSideProps() {
       data: data,
       blurHashBase64,
     },
+    revalidate: 60,
   };
 }
 
