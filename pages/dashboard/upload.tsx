@@ -49,7 +49,7 @@ const UploadForm = () => {
         });
 
         // Trigger /api/revalidate to revalidate /clips page
-        await fetch("/api/revalidate");
+        await fetch(`/api/revalidate?secret=${process.env.SECRET_TOKEN}`);
 
         // Router.push should wait 500ms before pushing
         // to ensure the /api/revalidate has completed
