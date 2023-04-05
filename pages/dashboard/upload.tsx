@@ -48,7 +48,14 @@ const UploadForm = () => {
           tag: tag,
         });
 
-        router.push(`/clip/${data.upload.asset_id}`);
+        // Trigger /api/revalidate to revalidate /clips page
+        await fetch("/api/revalidate");
+
+        // Router.push should wait 500ms before pushing
+        // to ensure the /api/revalidate has completed
+        setTimeout(() => {
+          router.push(`/clip/${data.upload.asset_id}`);
+        }, 500);
       };
 
       finishUpload();
