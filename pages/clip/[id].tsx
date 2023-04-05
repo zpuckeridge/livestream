@@ -57,7 +57,7 @@ export async function getStaticProps({ params }: any) {
       data: data,
       blurHashBase64,
     },
-    revalidate: 60,
+    revalidate: 1,
   };
 }
 
