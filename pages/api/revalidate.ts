@@ -4,9 +4,13 @@ export default async function handler(req: any, res: any) {
     return res.status(401).json({ message: "Invalid token" });
   }
 
+  const pathsToRevalidate = ["/clips", "/"];
+
   try {
-    // Hardcoded path to be revalidated
-    await res.revalidate("/clips");
+    // Loop through the paths and revalidate each one
+    for (const path of pathsToRevalidate) {
+      await res.revalidate(path);
+    }
     return res.json({ revalidated: true });
   } catch (err) {
     // If there was an error, Next.js will continue

@@ -34,7 +34,6 @@ export async function getStaticProps() {
       data: data,
       blurHashBase64,
     },
-    revalidate: 60,
   };
 }
 
