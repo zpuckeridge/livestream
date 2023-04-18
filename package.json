@@ -20,7 +20,7 @@
     "@supabase/supabase-js": "^2.20.0",
     "@vercel/analytics": "^0.1.10",
     "dateformat": "^5.0.3",
-    "framer-motion": "^10.11.6",
+    "framer-motion": "^10.12.3",
     "next": "^13.3.0",
     "npm": "^9.6.4",
     "react": "18.2.0",
