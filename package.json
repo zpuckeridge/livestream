@@ -13,7 +13,7 @@
     "@mux/blurhash": "^0.1.2",
     "@mux/mux-node": "^7.3.0",
     "@mux/mux-player": "^1.10.0",
-    "@mux/mux-player-react": "^1.9.0",
+    "@mux/mux-player-react": "^1.10.0",
     "@mux/upchunk": "^3.0.2",
     "@supabase/auth-helpers-nextjs": "^0.6.0",
     "@supabase/auth-helpers-react": "^0.3.1",
