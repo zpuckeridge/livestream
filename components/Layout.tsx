@@ -20,7 +20,7 @@ export default function Layout({ children }: { children: any }) {
                 </button>
               </Link>
             </div>
-            {session && (
+            {session && session.user.email === `contact@sdelta.xyz` && (
               <div>
                 <Link href="/dashboard" passHref>
                   <button
