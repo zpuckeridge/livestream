@@ -46,6 +46,7 @@ npm run dev
 - ♥ Like Button
 - 🗂 Tags
 - ▶ Pagination
+- ♻ Incremental Static Revalidation
 
 ## 👀 Coming soon
 

@@ -1,8 +1,10 @@
 import Link from "next/link";
 import LoginButton from "./LoginButton";
+import { useSession } from "@supabase/auth-helpers-react";
 import { FiGrid, FiHome } from "react-icons/fi";
 
 export default function Layout({ children }: { children: any }) {
+  const session = useSession();
   return (
     <>
       <div className="p-4 flex flex-col min-h-screen justify-between text-white bg-[#111111]">
@@ -18,18 +20,20 @@ export default function Layout({ children }: { children: any }) {
                 </button>
               </Link>
             </div>
-
-            <div>
-              <Link href="/dashboard" passHref>
-                <button
-                  title="Dashboard"
-                  className="ml-2 py-1 px-6 rounded-lg flex items-center justify-center bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all">
-                  <FiGrid className="h-6 w-6" />
-                  <p className="hidden sm:flex ml-1">Dashboard</p>
-                </button>
-              </Link>
-            </div>
+            {session && (
+              <div>
+                <Link href="/dashboard" passHref>
+                  <button
+                    title="Dashboard"
+                    className="ml-2 py-1 px-6 rounded-lg flex items-center justify-center bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300 transition-all">
+                    <FiGrid className="h-6 w-6" />
+                    <p className="hidden sm:flex ml-1">Dashboard</p>
+                  </button>
+                </Link>
+              </div>
+            )}
           </div>
+
           <div className="inline-flex">
             <div>
               <LoginButton />

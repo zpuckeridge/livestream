@@ -88,7 +88,16 @@ export default function Clips({ data }: { data: any }) {
                     ? "bg-white/50 border-zinc-800 ring-2 ring-gray-300"
                     : "bg-white/5 border border-zinc-800/50 hover:ring-2 ring-gray-300"
                 } transition-all`}
-                onClick={() => setSelectedTag(tag)}>
+                // onClick should be able to unselected
+                onClick={() => {
+                  if (selectedTag === tag) {
+                    setSelectedTag("");
+                    setCurrentPage(1);
+                  } else {
+                    setSelectedTag(tag);
+                    setCurrentPage(1);
+                  }
+                }}>
                 {tag}
               </button>
             ))}
