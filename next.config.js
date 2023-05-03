@@ -3,6 +3,9 @@ const nextConfig = {
   experimental: {
     appDir: true,
   },
-}
+  images: {
+    domains: ["cdn.discordapp.com", "image.mux.com"],
+  },
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;
