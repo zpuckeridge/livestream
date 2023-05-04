@@ -17,12 +17,8 @@ export default async function Views() {
           title={video.title}
           key={video.asset_id}
           className="flex justify-between">
-          <div className="space-y-1">
-            <div>
-              <p className="font-medium leading-none">{video.title}</p>
-            </div>
-          </div>
-          <div className="text-sm ml-auto font-medium">{video.views} views</div>
+          <p>{video.title}</p>
+          <div className="text-sm ml-auto">{video.views} views</div>
         </Link>
       ))}
     </div>

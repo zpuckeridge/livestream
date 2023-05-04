@@ -20,6 +20,7 @@ import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/components/ui/use-toast";
 
 import { Eye } from "lucide-react";
+import { Textarea } from "../ui/textarea";
 
 interface Props {
   assetId: string;
@@ -104,7 +105,7 @@ export default function Edit({
                     <Label htmlFor="description" className="text-right">
                       Description
                     </Label>
-                    <Input
+                    <Textarea
                       id="description"
                       value={description}
                       onChange={(e) => setDescription(e.target.value)}

@@ -79,7 +79,7 @@ export default async function Clip({ params }: any) {
           <div>{video?.views} views</div>
           <Link href="/clips">
             <Button className="mt-4" size="sm">
-              <ArrowLeft /> Back to Clips
+              <ArrowLeft className="mr-1 h-4 w-4" /> Back to Clips
             </Button>
           </Link>
         </div>

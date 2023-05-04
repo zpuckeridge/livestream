@@ -34,7 +34,10 @@ export default withClerkMiddleware((request: NextRequest) => {
     return NextResponse.redirect(signInUrl);
   }
 
-  if (userId !== "user_2PJcfYqloKIOPOUBDjidWNatNpj") {
+  if (
+    userId !== "user_2PJcfYqloKIOPOUBDjidWNatNpj" &&
+    userId !== "user_2Oxo2ani3BAOKgZAboW1YCzW1g3"
+  ) {
     const unauthorised = new URL("/unauthorised", request.url);
 
     return NextResponse.redirect(unauthorised);

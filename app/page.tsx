@@ -73,7 +73,7 @@ export default async function Home() {
         <Link href="/clips">
           <Button className="mt-4" size="sm">
             View more
-            <ArrowRight />
+            <ArrowRight className="ml-1 h-4 w-4" />
           </Button>
         </Link>
       </main>
