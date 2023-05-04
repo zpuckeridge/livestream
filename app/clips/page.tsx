@@ -13,7 +13,7 @@ export default async function Clips() {
   return (
     <>
       <main className="max-w-6xl mx-auto p-4">
-        <Videos videos={videos} tags={tags} itemsPerPage={8} />
+        <Videos videos={videos} tags={tags} itemsPerPage={12} />
       </main>
     </>
   );
