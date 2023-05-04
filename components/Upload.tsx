@@ -2,11 +2,13 @@
 
 import { Label } from "./ui/label";
 import { Input } from "./ui/input";
+import { Switch } from "./ui/switch";
 import { Button } from "./ui/button";
 import { useRef, useState } from "react";
 import useSwr from "swr";
 import * as UpChunk from "@mux/upchunk";
 import Link from "next/link";
+import { Eye } from "lucide-react";
 
 const fetcher = (url: string) => {
   return fetch(url).then((res) => res.json());
@@ -22,6 +24,7 @@ export default function Upload() {
   const inputRef = useRef<HTMLInputElement>(null);
   const [title, setTitle] = useState("");
   const [tag, setTag] = useState("");
+  const [visibility, setVisibility] = useState<boolean>(true);
 
   const { data, error } = useSwr(
     () => (final ? `/api/upload/${uploadId}` : null),
@@ -46,6 +49,7 @@ export default function Upload() {
             duration: Math.floor(asset.duration),
             title: title,
             tag: tag,
+            visibility: visibility,
           }),
         });
       }
@@ -132,7 +136,7 @@ export default function Upload() {
         ) : (
           <>
             <div>
-              <Label>Choose a title</Label>
+              <Label>Video Title</Label>
               <Input
                 type="text"
                 value={title}
@@ -140,15 +144,31 @@ export default function Upload() {
               />
             </div>
             <div>
-              <Label>Select a video file</Label>
+              <Label>Video File</Label>
               <Input type="file" ref={inputRef} />
             </div>
             <div>
-              <Label>Add a tag for the video</Label>
+              <Label>Video Tag</Label>
               <Input
                 type="text"
                 value={tag}
                 onChange={(e) => setTag(e.target.value)}
+              />
+            </div>
+            <div className="flex items-center space-x-4 rounded-md border p-4">
+              <Eye />
+              <div className="flex-1 space-y-1">
+                <p className="text-sm font-medium leading-none">Visibility</p>
+                <p className="text-sm text-muted-foreground">
+                  Should this video be public?
+                </p>
+              </div>
+              <Switch
+                id="visibility"
+                checked={visibility}
+                onCheckedChange={(checked: boolean) => setVisibility(checked)}
+                className="col-span-3"
+                required
               />
             </div>
 

@@ -10,6 +10,8 @@ import {
 import { SignInButton } from "@clerk/nextjs";
 import { useTheme } from "next-themes";
 import { dark } from "@clerk/themes";
+import { Button } from "../ui/button";
+import { LogIn } from "lucide-react";
 
 export function Auth() {
   const theme = useTheme();
@@ -26,6 +28,9 @@ export function Auth() {
               <UserButton
                 appearance={{
                   baseTheme: theme.theme === "dark" ? dark : undefined,
+                  elements: {
+                    card: "bg-muted",
+                  },
                 }}
               />
             </div>
@@ -33,7 +38,10 @@ export function Auth() {
         </div>
       </SignedIn>
       <SignedOut>
-        <SignInButton mode="modal" />
+        <Button size="sm">
+          <LogIn className="mr-2 h-4 w-4" />
+          <SignInButton mode="modal" />
+        </Button>
       </SignedOut>
     </>
   );

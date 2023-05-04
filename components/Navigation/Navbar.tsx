@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 
 export default async function Navbar() {
   return (
-    <nav className="border-b border-border p-4 flex items-center">
+    <nav className="p-4 flex items-center">
       <div className="h-8 flex items-center space-x-2">
         <Link href="/">
           <Button size="sm">

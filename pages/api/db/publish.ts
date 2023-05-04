@@ -6,7 +6,8 @@ export default async function handle(
   res: NextApiResponse
 ) {
   if (req.method === "POST") {
-    const { asset_id, playback_id, duration, title, tag } = req.body;
+    const { asset_id, playback_id, duration, title, tag, visibility } =
+      req.body;
 
     const asset = await prisma.videos.create({
       data: {
@@ -19,7 +20,7 @@ export default async function handle(
         date: new Date(),
         likes: 0,
         views: 0,
-        public: true,
+        public: visibility,
       },
     });
 
