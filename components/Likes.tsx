@@ -76,7 +76,7 @@ export default function Likes({ assetId, likes }: Props) {
       <button onClick={handleClick} title="Like" disabled={buttonDisabled}>
         {liked ? (
           <div className="text-red-500 inline-flex">
-            {likes ? likes : 0 + 1}
+            {likes ? likes + 1 : 0}
             <Heart className="my-auto ml-2" />
           </div>
         ) : (
