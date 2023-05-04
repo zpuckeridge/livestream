@@ -1,15 +1,26 @@
+import { Metadata } from "next";
 import Image from "next/image";
-import { PrismaClient } from "@prisma/client";
+import prisma from "@/lib/prisma";
 import Link from "next/link";
 import { ArrowRight, Heart } from "lucide-react";
 import { format } from "date-fns";
 import Player from "@/components/Player";
 import { Button } from "@/components/ui/button";
 
-const prisma = new PrismaClient();
+export const metadata: Metadata = {
+  title: "sdelta | Home",
+  description: "Check out the latest clips from sdelta!",
+};
 
 export default async function Home() {
   const videos = await prisma.videos.findMany({ orderBy: { date: "desc" } });
+
+  const formatDuration = (duration: number) => {
+    const minutes = Math.floor(duration / 60);
+    const seconds = duration % 60;
+
+    return `${minutes}:${seconds.toString().padStart(2, "0")}`;
+  };
 
   return (
     <>
@@ -24,9 +35,13 @@ export default async function Home() {
                     {video.tag}
                   </div>
                   <div className="absolute top-2 right-2 rounded-md text-white bg-black/75 p-1 text-xs font-semibold">
-                    {Math.floor(video.duration / 60)}:
-                    {video.duration % 60 < 10 ? "0" : ""}
-                    {video.duration % 60}
+                    {video.duration ? (
+                      <span className="duration">
+                        {formatDuration(video.duration)}
+                      </span>
+                    ) : (
+                      <span className="duration">N/A</span>
+                    )}
                   </div>
 
                   <Image

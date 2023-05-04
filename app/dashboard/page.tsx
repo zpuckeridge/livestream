@@ -19,7 +19,7 @@ import Edit from "@/components/Dashboard/Edit";
 
 export const metadata: Metadata = {
   title: "Dashboard",
-  description: "Example dashboard app using the components.",
+  description: "View stats, manage videos and more.",
 };
 
 export default async function DashboardPage() {

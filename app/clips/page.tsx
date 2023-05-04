@@ -1,5 +1,11 @@
+import { Metadata } from "next";
 import Videos from "@/components/Clips/Videos";
 import prisma from "@/lib/prisma";
+
+export const metadata: Metadata = {
+  title: "sdelta | Clips",
+  description: "Check out the latest clips from sdelta!",
+};
 
 export default async function Clips() {
   const videos = await prisma.videos.findMany({
