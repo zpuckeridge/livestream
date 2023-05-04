@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import Likes from "@/components/Likes";
+import Script from "next/script";
 
 export default async function Clip({ params }: any) {
   const { id } = params;
@@ -24,6 +25,7 @@ export default async function Clip({ params }: any) {
 
   return (
     <>
+      <Script src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCastFramework=1" />
       <main>
         <div className="max-w-6xl p-4 mx-auto">
           <Player playbackId={video?.playback_id} />
@@ -45,5 +47,3 @@ export default async function Clip({ params }: any) {
     </>
   );
 }
-
-// PAGE SHOULD BE REVALIDATED ON EACH VISIT
