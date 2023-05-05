@@ -12,6 +12,8 @@ specifiers:
   '@radix-ui/react-dialog': ^1.0.3
   '@radix-ui/react-dropdown-menu': ^2.0.4
   '@radix-ui/react-label': ^2.0.1
+  '@radix-ui/react-popover': ^1.0.5
+  '@radix-ui/react-progress': ^1.0.2
   '@radix-ui/react-select': ^1.2.1
   '@radix-ui/react-switch': ^1.0.2
   '@radix-ui/react-tabs': ^1.0.3
@@ -32,6 +34,7 @@ specifiers:
   prisma: ^4.13.0
   prop-types: ^15.8.1
   react: 18.2.0
+  react-day-picker: ^8.7.1
   react-dom: 18.2.0
   swr: ^2.1.5
   tailwind-merge: ^1.12.0
@@ -51,6 +54,8 @@ dependencies:
   '@radix-ui/react-dialog': 1.0.3_cis5wmpl6sllca25ejrqakjpau
   '@radix-ui/react-dropdown-menu': 2.0.4_cis5wmpl6sllca25ejrqakjpau
   '@radix-ui/react-label': 2.0.1_biqbaboplfbrettd7655fr4n2y
+  '@radix-ui/react-popover': 1.0.5_cis5wmpl6sllca25ejrqakjpau
+  '@radix-ui/react-progress': 1.0.2_biqbaboplfbrettd7655fr4n2y
   '@radix-ui/react-select': 1.2.1_cis5wmpl6sllca25ejrqakjpau
   '@radix-ui/react-switch': 1.0.2_biqbaboplfbrettd7655fr4n2y
   '@radix-ui/react-tabs': 1.0.3_biqbaboplfbrettd7655fr4n2y
@@ -70,6 +75,7 @@ dependencies:
   postcss: 8.4.23
   prop-types: 15.8.1
   react: 18.2.0
+  react-day-picker: 8.7.1_r6j3756ioqf5pjc2u22wj25rla
   react-dom: 18.2.0_react@18.2.0
   swr: 2.1.5_react@18.2.0
   tailwind-merge: 1.12.0
@@ -765,6 +771,34 @@ packages:
       - '@types/react'
     dev: false
 
+  /@radix-ui/react-popover/1.0.5_cis5wmpl6sllca25ejrqakjpau:
+    resolution: {integrity: sha512-GRHZ8yD12MrN2NLobHPE8Rb5uHTxd9x372DE9PPNnBjpczAQHcZ5ne0KXG4xpf+RDdXSzdLv9ym6mYJCDTaUZg==}
+    peerDependencies:
+      react: ^16.8 || ^17.0 || ^18.0
+      react-dom: ^16.8 || ^17.0 || ^18.0
+    dependencies:
+      '@babel/runtime': 7.21.0
+      '@radix-ui/primitive': 1.0.0
+      '@radix-ui/react-compose-refs': 1.0.0_react@18.2.0
+      '@radix-ui/react-context': 1.0.0_react@18.2.0
+      '@radix-ui/react-dismissable-layer': 1.0.3_biqbaboplfbrettd7655fr4n2y
+      '@radix-ui/react-focus-guards': 1.0.0_react@18.2.0
+      '@radix-ui/react-focus-scope': 1.0.2_biqbaboplfbrettd7655fr4n2y
+      '@radix-ui/react-id': 1.0.0_react@18.2.0
+      '@radix-ui/react-popper': 1.1.1_cis5wmpl6sllca25ejrqakjpau
+      '@radix-ui/react-portal': 1.0.2_biqbaboplfbrettd7655fr4n2y
+      '@radix-ui/react-presence': 1.0.0_biqbaboplfbrettd7655fr4n2y
+      '@radix-ui/react-primitive': 1.0.2_biqbaboplfbrettd7655fr4n2y
+      '@radix-ui/react-slot': 1.0.1_react@18.2.0
+      '@radix-ui/react-use-controllable-state': 1.0.0_react@18.2.0
+      aria-hidden: 1.2.3
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+      react-remove-scroll: 2.5.5_3mjolpizrsjgnt7s4ahgoveqvu
+    transitivePeerDependencies:
+      - '@types/react'
+    dev: false
+
   /@radix-ui/react-popper/1.1.1_cis5wmpl6sllca25ejrqakjpau:
     resolution: {integrity: sha512-keYDcdMPNMjSC8zTsZ8wezUMiWM9Yj14wtF3s0PTIs9srnEPC9Kt2Gny1T3T81mmSeyDjZxsD9N5WCwNNb712w==}
     peerDependencies:
@@ -821,6 +855,19 @@ packages:
     dependencies:
       '@babel/runtime': 7.21.0
       '@radix-ui/react-slot': 1.0.1_react@18.2.0
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+    dev: false
+
+  /@radix-ui/react-progress/1.0.2_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-c16RVM43ct2koRcMmPw4b47JWFNs89qe5p4Um9dwoPs0yi+d7It1MJ35EpsX+93o31Mqdwe4vQyu0SrHrygdCg==}
+    peerDependencies:
+      react: ^16.8 || ^17.0 || ^18.0
+      react-dom: ^16.8 || ^17.0 || ^18.0
+    dependencies:
+      '@babel/runtime': 7.21.0
+      '@radix-ui/react-context': 1.0.0_react@18.2.0
+      '@radix-ui/react-primitive': 1.0.2_biqbaboplfbrettd7655fr4n2y
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
     dev: false
@@ -3207,6 +3254,16 @@ packages:
   /quick-lru/4.0.1:
     resolution: {integrity: sha512-ARhCpm70fzdcvNQfPoy49IaanKkTlRWF2JMzqhcJbhSFRZv7nPTvZJdcY7301IPmvW+/p0RgIWnQDLJxifsQ7g==}
     engines: {node: '>=8'}
+    dev: false
+
+  /react-day-picker/8.7.1_r6j3756ioqf5pjc2u22wj25rla:
+    resolution: {integrity: sha512-Gv426AW8b151CZfh3aP5RUGztLwHB/EyJgWZ5iMgtzbFBkjHfG6Y66CIQFMWGLnYjsQ9DYSJRmJ5S0Pg5HWKjA==}
+    peerDependencies:
+      date-fns: ^2.28.0
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      date-fns: 2.29.3
+      react: 18.2.0
     dev: false
 
   /react-dom/18.2.0_react@18.2.0:

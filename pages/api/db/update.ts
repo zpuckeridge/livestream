@@ -6,7 +6,7 @@ export default async function handle(
   res: NextApiResponse
 ) {
   if (req.method === "POST") {
-    const { asset_id, title, tag, description, visibility } = req.body;
+    const { asset_id, title, tag, description, visibility, date } = req.body;
 
     const asset = await prisma.videos.update({
       where: {
@@ -14,9 +14,10 @@ export default async function handle(
       },
       data: {
         title: title,
-        tag: tag,
         description: description,
+        tag: tag,
         public: visibility,
+        date: date,
       },
     });
 

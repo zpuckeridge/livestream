@@ -1,8 +1,19 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import prisma from "@/lib/prisma";
-import { Activity, Eye, Heart, Stars, Upload } from "lucide-react";
+import { Activity, Eye, Heart, Stars, UploadIcon } from "lucide-react";
+import Upload from "@/components/Dashboard/Upload";
 
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogClose,
+} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -18,12 +29,12 @@ import Likes from "@/components/Dashboard/Likes";
 import Edit from "@/components/Dashboard/Edit";
 
 export const metadata: Metadata = {
-  title: "Dashboard",
+  title: "sdelta - Dashboard",
   description: "View stats, manage videos and more.",
 };
 
 export default async function DashboardPage() {
-  const videos = await prisma.videos.findMany();
+  const videos = await prisma.videos.findMany({ orderBy: { date: "desc" } });
 
   const videoCount = videos.length;
 
@@ -44,12 +55,23 @@ export default async function DashboardPage() {
           <div className="flex items-center justify-between space-y-2">
             <h2 className="text-3xl font-bold tracking-tight">Dashboard</h2>
             <div className="flex items-center space-x-2">
-              <Link href="/dashboard/upload">
-                <Button size="sm">
-                  <Upload className="mr-2 h-4 w-4" />
-                  Upload
-                </Button>
-              </Link>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button size="sm">
+                    <UploadIcon className="mr-2 h-4 w-4" />
+                    Upload
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-[425px]">
+                  <DialogHeader>
+                    <DialogTitle>Upload Video</DialogTitle>
+                    <DialogDescription>
+                      Create and upload a video with relevant metadata.
+                    </DialogDescription>
+                  </DialogHeader>
+                  <Upload />
+                </DialogContent>
+              </Dialog>
             </div>
           </div>
           <Tabs defaultValue="overview" className="space-y-4">
@@ -57,12 +79,6 @@ export default async function DashboardPage() {
               <TabsTrigger value="overview">Overview</TabsTrigger>
               <TabsTrigger value="analytics" disabled>
                 Analytics <Badge className="ml-1">WIP</Badge>
-              </TabsTrigger>
-              <TabsTrigger value="reports" disabled>
-                Reports <Badge className="ml-1">WIP</Badge>
-              </TabsTrigger>
-              <TabsTrigger value="notifications" disabled>
-                Notifications <Badge className="ml-1">WIP</Badge>
               </TabsTrigger>
             </TabsList>
             <TabsContent value="overview" className="space-y-4">
@@ -124,7 +140,7 @@ export default async function DashboardPage() {
                 </Card>
               </div>
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-8">
-                <Card className="col-span-4">
+                <Card className="col-span-8 sm:col-span-4">
                   <CardHeader>
                     <CardTitle>Highest View Counts</CardTitle>
                     <CardDescription>
@@ -136,7 +152,7 @@ export default async function DashboardPage() {
                     <Views />
                   </CardContent>
                 </Card>
-                <Card className="col-span-4">
+                <Card className="col-span-8 sm:col-span-4">
                   <CardHeader>
                     <CardTitle>Highest Like Counts</CardTitle>
                     <CardDescription>
@@ -148,7 +164,7 @@ export default async function DashboardPage() {
                     <Likes />
                   </CardContent>
                 </Card>
-                <Card className="col-span-4">
+                <Card className="col-span-8">
                   <CardHeader>
                     <CardTitle>Video Management</CardTitle>
                     <CardDescription>
@@ -156,16 +172,7 @@ export default async function DashboardPage() {
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
-                    {videos.map((video) => (
-                      <Edit
-                        key={video.asset_id}
-                        assetId={video.asset_id}
-                        title={video.title}
-                        description={video.description}
-                        tag={video.tag}
-                        visibility={video.public}
-                      />
-                    ))}
+                    <Edit videos={videos} />
                   </CardContent>
                 </Card>
               </div>
