@@ -19,7 +19,7 @@ import {
 
 interface Props {
   assetId: string | undefined;
-  likes: number | undefined;
+  likes: number | 0;
 }
 
 export default function Likes({ assetId, likes }: Props) {
@@ -76,7 +76,7 @@ export default function Likes({ assetId, likes }: Props) {
       <button onClick={handleClick} title="Like" disabled={buttonDisabled}>
         {liked ? (
           <div className="text-red-500 inline-flex">
-            {likes ? likes + 1 : 0}
+            {likes + 1}
             <Heart className="my-auto ml-2" />
           </div>
         ) : (
