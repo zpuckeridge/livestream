@@ -1,7 +1,7 @@
-import "@/styles/globals.css";
+import "@/app/globals.css";
 
 import { Metadata } from "next";
-import { fontSans } from "@/lib/fonts";
+import { Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs/app-beta";
 import { ThemeProvider } from "./theme-provider";
 import { Toaster } from "@/components/ui/toaster";
@@ -25,16 +25,21 @@ export const metadata: Metadata = {
   },
 };
 
-interface RootLayoutProps {
-  children: React.ReactNode;
-}
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+});
 
-export default function RootLayout({ children }: RootLayoutProps) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <ClerkProvider>
-      <html lang="en" suppressHydrationWarning>
+      <html lang="en" className={inter.className} suppressHydrationWarning>
         <head />
-        <body className={fontSans.variable}>
+        <body>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             {/* @ts-expect-error Server Component */}
             <Navbar />

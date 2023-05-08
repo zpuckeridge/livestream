@@ -16,7 +16,8 @@ export default async function Views() {
           href={`/clip/${video.asset_id}`}
           title={video.title}
           key={video.asset_id}
-          className="flex justify-between">
+          className="flex justify-between"
+        >
           <p>{video.title}</p>
           <div className="text-sm ml-auto">{video.views} views</div>
         </Link>
