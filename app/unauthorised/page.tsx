@@ -1,10 +1,5 @@
 import { Metadata } from "next";
 
-export const metadata: Metadata = {
-  title: "sdelta - Unauthorised",
-  description: "Oops! That wasn't supposed to happen! 😳",
-};
-
 export default function Unauthorised() {
   return (
     <main className="mx-auto my-10 max-w-lg">

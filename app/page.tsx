@@ -1,4 +1,3 @@
-import { Metadata } from "next";
 import Image from "next/image";
 import prisma from "@/lib/prisma";
 import Link from "next/link";
@@ -6,11 +5,6 @@ import { ArrowRight, Heart } from "lucide-react";
 import { format } from "date-fns";
 import Player from "@/components/Player";
 import { Button } from "@/components/ui/button";
-
-export const metadata: Metadata = {
-  title: "sdelta | Home",
-  description: "Check out the latest clips from sdelta!",
-};
 
 export default async function Home() {
   const videos = await prisma.videos.findMany({ orderBy: { date: "desc" } });

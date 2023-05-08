@@ -1,5 +1,3 @@
-import Head from "next/head";
-import type { Metadata } from "next";
 import prisma from "@/lib/prisma";
 import Player from "@/components/Player";
 import CopyLink from "@/components/CopyLink";

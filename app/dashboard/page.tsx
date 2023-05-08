@@ -28,11 +28,6 @@ import Views from "@/components/Dashboard/Views";
 import Likes from "@/components/Dashboard/Likes";
 import Edit from "@/components/Dashboard/Edit";
 
-export const metadata: Metadata = {
-  title: "sdelta - Dashboard",
-  description: "View stats, manage videos and more.",
-};
-
 export default async function DashboardPage() {
   const videos = await prisma.videos.findMany({ orderBy: { date: "desc" } });
 
