@@ -13,7 +13,11 @@
 </div>
 
 <div align="center">
-  <img width="600" src="https://raw.githubusercontent.com/zpuckeridge/livestream/main/public/preview.png" />
+  <img width="600" src="https://raw.githubusercontent.com/zpuckeridge/livestream/main/public/site-preview.png" />
+</div>
+
+<div align="center">
+  <img width="600" src="https://raw.githubusercontent.com/zpuckeridge/livestream/main/public/dash-preview.png" />
 </div>
 
 ## 🚀 Install
