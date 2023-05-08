@@ -70,7 +70,7 @@ export default async function Clip({ params }: any) {
           <div className="flex justify-between">
             <h1 className="text-2xl font-bold mt-2"> {video?.title}</h1>
             <div className="inline-flex space-x-2">
-              <Likes assetId={video?.asset_id} likes={video?.likes} />
+              <Likes assetId={video?.asset_id} likes={video?.likes ?? 0} />
               <CopyLink />
             </div>
           </div>
