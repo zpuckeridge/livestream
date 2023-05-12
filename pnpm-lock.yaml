@@ -18,11 +18,12 @@ specifiers:
   '@radix-ui/react-switch': ^1.0.2
   '@radix-ui/react-tabs': ^1.0.3
   '@radix-ui/react-toast': ^1.1.3
+  '@tanstack/react-table': ^8.9.1
   '@types/node': 20.1.0
   '@types/react': 18.2.0
-  '@types/react-dom': 18.2.1
+  '@types/react-dom': 18.2.4
   autoprefixer: 10.4.14
-  class-variance-authority: ^0.5.3
+  class-variance-authority: ^0.6.0
   clsx: ^1.2.1
   date-fns: ^2.30.0
   eslint: 8.40.0
@@ -47,7 +48,7 @@ dependencies:
   '@clerk/nextjs': 4.17.1_2xek2u27flvv5bywadnu4xxgx4
   '@clerk/themes': 1.6.4_react@18.2.0
   '@mux/mux-node': 7.3.0
-  '@mux/mux-player-react': 1.10.1_eifcttp3urtuoaozkvkishqkgm
+  '@mux/mux-player-react': 1.10.1_ti7qfxrzpknm2yx4yj3d67scpa
   '@mux/upchunk': 3.1.0
   '@prisma/client': 4.13.0_prisma@4.13.0
   '@radix-ui/react-alert-dialog': 1.0.3_cis5wmpl6sllca25ejrqakjpau
@@ -61,11 +62,12 @@ dependencies:
   '@radix-ui/react-switch': 1.0.2_biqbaboplfbrettd7655fr4n2y
   '@radix-ui/react-tabs': 1.0.3_biqbaboplfbrettd7655fr4n2y
   '@radix-ui/react-toast': 1.1.3_biqbaboplfbrettd7655fr4n2y
+  '@tanstack/react-table': 8.9.1_biqbaboplfbrettd7655fr4n2y
   '@types/node': 20.1.0
   '@types/react': 18.2.0
-  '@types/react-dom': 18.2.1
+  '@types/react-dom': 18.2.4
   autoprefixer: 10.4.14_postcss@8.4.23
-  class-variance-authority: 0.5.3_typescript@5.0.4
+  class-variance-authority: 0.6.0_typescript@5.0.4
   clsx: 1.2.1
   date-fns: 2.30.0
   eslint: 8.40.0
@@ -312,7 +314,7 @@ packages:
       - debug
     dev: false
 
-  /@mux/mux-player-react/1.10.1_eifcttp3urtuoaozkvkishqkgm:
+  /@mux/mux-player-react/1.10.1_ti7qfxrzpknm2yx4yj3d67scpa:
     resolution: {integrity: sha512-sn3BZ6WTIx5yKfXAIqxkt0GBlOAxz5dMDHy228lZjyiVg8mJSNYDiqrVSDYSjNcBsosSK0V4TNSP11JUQCf8Gg==}
     peerDependencies:
       '@types/react': ^17.0.0 || ^18
@@ -328,7 +330,7 @@ packages:
       '@mux/mux-player': 1.10.1
       '@mux/playback-core': 0.18.0
       '@types/react': 18.2.0
-      '@types/react-dom': 18.2.1
+      '@types/react-dom': 18.2.4
       prop-types: 15.8.1
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
@@ -1094,6 +1096,23 @@ packages:
       tslib: 2.5.0
     dev: false
 
+  /@tanstack/react-table/8.9.1_biqbaboplfbrettd7655fr4n2y:
+    resolution: {integrity: sha512-yHs2m6lk5J5RNcu2dNtsDGux66wNXZjEgzxos6MRCX8gL+nqxeW3ZglqP6eANN0bGElPnjvqiUHGQvdACOr3Cw==}
+    engines: {node: '>=12'}
+    peerDependencies:
+      react: '>=16'
+      react-dom: '>=16'
+    dependencies:
+      '@tanstack/table-core': 8.9.1
+      react: 18.2.0
+      react-dom: 18.2.0_react@18.2.0
+    dev: false
+
+  /@tanstack/table-core/8.9.1:
+    resolution: {integrity: sha512-2+R83n8vMZND0q3W1lSiF7co9nFbeWbjAErFf27xwbeA9E0wtUu5ZDfgj+TZ6JzdAEQAgfxkk/QNFAKiS8E4MA==}
+    engines: {node: '>=12'}
+    dev: false
+
   /@types/body-parser/1.19.2:
     resolution: {integrity: sha512-ALYone6pm6QmwZoAgeyNksccT9Q4AWZQ6PvfwR37GT6r6FWUPguq6sUmNGSMV2Wr761oQoBxwGGa6DR5o1DC9g==}
     dependencies:
@@ -1177,8 +1196,8 @@ packages:
     resolution: {integrity: sha512-EEhsLsD6UsDM1yFhAvy0Cjr6VwmpMWqFBCb9w07wVugF7w9nfajxLuVmngTIpgS6svCnm6Vaw+MZhoDCKnOfsw==}
     dev: false
 
-  /@types/react-dom/18.2.1:
-    resolution: {integrity: sha512-8QZEV9+Kwy7tXFmjJrp3XUKQSs9LTnE0KnoUb0YCguWBiNW0Yfb2iBMYZ08WPg35IR6P3Z0s00B15SwZnO26+w==}
+  /@types/react-dom/18.2.4:
+    resolution: {integrity: sha512-G2mHoTMTL4yoydITgOGwWdWMVd8sNgyEP85xVmMKAPUBwQWm9wBPQUmvbeF4V3WBY1P7mmL4BkjQ0SqUpf1snw==}
     dependencies:
       '@types/react': 18.2.0
     dev: false
@@ -1575,14 +1594,15 @@ packages:
       fsevents: 2.3.2
     dev: false
 
-  /class-variance-authority/0.5.3_typescript@5.0.4:
-    resolution: {integrity: sha512-vcMxnya/xxQSvTuXO9FWAOnmLihbzX82fPkQpMUwPHZ4tdopmFlM4X818fMgCPt2L6CirOIbN91vybifdScUVw==}
+  /class-variance-authority/0.6.0_typescript@5.0.4:
+    resolution: {integrity: sha512-qdRDgfjx3GRb9fpwpSvn+YaidnT7IUJNe4wt5/SWwM+PmUwJUhQRk/8zAyNro0PmVfmen2635UboTjIBXXxy5A==}
     peerDependencies:
       typescript: '>= 4.5.5 < 6'
     peerDependenciesMeta:
       typescript:
         optional: true
     dependencies:
+      clsx: 1.2.1
       typescript: 5.0.4
     dev: false
 
