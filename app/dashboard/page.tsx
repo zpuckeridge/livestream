@@ -1,5 +1,5 @@
-import { Metadata } from "next";
-import Link from "next/link";
+import { columns } from "./columns";
+import { DataTable } from "./data-table";
 import prisma from "@/lib/prisma";
 import { Activity, Eye, Heart, Stars, UploadIcon } from "lucide-react";
 import Upload from "@/components/Dashboard/Upload";
@@ -8,11 +8,9 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-  DialogClose,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import {
@@ -26,7 +24,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import Views from "@/components/Dashboard/Views";
 import Likes from "@/components/Dashboard/Likes";
-import Edit from "@/components/Dashboard/Edit";
 
 export default async function DashboardPage() {
   const videos = await prisma.videos.findMany({ orderBy: { date: "desc" } });
@@ -167,7 +164,7 @@ export default async function DashboardPage() {
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
-                    <Edit videos={videos} />
+                    <DataTable columns={columns} data={videos} />
                   </CardContent>
                 </Card>
               </div>

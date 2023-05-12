@@ -22,7 +22,7 @@ import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/components/ui/use-toast";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
-import { CalendarIcon, Eye } from "lucide-react";
+import { CalendarIcon, Eye, MoreHorizontal } from "lucide-react";
 import { format } from "date-fns";
 
 interface Props {
@@ -74,8 +74,9 @@ export default function PublishEdit({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline" size="sm">
-          Edit
+        <Button variant="ghost" size="sm">
+          <span className="sr-only">Open menu</span>
+          <MoreHorizontal className="h-4 w-4" />
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
