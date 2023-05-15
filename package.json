@@ -20,7 +20,7 @@
     "@mux/mux-node": "^7.3.0",
     "@mux/mux-player-react": "^1.10.1",
     "@mux/upchunk": "^3.1.0",
-    "@prisma/client": "4.13.0",
+    "@prisma/client": "4.14.0",
     "@radix-ui/react-alert-dialog": "^1.0.3",
     "@radix-ui/react-avatar": "^1.0.2",
     "@radix-ui/react-dialog": "^1.0.3",
