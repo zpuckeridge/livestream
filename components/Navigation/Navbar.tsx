@@ -10,7 +10,7 @@ export default async function Navbar() {
     <nav className="p-4 flex items-center">
       <div className="h-8 flex items-center space-x-2">
         <Link href="/">
-          <Button size="sm">
+          <Button size="sm" variant="secondary">
             <Home className="mr-2 h-4 w-4" />
             Home
           </Button>
@@ -18,7 +18,7 @@ export default async function Navbar() {
       </div>
       <div className="h-8 flex items-center space-x-2 ml-auto">
         <Link href="/dashboard">
-          <Button size="sm">
+          <Button size="sm" variant="secondary">
             <LayoutGrid className="mr-2 h-4 w-4" />
             Dashboard
           </Button>

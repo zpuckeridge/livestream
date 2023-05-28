@@ -65,7 +65,7 @@ export default async function Home() {
           ))}
         </div>
         <Link href="/clips">
-          <Button className="mt-4" size="sm">
+          <Button className="mt-4" size="sm" variant="secondary">
             View more
             <ArrowRight className="ml-1 h-4 w-4" />
           </Button>
