@@ -38,10 +38,8 @@ export function Auth() {
         </div>
       </SignedIn>
       <SignedOut>
-        <Button size="sm" variant="secondary">
-          <LogIn className="mr-2 h-4 w-4" />
-          <SignInButton mode="modal" />
-        </Button>
+        <LogIn className="mr-2 h-4 w-4" />
+        <SignInButton mode="modal" />
       </SignedOut>
     </>
   );
