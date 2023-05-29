@@ -37,10 +37,9 @@ export default function RootLayout({
 }) {
   return (
     <ClerkProvider>
-      <html lang="en" className={inter.className} suppressHydrationWarning>
-        <head />
-        <body>
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+      <html lang="en" suppressHydrationWarning>
+        <body className={inter.className}>
+          <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
             {/* @ts-expect-error Server Component */}
             <Navbar />
             {children}
