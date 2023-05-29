@@ -89,6 +89,7 @@ export default function Videos({ videos, itemsPerPage, tags }: Props) {
           {uniqueTags.map((tag: any, index: number) => (
             <Button
               size="sm"
+              variant={selectedTag === tag ? "default" : "secondary"}
               key={index}
               onClick={() => {
                 if (selectedTag === tag) {
@@ -106,7 +107,7 @@ export default function Videos({ videos, itemsPerPage, tags }: Props) {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-2">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
         {currentVideos
           .filter((video) =>
             video.title.toLowerCase().includes(searchTerm.toLowerCase())
@@ -157,16 +158,22 @@ export default function Videos({ videos, itemsPerPage, tags }: Props) {
           ))}
       </div>
       <div className="flex justify-center gap-2 mt-4">
-        <Button onClick={handlePrevPage} disabled={currentPage === 1} size="sm">
+        <Button
+          onClick={handlePrevPage}
+          disabled={currentPage === 1}
+          size="sm"
+          variant="secondary"
+        >
           <ArrowLeft />
         </Button>
-        <Button onClick={() => setCurrentPage(1)} size="sm">
+        <Button onClick={() => setCurrentPage(1)} size="sm" variant="secondary">
           {currentPage} of {totalPages}
         </Button>
         <Button
           onClick={handleNextPage}
           disabled={currentPage === totalPages}
           size="sm"
+          variant="secondary"
         >
           <ArrowRight />
         </Button>
