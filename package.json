@@ -55,6 +55,7 @@
     "tailwindcss-animate": "^1.0.5",
     "typescript": "5.0.4"
   },
+  "packageManager": "pnpm@8.6.0",
   "devDependencies": {
     "prisma": "^4.14.1"
   }
