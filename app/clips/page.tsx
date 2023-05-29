@@ -1,4 +1,4 @@
-import Videos from "@/components/Clips/Videos";
+import Videos from "@/components/clips/videos";
 import prisma from "@/lib/prisma";
 
 export default async function Clips() {

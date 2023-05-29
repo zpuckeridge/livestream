@@ -2,7 +2,9 @@ import { columns } from "./columns";
 import { DataTable } from "./data-table";
 import prisma from "@/lib/prisma";
 import { Activity, Eye, Heart, Stars, UploadIcon } from "lucide-react";
-import Upload from "@/components/Dashboard/Upload";
+import Upload from "@/components/dashboard/upload";
+import Views from "@/components/dashboard/views";
+import Likes from "@/components/dashboard/likes";
 
 import {
   Dialog,
@@ -22,8 +24,6 @@ import {
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
-import Views from "@/components/Dashboard/Views";
-import Likes from "@/components/Dashboard/Likes";
 
 export default async function DashboardPage() {
   const videos = await prisma.videos.findMany({ orderBy: { date: "desc" } });

@@ -2,7 +2,7 @@
 
 import { ColumnDef } from "@tanstack/react-table";
 
-import PublishEdit from "@/components/Dashboard/PublishEdit";
+import PublishEdit from "@/components/dashboard/publish-edit";
 
 export type Videos = {
   asset_id: string;

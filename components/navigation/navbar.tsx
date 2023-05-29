@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { Home, LayoutGrid } from "lucide-react";
 
-import { Auth } from "@/components/Navigation/Auth";
-import { ModeToggle } from "@/components/Navigation/ModeToggle";
+import { Auth } from "@/components/navigation/auth";
+import { ModeToggle } from "@/components/navigation/mode-toggle";
 import { Button } from "@/components/ui/button";
 
 export default async function Navbar() {

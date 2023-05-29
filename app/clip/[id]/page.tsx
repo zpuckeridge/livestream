@@ -1,10 +1,11 @@
 import prisma from "@/lib/prisma";
-import Player from "@/components/Player";
-import CopyLink from "@/components/CopyLink";
+import Player from "@/components/player";
+import CopyLink from "@/components/copy-link";
+import { DateTime } from "luxon";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
-import Likes from "@/components/Likes";
+import Likes from "@/components/likes";
 import Script from "next/script";
 
 export async function generateMetadata({ params }: any) {
@@ -48,7 +49,7 @@ export async function generateMetadata({ params }: any) {
 export default async function Clip({ params }: any) {
   const { id } = params;
 
-  const video = await prisma.videos.findUnique({
+  const video = await prisma.videos.findFirst({
     where: { asset_id: decodeURIComponent(id) },
   });
 
@@ -61,20 +62,32 @@ export default async function Clip({ params }: any) {
 
   await incrementViewCount(id);
 
+  // if no video, return 404
+  if (!video) {
+    return {
+      notFound: true,
+    };
+  }
+
   return (
     <>
       <Script src="https://www.gstatic.com/cv/js/sender/v1/cast_sender.js?loadCastFramework=1" />
       <main>
         <div className="max-w-6xl p-4 mx-auto">
-          <Player playbackId={video?.playback_id} />
+          <Player playbackId={video.playback_id} />
           <div className="flex justify-between">
-            <h1 className="text-2xl font-bold mt-2"> {video?.title}</h1>
+            <h1 className="text-2xl font-bold mt-2"> {video.title}</h1>
             <div className="inline-flex space-x-2">
-              <Likes assetId={video?.asset_id} likes={video?.likes ?? 0} />
+              <Likes assetId={video.asset_id} likes={video.likes ?? 0} />
               <CopyLink />
             </div>
           </div>
-          <div>{video?.views} views</div>
+          <div className="flex justify-between">
+            <div>{video.views} views</div>
+            <div>
+              {DateTime.fromJSDate(video.date).toFormat("MMMM d, yyyy")}
+            </div>
+          </div>
           <Link href="/clips">
             <Button className="mt-4" size="sm">
               <ArrowLeft className="mr-1 h-4 w-4" /> Back to Clips

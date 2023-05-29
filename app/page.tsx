@@ -2,8 +2,8 @@ import Image from "next/image";
 import prisma from "@/lib/prisma";
 import Link from "next/link";
 import { ArrowRight, Heart } from "lucide-react";
-import { format } from "date-fns";
-import Player from "@/components/Player";
+import { DateTime } from "luxon";
+import Player from "@/components/player";
 import { Button } from "@/components/ui/button";
 
 export default async function Home() {
@@ -56,7 +56,9 @@ export default async function Home() {
                     </div>
                   </div>
                   <div className="flex justify-between text-sm">
-                    <p>{format(new Date(video.date), "MMMM d, yyyy")}</p>
+                    <p>
+                      {DateTime.fromJSDate(video.date).toFormat("MMMM d, yyyy")}
+                    </p>
                     {video.views} views
                   </div>
                 </div>

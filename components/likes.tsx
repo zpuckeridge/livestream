@@ -3,7 +3,7 @@
 import { Heart } from "lucide-react";
 import { useState } from "react";
 import { useAuth, SignInButton } from "@clerk/nextjs";
-import { useToast } from "./ui/use-toast";
+import { useToast } from "@/components/ui/use-toast";
 
 import {
   AlertDialog,

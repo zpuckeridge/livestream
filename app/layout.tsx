@@ -5,7 +5,7 @@ import { Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs/app-beta";
 import { ThemeProvider } from "./theme-provider";
 import { Toaster } from "@/components/ui/toaster";
-import Navbar from "@/components/Navigation/Navbar";
+import Navbar from "@/components/navigation/navbar";
 import { siteConfig } from "@/config/site";
 
 export const metadata: Metadata = {

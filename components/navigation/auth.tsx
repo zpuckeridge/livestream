@@ -10,7 +10,6 @@ import {
 import { SignInButton } from "@clerk/nextjs";
 import { useTheme } from "next-themes";
 import { dark } from "@clerk/themes";
-import { Button } from "@/components/ui/button";
 import { LogIn } from "lucide-react";
 
 export function Auth() {

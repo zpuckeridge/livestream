@@ -1,7 +1,7 @@
 import prisma from "@/lib/prisma";
 import Link from "next/link";
 
-export default async function Views() {
+export default async function Likes() {
   const videos = await prisma.videos.findMany({
     take: 5,
     orderBy: {

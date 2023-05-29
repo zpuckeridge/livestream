@@ -1,18 +1,18 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
-import { format } from "date-fns";
 import Link from "next/link";
+import { useState } from "react";
 import { ArrowLeft, ArrowRight, Heart } from "lucide-react";
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { DateTime } from "luxon";
 
 interface Video {
   asset_id: string;
   playback_id: string;
   title: string;
-  duration: number | null;
+  duration: number;
   tag: string;
   likes: number;
   views: number;
@@ -68,6 +68,10 @@ export default function Videos({ videos, itemsPerPage, tags }: Props) {
     const seconds = duration % 60;
 
     return `${minutes}:${seconds.toString().padStart(2, "0")}`;
+  };
+
+  const formatDate = (date: Date) => {
+    return DateTime.fromJSDate(date).toFormat("MMMM d, yyyy");
   };
 
   // @ts-ignore
@@ -150,7 +154,7 @@ export default function Videos({ videos, itemsPerPage, tags }: Props) {
                   </div>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <p>{format(new Date(video.date), "MMMM d, yyyy")}</p>
+                  <p>{formatDate(video.date)}</p>
                   {video.views} views
                 </div>
               </div>
