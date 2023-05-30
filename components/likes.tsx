@@ -48,12 +48,10 @@ export default function Likes({ assetId, likes }: Props) {
     return (
       <AlertDialog>
         <AlertDialogTrigger>
-          <button>
-            <div className="inline-flex space-x-2">
-              <div>{likes}</div>
-              <Heart className="my-auto hover:text-red-500 transition-all duration-200" />
-            </div>
-          </button>
+          <div className="inline-flex cursor-pointer">
+            {likes}
+            <Heart className="my-auto ml-2 hover:text-red-500 transition-all duration-200" />
+          </div>
         </AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>
@@ -64,7 +62,7 @@ export default function Likes({ assetId, likes }: Props) {
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction>
+            <AlertDialogAction asChild>
               <SignInButton redirectUrl={`/clip/${assetId}`} />
             </AlertDialogAction>
           </AlertDialogFooter>
