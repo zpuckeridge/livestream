@@ -23,7 +23,11 @@ export default async function Home() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-2">
           {videos.slice(0, 4).map((video) => (
             <div key={video.asset_id}>
-              <Link href={`/clip/${video.asset_id}`} title={video.title}>
+              <Link
+                href={`/clip/${video.asset_id}`}
+                title={video.title}
+                prefetch={false}
+              >
                 <div className="transform hover:scale-[1.05] transition-all">
                   <div className="absolute top-2 left-2 rounded-md text-white bg-black/75 p-1 text-xs font-semibold">
                     {video.tag}
