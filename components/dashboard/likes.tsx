@@ -17,6 +17,7 @@ export default async function Likes() {
           title={video.title}
           key={video.asset_id}
           className="flex justify-between"
+          prefetch={false}
         >
           <p>{video.title}</p>
           <div className="text-sm ml-auto">{video.likes} likes</div>
