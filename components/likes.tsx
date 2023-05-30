@@ -34,7 +34,7 @@ export default function Likes({ assetId, likes }: Props) {
     setButtonDisabled(true);
     setLiked(true);
 
-    await fetch(`${process.env.PAGE_URL}/api/increment/likes/${assetId}`, {
+    await fetch(`/api/increment/likes/${assetId}`, {
       method: "POST",
     });
 
