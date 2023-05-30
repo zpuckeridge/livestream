@@ -13,7 +13,7 @@ export default async function handler(
   } else {
     const id = req.query.id as string;
 
-    await prisma.videos.updateMany({
+    await prisma.videos.update({
       where: { asset_id: id },
       data: { likes: { increment: 1 } },
     });

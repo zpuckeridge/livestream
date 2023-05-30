@@ -10,7 +10,7 @@ const publicPaths = [
   "/clip*",
   "/clips",
   "/unauthorised",
-  "/api/increment*",
+  "/api/increment/likes",
 ];
 
 const isPublic = (path: string) => {

@@ -7,6 +7,7 @@ import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import Likes from "@/components/likes";
 import Script from "next/script";
+import { redirect } from "next/navigation";
 
 export async function generateMetadata({ params }: any) {
   const { id } = params;
@@ -53,21 +54,17 @@ export default async function Clip({ params }: any) {
     where: { asset_id: decodeURIComponent(id) },
   });
 
-  async function incrementViewCount(assetId: string) {
-    await prisma.videos.updateMany({
-      where: { asset_id: decodeURIComponent(assetId) },
-      data: { views: { increment: 1 } },
-    });
-  }
-
-  await incrementViewCount(id);
-
-  // if no video, return 404
   if (!video) {
-    return {
-      notFound: true,
-    };
+    redirect("/404");
   }
+
+  // increment views
+  await prisma.videos.update({
+    where: { asset_id: decodeURIComponent(id) },
+    data: {
+      views: video.views + 1,
+    },
+  });
 
   return (
     <>
@@ -76,7 +73,7 @@ export default async function Clip({ params }: any) {
         <div className="max-w-6xl p-4 mx-auto">
           <Player playbackId={video.playback_id} />
           <div className="flex justify-between">
-            <h1 className="text-2xl font-bold mt-2"> {video.title}</h1>
+            <h1 className="text-2xl font-bold mt-2">{video.title}</h1>
             <div className="inline-flex space-x-2">
               <Likes assetId={video.asset_id} likes={video.likes ?? 0} />
               <CopyLink />
@@ -89,7 +86,7 @@ export default async function Clip({ params }: any) {
             </div>
           </div>
           <Link href="/clips">
-            <Button className="mt-4" size="sm">
+            <Button className="mt-4" size="sm" variant="secondary">
               <ArrowLeft className="mr-1 h-4 w-4" /> Back to Clips
             </Button>
           </Link>
