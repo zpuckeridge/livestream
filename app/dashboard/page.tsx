@@ -140,7 +140,6 @@ export default async function DashboardPage() {
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
-                    {/* @ts-expect-error Server Component */}
                     <Views />
                   </CardContent>
                 </Card>
@@ -152,7 +151,6 @@ export default async function DashboardPage() {
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
-                    {/* @ts-expect-error Server Component */}
                     <Likes />
                   </CardContent>
                 </Card>
