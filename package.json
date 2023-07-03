@@ -37,7 +37,7 @@
     "autoprefixer": "10.4.14",
     "class-variance-authority": "^0.6.0",
     "clsx": "^1.2.1",
-    "eslint": "8.43.0",
+    "eslint": "8.44.0",
     "eslint-config-next": "13.4.7",
     "lucide-react": "^0.252.0",
     "luxon": "^3.3.0",
