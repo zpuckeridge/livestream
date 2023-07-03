@@ -12,7 +12,7 @@
     "postinstall": "prisma generate"
   },
   "dependencies": {
-    "@clerk/nextjs": "^4.21.10",
+    "@clerk/nextjs": "^4.21.13",
     "@clerk/themes": "^1.7.5",
     "@mux/mux-node": "^7.3.0",
     "@mux/mux-player-react": "^1.11.2",
