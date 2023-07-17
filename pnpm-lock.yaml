@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@clerk/nextjs':
-    specifier: ^4.21.14
-    version: 4.21.14(next@13.4.7)(react-dom@18.2.0)(react@18.2.0)
+    specifier: ^4.21.15
+    version: 4.21.15(next@13.4.7)(react-dom@18.2.0)(react@18.2.0)
   '@clerk/themes':
     specifier: ^1.7.5
     version: 1.7.5(react@18.2.0)
@@ -197,8 +197,8 @@ packages:
       tslib: 2.4.1
     dev: false
 
-  /@clerk/nextjs@4.21.14(next@13.4.7)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-r+s9EKG0CPPj31p6UZmxPQ2A3+JVE70PmBYiC/pRrF3Oo57pYJGVmBB+eUWVYaYJNcJxhYoYb/QLsL8Xl0dUVQ==}
+  /@clerk/nextjs@4.21.15(next@13.4.7)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-paFf+kgXEb5Chea4Gpjy65xYRpEm88yezu1riQWQRPFOJCcEbYrhzWe6xRtErioyjZM0QxDFYaIP4FQeVmNf4g==}
     engines: {node: '>=14'}
     peerDependencies:
       next: '>=10'
