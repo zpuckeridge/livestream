@@ -49,7 +49,7 @@ export default async function DashboardPage() {
             <div className="flex items-center space-x-2">
               <Dialog>
                 <DialogTrigger asChild>
-                  <Button size="sm">
+                  <Button variant="secondary">
                     <UploadIcon className="mr-2 h-4 w-4" />
                     Upload
                   </Button>

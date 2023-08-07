@@ -84,7 +84,7 @@ export default async function Clip({ params }: any) {
             </div>
           </div>
           <Link href="/clips">
-            <Button className="mt-4" size="sm" variant="secondary">
+            <Button className="mt-4" variant="secondary">
               <ArrowLeft className="mr-1 h-4 w-4" /> Back to Clips
             </Button>
           </Link>

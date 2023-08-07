@@ -29,6 +29,7 @@ export const columns: ColumnDef<Videos>[] = [
   },
   {
     id: "actions",
+    header: "Actions",
     cell: ({ row }) => {
       const video = row.original;
 

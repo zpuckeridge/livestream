@@ -38,7 +38,7 @@ export default function Upload() {
   const { data, error } = useSwr(
     () => (final ? `/api/upload/${uploadId}` : null),
     fetcher,
-    { refreshInterval: 5000 }
+    { refreshInterval: 5000 },
   );
 
   if (data && data.upload) {
@@ -157,43 +157,47 @@ export default function Upload() {
         ) : (
           <>
             <div className="grid gap-4 py-4">
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label className="text-right">Name</Label>
+              <div className="flex flex-col gap-2">
+                <Label>Name</Label>
                 <Input
                   type="text"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                  className="col-span-3"
                   required
                 />
+                <p className="text-sm text-muted-foreground">
+                  Enter a name for your video.
+                </p>
               </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label className="text-right">Description</Label>
+              <div className="flex flex-col gap-2">
+                <Label>Description</Label>
                 <Textarea
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  className="col-span-3"
                   required
                 />
+                <p className="text-sm text-muted-foreground">
+                  Enter a short description for your video.
+                </p>
               </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label className="text-right">File</Label>
-                <Input
-                  type="file"
-                  ref={inputRef}
-                  className="col-span-3"
-                  required
-                />
-              </div>
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label className="text-right">Tag</Label>
+              <div className="flex flex-col gap-2">
+                <Label>Tag</Label>
                 <Input
                   type="text"
                   value={tag}
                   onChange={(e) => setTag(e.target.value)}
-                  className="col-span-3"
                   required
                 />
+                <p className="text-sm text-muted-foreground">
+                  Set a tag for your video.
+                </p>
+              </div>
+              <div className="flex flex-col gap-2">
+                <Label>File</Label>
+                <Input type="file" ref={inputRef} required />
+                <p className="text-sm text-muted-foreground">
+                  Select a valid video file.
+                </p>
               </div>
               <div className="flex items-center space-x-4 rounded-md border p-4">
                 <Eye />
@@ -213,9 +217,7 @@ export default function Upload() {
               </div>
             </div>
             <div className="flex justify-end">
-              <Button onClick={startUpload} size="sm">
-                Start Upload
-              </Button>
+              <Button onClick={startUpload}>Start Upload</Button>
             </div>
           </>
         )}

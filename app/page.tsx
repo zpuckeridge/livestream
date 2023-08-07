@@ -18,7 +18,7 @@ export default async function Home() {
 
   return (
     <>
-      <main className="max-w-6xl mx-auto p-4">
+      <main className="max-w-6xl mx-auto">
         <Player playbackId="16mLGoj2uixoYcy5oeQ7vzwGPAQvc1sbVqvt01uHnjS8" />
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-2">
           {videos.slice(0, 4).map((video) => (
@@ -71,7 +71,7 @@ export default async function Home() {
           ))}
         </div>
         <Link href="/clips">
-          <Button className="mt-4" size="sm" variant="secondary">
+          <Button className="mt-4" variant="secondary">
             View more
             <ArrowRight className="ml-1 h-4 w-4" />
           </Button>

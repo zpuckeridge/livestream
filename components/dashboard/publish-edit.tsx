@@ -6,7 +6,6 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-  DialogClose,
 } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -22,7 +21,7 @@ import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/components/ui/use-toast";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
-import { CalendarIcon, Eye, MoreHorizontal } from "lucide-react";
+import { CalendarIcon, Edit, Eye, MoreHorizontal } from "lucide-react";
 import { format } from "date-fns";
 
 interface Props {
@@ -76,7 +75,7 @@ export default function PublishEdit({
       <DialogTrigger asChild>
         <Button variant="ghost" size="sm">
           <span className="sr-only">Open menu</span>
-          <MoreHorizontal className="h-4 w-4" />
+          <Edit className="h-4 w-4" />
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
@@ -85,53 +84,42 @@ export default function PublishEdit({
           <DialogDescription>Make changes to video metadata.</DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="name" className="text-right">
-              Name
-            </Label>
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="name">Name</Label>
             <Input
               id="name"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="col-span-3"
               required
             />
           </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="description" className="text-right">
-              Description
-            </Label>
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="description">Description</Label>
             <Textarea
               id="description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="col-span-3"
               required
             />
           </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="tag" className="text-right">
-              Tag
-            </Label>
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="tag">Tag</Label>
             <Input
               id="tag"
               value={tag}
               onChange={(e) => setTag(e.target.value)}
-              className="col-span-3"
               required
             />
           </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="date" className="text-right">
-              Date
-            </Label>
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="date">Date</Label>
             <Popover>
               <PopoverTrigger asChild>
                 <Button
                   variant={"outline"}
                   className={cn(
-                    "w-[280px] justify-start text-left font-normal",
-                    !date && "text-muted-foreground"
+                    "w-full justify-start text-left font-normal",
+                    !date && "text-muted-foreground",
                   )}
                 >
                   <CalendarIcon className="mr-2 h-4 w-4" />
@@ -167,11 +155,7 @@ export default function PublishEdit({
           </div>
         </div>
         <DialogFooter>
-          <DialogClose asChild>
-            <Button onClick={handleSubmit} size="sm">
-              Save Changes
-            </Button>
-          </DialogClose>
+          <Button onClick={handleSubmit}>Save Changes</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

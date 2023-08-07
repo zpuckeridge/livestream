@@ -11,8 +11,9 @@ import { SignInButton } from "@clerk/nextjs";
 import { useTheme } from "next-themes";
 import { dark } from "@clerk/themes";
 import { LogIn } from "lucide-react";
+import { Button } from "./ui/button";
 
-export function Auth() {
+export function Authentication() {
   const theme = useTheme();
 
   return (
@@ -37,8 +38,10 @@ export function Auth() {
         </div>
       </SignedIn>
       <SignedOut>
-        <LogIn className="mr-2 h-4 w-4" />
-        <SignInButton mode="modal" />
+        <Button variant="ghost">
+          <LogIn className="mr-2 h-4 w-4" />
+          <SignInButton mode="modal" />
+        </Button>
       </SignedOut>
     </>
   );
