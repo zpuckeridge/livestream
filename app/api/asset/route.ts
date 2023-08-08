@@ -3,7 +3,7 @@ import Mux from "@mux/mux-node";
 
 const { Video } = new Mux();
 
-export default async function GET(request: NextRequest) {
+export async function GET(request: NextRequest) {
   const res = await request.json();
 
   try {

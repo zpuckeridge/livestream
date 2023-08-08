@@ -16,10 +16,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
 
-const fetcher = (url: string) => {
-  return fetch(url).then((res) => res.json());
-};
-
 export default function Upload() {
   const [uploadId, setUploadId] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
@@ -35,51 +31,28 @@ export default function Upload() {
   const { toast } = useToast();
   const router = useRouter();
 
+  const fetcher = (url: string) => {
+    return fetch(url, {
+      method: "POST", // Adjust the HTTP method as needed
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id: uploadId }),
+    }).then((res) => res.json());
+  };
+
   const { data, error } = useSwr(
-    () => (final ? `/api/upload/${uploadId}` : null),
+    () => (final ? [`/api/upload/${uploadId}`] : null),
     fetcher,
     { refreshInterval: 5000 },
   );
 
   if (data && data.upload) {
-    const finishUpload = async () => {
-      const response = await fetch(`/api/asset/${data.upload.asset_id}`);
-      const asset = await response.json();
+    const assetStatus = data.upload.status;
 
-      if (asset.status === "ready" && isPreparing) {
-        setIsPreparing(false);
-
-        await fetch("/api/db/publish", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            asset_id: data.upload.asset_id,
-            playback_id: asset.playback_id,
-            duration: Math.floor(asset.duration),
-            title: title,
-            description: description,
-            tag: tag,
-            visibility: visibility,
-          }),
-        });
-
-        toast({
-          title: "Upload Successful!",
-          description: `Your video ${title} was uploaded successfully. 🎉`,
-          action: (
-            <Link href={`/clip/${data.upload.asset_id}`}>
-              <ToastAction altText="View">View</ToastAction>
-            </Link>
-          ),
-        });
-
-        router.refresh();
-      }
-    };
-
-    finishUpload();
+    if (assetStatus === "asset_created" && isPreparing) {
+      finishUpload();
+    }
 
     return (
       <>
@@ -98,22 +71,84 @@ export default function Upload() {
     );
   }
 
-  const createUpload = async () => {
+  async function finishUpload() {
     try {
-      return fetch("/api/upload", {
+      const response = await fetch(`/api/asset/${data.upload.asset_id}`, {
         method: "POST",
-      })
-        .then((res) => res.json())
-        .then(({ id, url }) => {
-          setUploadId(id);
-          return url;
-        });
-    } catch (e) {
-      console.error("Error in createUpload", e);
-    }
-  };
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id: data.upload.asset_id }),
+      });
 
-  const startUpload = () => {
+      const asset = await response.json();
+
+      if (asset.status === "ready") {
+        try {
+          await fetch("/api/db/publish", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              asset_id: data.upload.asset_id,
+              playback_id: asset.playback_id,
+              duration: Math.floor(asset.duration),
+              title: title,
+              description: description,
+              tag: tag,
+              visibility: visibility,
+            }),
+          });
+
+          toast({
+            title: "Upload Successful!",
+            description: `Your video ${title} was uploaded successfully. 🎉`,
+            action: (
+              <Link href={`/clip/${data.upload.asset_id}`}>
+                <ToastAction altText="View">View</ToastAction>
+              </Link>
+            ),
+          });
+
+          setIsPreparing(false);
+
+          router.refresh();
+        } catch (error) {
+          console.error("Error in publishing the video.", error);
+          toast({
+            title: "Upload Failed!",
+            description: `Your video ${title} was not uploaded. 🎉`,
+            variant: "destructive",
+          });
+        }
+      }
+    } catch (error) {
+      console.error("Error fetching or parsing data:", error);
+    }
+  }
+
+  async function createUpload() {
+    try {
+      const response = await fetch("/api/upload", {
+        method: "POST",
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to create upload.");
+      }
+
+      const data = await response.json();
+
+      // Return the entire data object including url and id
+      return data;
+    } catch (error) {
+      console.error("Error in creating the upload link.", error);
+      throw error; // Re-throw the error to handle it in the caller function
+    }
+  }
+
+  function startUpload() {
     const files = inputRef.current?.files;
 
     if (!title || !files) {
@@ -123,24 +158,32 @@ export default function Upload() {
 
     setIsUploading(true);
 
-    const upload = UpChunk.createUpload({
-      endpoint: createUpload,
-      file: files[0],
-    });
+    createUpload()
+      .then((data) => {
+        const upload = UpChunk.createUpload({
+          endpoint: data.url, // Use the URL from the data object
+          file: files[0],
+        });
 
-    upload.on("error", (err: any) => {
-      setErrorMessage(err.detail.message);
-    });
+        upload.on("error", (err) => {
+          setErrorMessage(err.detail.message);
+        });
 
-    upload.on("progress", (progress: any) => {
-      setProgress(Math.floor(progress.detail));
-    });
+        upload.on("progress", (progress) => {
+          setProgress(Math.floor(progress.detail));
+        });
 
-    upload.on("success", () => {
-      setIsPreparing(true);
-      setFinal(true);
-    });
-  };
+        upload.on("success", () => {
+          setIsPreparing(true);
+          setFinal(true);
+          setUploadId(data.id);
+        });
+      })
+      .catch((error) => {
+        // Handle the error from createUpload
+        console.error("Error in starting the upload.", error);
+      });
+  }
 
   return (
     <>
