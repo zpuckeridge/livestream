@@ -9,48 +9,19 @@ import Navigation from "@/components/navigation";
 import { siteConfig } from "@/config/site";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteConfig.url),
-  alternates: {
-    types: {
-      "application/rss+xml": `${siteConfig.url}/rss.xml`,
-    },
-  },
-  applicationName: "sdelta.xyz",
-  authors: { name: siteConfig.username },
-  creator: siteConfig.username,
-  publisher: siteConfig.username,
-  generator: "Next.js",
-  keywords: ["sdelta", "sdelta.xyz", "sdelta Livestream", "sdelta Live Stream"],
-  referrer: "origin-when-cross-origin",
-  colorScheme: "dark light",
-  appleWebApp: {
-    title: "sdelta.xyz",
-    statusBarStyle: "default",
-  },
-  formatDetection: {
-    telephone: false,
-  },
-  manifest: "/manifest.json",
   title: {
-    default: "sdelta",
-    template: "%s | sdelta",
+    default: siteConfig.name,
+    template: `%s - ${siteConfig.name}`,
   },
   description: siteConfig.description,
-  openGraph: {
-    url: siteConfig.url,
-    title: "sdelta",
-    description: siteConfig.description,
-    images: [
-      {
-        url: "https://og.sznm.dev/api/generate?heading=Livestream&text=https://sdelta.xyz", // to be replaced with own generator
-        alt: "sdelta.xyz og-image",
-      },
-    ],
-    siteName: "sdelta.xyz",
-  },
-  twitter: {
-    creator: "@zpuckeridge",
-    card: "summary_large_image",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "white" },
+    { media: "(prefers-color-scheme: dark)", color: "black" },
+  ],
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon-16x16.png",
+    apple: "/apple-touch-icon.png",
   },
 };
 
