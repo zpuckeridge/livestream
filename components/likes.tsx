@@ -30,19 +30,20 @@ export default function Likes({ assetId, likes }: Props) {
   const [liked, setLiked] = useState(false);
   const [buttonDisabled, setButtonDisabled] = useState(false);
 
-  const handleClick = async () => {
+  async function handleClick() {
     setButtonDisabled(true);
     setLiked(true);
 
-    await fetch(`/api/increment/likes/${assetId}`, {
+    await fetch(`/api/likes/${assetId}`, {
       method: "POST",
+      body: JSON.stringify({ id: assetId }),
     });
 
     toast({
       title: "Liked!",
       description: "Thank-you for liking this video! 😍",
     });
-  };
+  }
 
   if (!sessionId) {
     return (
