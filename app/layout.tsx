@@ -46,7 +46,7 @@ export const metadata: Metadata = {
         alt: "sdelta.xyz og-image",
       },
     ],
-    siteName: "zpuckeridge",
+    siteName: "sdelta.xyz",
   },
   twitter: {
     creator: "@zpuckeridge",

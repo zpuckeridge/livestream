@@ -29,11 +29,13 @@ export async function generateMetadata({ params }: any) {
           url: `https://image.mux.com/${video?.playback_id}/thumbnail.png`,
           width: 800,
           height: 600,
+          alt: `${video?.title} Thumbnail`,
         },
         {
           url: `https://image.mux.com/${video?.playback_id}/thumbnail.png`,
           width: 1800,
           height: 1600,
+          alt: `${video?.title} Thumbnail`,
         },
       ],
       videos: {
@@ -43,6 +45,24 @@ export async function generateMetadata({ params }: any) {
       },
       locale: "en-US",
       type: "video.other",
+      author: "sdelta",
+      uploadDate: video?.date,
+      tags: [`${video?.tag}`],
+      duration: video?.duration,
+      twitter: {
+        card: "player",
+        site: "@zpuckeridge",
+        title: video?.title,
+        description: video?.description,
+        image: [
+          {
+            url: `https://image.mux.com/${video?.playback_id}/twitter_card.png`,
+            width: 1200,
+            height: 630,
+            alt: `${video?.title} Twitter Card`,
+          },
+        ],
+      },
     },
   };
 }
