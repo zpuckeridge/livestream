@@ -7,6 +7,7 @@ import { ThemeProvider } from "../components/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
 import Navigation from "@/components/navigation";
 import { siteConfig } from "@/config/site";
+import Script from "next/script";
 
 export const metadata: Metadata = {
   title: {
@@ -20,6 +21,8 @@ const inter = Inter({
   subsets: ["latin"],
   display: "swap",
 });
+
+import { UMAMI_SCRIPT_URL, UMAMI_WEBSITE_ID } from "@/lib/umami";
 
 export default function RootLayout({
   children,
@@ -38,6 +41,7 @@ export default function RootLayout({
             </div>
           </ThemeProvider>
         </body>
+        <Script src={UMAMI_SCRIPT_URL} data-website-id={UMAMI_WEBSITE_ID} />
       </html>
     </ClerkProvider>
   );
