@@ -9,9 +9,9 @@ export default authMiddleware({
 
   publicRoutes: [
     "/",
-    "/sign-in*",
-    "/sign-up*",
-    "/clip*",
+    "/sign-in",
+    "/sign-up",
+    "/(clip)(.*)",
     "/clips",
     "/unauthorised",
     "/api/increment/likes",
