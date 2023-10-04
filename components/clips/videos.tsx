@@ -34,7 +34,7 @@ export default function Videos({ videos, itemsPerPage, tags }: Props) {
 
   const currentVideos = videos
     .filter((video) =>
-      video.title.toLowerCase().includes(searchTerm.toLowerCase())
+      video.title.toLowerCase().includes(searchTerm.toLowerCase()),
     )
     .filter((video) => {
       if (selectedTag === "") {
@@ -47,8 +47,8 @@ export default function Videos({ videos, itemsPerPage, tags }: Props) {
 
   const totalPages = Math.ceil(
     videos.filter((video) =>
-      video.title.toLowerCase().includes(searchTerm.toLowerCase())
-    ).length / itemsPerPage
+      video.title.toLowerCase().includes(searchTerm.toLowerCase()),
+    ).length / itemsPerPage,
   );
 
   const handlePrevPage = () => {
@@ -114,7 +114,7 @@ export default function Videos({ videos, itemsPerPage, tags }: Props) {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-4">
         {currentVideos
           .filter((video) =>
-            video.title.toLowerCase().includes(searchTerm.toLowerCase())
+            video.title.toLowerCase().includes(searchTerm.toLowerCase()),
           )
           .map((video: Video) => (
             <Link
@@ -124,10 +124,10 @@ export default function Videos({ videos, itemsPerPage, tags }: Props) {
               prefetch={false}
             >
               <div className="transform hover:scale-[1.05] transition-all">
-                <div className="absolute top-2 left-2 rounded-md text-white bg-black/75 p-1 text-xs font-semibold">
+                <div className="absolute top-2 left-2 rounded-md text-white bg-black/75 p-2 text-xs font-semibold">
                   {video.tag}
                 </div>
-                <div className="absolute top-2 right-2 rounded-md text-white bg-black/75 p-1 text-xs font-semibold">
+                <div className="absolute top-2 right-2 rounded-md text-white bg-black/75 p-2 text-xs font-semibold">
                   {video.duration ? (
                     <span className="duration">
                       {formatDuration(video.duration)}

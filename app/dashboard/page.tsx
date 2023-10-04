@@ -5,6 +5,8 @@ import { Activity, Eye, Heart, Stars, UploadIcon } from "lucide-react";
 import Upload from "@/components/dashboard/upload";
 import Views from "@/components/dashboard/views";
 import Likes from "@/components/dashboard/likes";
+import { auth } from "@clerk/nextjs";
+import { redirect } from "next/navigation";
 
 import {
   Dialog,
@@ -26,6 +28,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 
 export default async function DashboardPage() {
+  const { userId } = auth();
+
+  if (userId !== process.env.ADMIN_ID) {
+    redirect("/unauthorised");
+  }
+
   const videos = await prisma.videos.findMany({ orderBy: { date: "desc" } });
 
   const videoCount = videos.length;
