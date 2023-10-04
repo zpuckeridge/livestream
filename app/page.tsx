@@ -29,10 +29,10 @@ export default async function Home() {
                 prefetch={false}
               >
                 <div className="transform hover:scale-[1.05] transition-all">
-                  <div className="absolute top-2 left-2 rounded-md text-white bg-black/75 p-1 text-xs font-semibold">
+                  <div className="absolute top-2 left-2 rounded-md text-white bg-black/75 p-2 text-xs font-semibold">
                     {video.tag}
                   </div>
-                  <div className="absolute top-2 right-2 rounded-md text-white bg-black/75 p-1 text-xs font-semibold">
+                  <div className="absolute top-2 right-2 rounded-md text-white bg-black/75 p-2 text-xs font-semibold">
                     {video.duration ? (
                       <span className="duration">
                         {formatDuration(video.duration)}
