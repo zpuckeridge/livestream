@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { Home, LayoutGrid } from "lucide-react";
-
 import { Authentication } from "@/components/authentication";
 import { ModeToggle } from "@/components/mode-toggle";
 import { Button } from "@/components/ui/button";

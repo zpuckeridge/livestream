@@ -1,5 +1,4 @@
 import prisma from "@/lib/prisma";
-import Player from "@/components/player";
 import CopyLink from "@/components/copy-link";
 import { DateTime } from "luxon";
 import { Button } from "@/components/ui/button";
@@ -7,12 +6,21 @@ import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import Likes from "@/components/likes";
 import { redirect } from "next/navigation";
+import "@vidstack/react/player/styles/default/theme.css";
+import "@vidstack/react/player/styles/default/layouts/video.css";
+import { MediaPlayer, MediaProvider } from "@vidstack/react";
+import {
+  defaultLayoutIcons,
+  DefaultVideoLayout,
+} from "@vidstack/react/player/layouts/default";
+
+export const revalidate = 0;
 
 export async function generateMetadata({ params }: any) {
   const { id } = params;
 
   const video = await prisma.videos.findUnique({
-    where: { asset_id: decodeURIComponent(id) },
+    where: { asset_id: id },
   });
 
   return {
@@ -70,7 +78,7 @@ export default async function Clip({ params }: any) {
   const { id } = params;
 
   const video = await prisma.videos.findFirst({
-    where: { asset_id: decodeURIComponent(id) },
+    where: { asset_id: id },
   });
 
   if (!video) {
@@ -79,7 +87,7 @@ export default async function Clip({ params }: any) {
 
   // increment view count on page load
   await prisma.videos.update({
-    where: { asset_id: decodeURIComponent(id) },
+    where: { asset_id: id },
     data: { views: video.views + 1 },
   });
 
@@ -87,7 +95,13 @@ export default async function Clip({ params }: any) {
     <>
       <main>
         <div className="max-w-6xl p-4 mx-auto">
-          <Player playbackId={video.playback_id} />
+          <MediaPlayer src={`https://stream.mux.com/${video.playback_id}.m3u8`}>
+            <MediaProvider />
+            <DefaultVideoLayout
+              thumbnails={`https://image.mux.com/${video.playback_id}/thumbnail.png`}
+              icons={defaultLayoutIcons}
+            />
+          </MediaPlayer>
           <div className="flex justify-between">
             <h1 className="text-2xl font-bold mt-2">{video.title}</h1>
             <div className="inline-flex space-x-2">

@@ -17,7 +17,6 @@ export default async function Views() {
           title={video.title}
           key={video.asset_id}
           className="flex justify-between"
-          prefetch={false}
         >
           <p>{video.title}</p>
           <div className="text-sm ml-auto">{video.views} views</div>

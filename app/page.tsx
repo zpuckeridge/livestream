@@ -3,8 +3,14 @@ import prisma from "@/lib/prisma";
 import Link from "next/link";
 import { ArrowRight, Heart } from "lucide-react";
 import { DateTime } from "luxon";
-import Player from "@/components/player";
 import { Button } from "@/components/ui/button";
+import "@vidstack/react/player/styles/default/theme.css";
+import "@vidstack/react/player/styles/default/layouts/video.css";
+import { MediaPlayer, MediaProvider } from "@vidstack/react";
+import {
+  defaultLayoutIcons,
+  DefaultVideoLayout,
+} from "@vidstack/react/player/layouts/default";
 
 export default async function Home() {
   const videos = await prisma.videos.findMany({ orderBy: { date: "desc" } });
@@ -19,7 +25,15 @@ export default async function Home() {
   return (
     <>
       <main className="max-w-6xl mx-auto">
-        <Player playbackId="16mLGoj2uixoYcy5oeQ7vzwGPAQvc1sbVqvt01uHnjS8" />
+        <MediaPlayer
+          src={`https://stream.mux.com/16mLGoj2uixoYcy5oeQ7vzwGPAQvc1sbVqvt01uHnjS8.m3u8`}
+        >
+          <MediaProvider />
+          <DefaultVideoLayout
+            thumbnails={`https://image.mux.com/16mLGoj2uixoYcy5oeQ7vzwGPAQvc1sbVqvt01uHnjS8/thumbnail.png`}
+            icons={defaultLayoutIcons}
+          />
+        </MediaPlayer>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-2">
           {videos.slice(0, 4).map((video) => (
             <div key={video.asset_id}>

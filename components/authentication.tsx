@@ -6,12 +6,13 @@ import {
   SignedOut,
   ClerkLoading,
   ClerkLoaded,
-} from "@clerk/nextjs/app-beta/client";
+} from "@clerk/nextjs";
 import { SignInButton } from "@clerk/nextjs";
 import { useTheme } from "next-themes";
 import { dark } from "@clerk/themes";
 import { LogIn } from "lucide-react";
-import { Button } from "./ui/button";
+import { buttonVariants } from "@/components/ui/button";
+import Link from "next/link";
 
 export function Authentication() {
   const theme = useTheme();
@@ -38,10 +39,10 @@ export function Authentication() {
         </div>
       </SignedIn>
       <SignedOut>
-        <Button variant="ghost">
+        <Link href="/sign-in" className={buttonVariants({ variant: "ghost" })}>
           <LogIn className="mr-2 h-4 w-4" />
-          <SignInButton mode="modal" />
-        </Button>
+          Sign in
+        </Link>
       </SignedOut>
     </>
   );
