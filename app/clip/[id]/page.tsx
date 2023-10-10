@@ -6,13 +6,7 @@ import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import Likes from "@/components/likes";
 import { redirect } from "next/navigation";
-import "@vidstack/react/player/styles/default/theme.css";
-import "@vidstack/react/player/styles/default/layouts/video.css";
-import { MediaPlayer, MediaProvider } from "@vidstack/react";
-import {
-  defaultLayoutIcons,
-  DefaultVideoLayout,
-} from "@vidstack/react/player/layouts/default";
+import Player from "@/components/player";
 
 export const revalidate = 0;
 
@@ -95,13 +89,7 @@ export default async function Clip({ params }: any) {
     <>
       <main>
         <div className="max-w-6xl p-4 mx-auto">
-          <MediaPlayer src={`https://stream.mux.com/${video.playback_id}.m3u8`}>
-            <MediaProvider />
-            <DefaultVideoLayout
-              thumbnails={`https://image.mux.com/${video.playback_id}/thumbnail.png`}
-              icons={defaultLayoutIcons}
-            />
-          </MediaPlayer>
+          <Player playbackId={video.playback_id} />
           <div className="flex justify-between">
             <h1 className="text-2xl font-bold mt-2">{video.title}</h1>
             <div className="inline-flex space-x-2">

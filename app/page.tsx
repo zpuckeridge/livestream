@@ -4,13 +4,7 @@ import Link from "next/link";
 import { ArrowRight, Heart } from "lucide-react";
 import { DateTime } from "luxon";
 import { Button } from "@/components/ui/button";
-import "@vidstack/react/player/styles/default/theme.css";
-import "@vidstack/react/player/styles/default/layouts/video.css";
-import { MediaPlayer, MediaProvider } from "@vidstack/react";
-import {
-  defaultLayoutIcons,
-  DefaultVideoLayout,
-} from "@vidstack/react/player/layouts/default";
+import Player from "@/components/player";
 
 export default async function Home() {
   const videos = await prisma.videos.findMany({ orderBy: { date: "desc" } });
@@ -25,23 +19,11 @@ export default async function Home() {
   return (
     <>
       <main className="max-w-6xl mx-auto">
-        <MediaPlayer
-          src={`https://stream.mux.com/16mLGoj2uixoYcy5oeQ7vzwGPAQvc1sbVqvt01uHnjS8.m3u8`}
-        >
-          <MediaProvider />
-          <DefaultVideoLayout
-            thumbnails={`https://image.mux.com/16mLGoj2uixoYcy5oeQ7vzwGPAQvc1sbVqvt01uHnjS8/thumbnail.png`}
-            icons={defaultLayoutIcons}
-          />
-        </MediaPlayer>
+        <Player playbackId="16mLGoj2uixoYcy5oeQ7vzwGPAQvc1sbVqvt01uHnjS8" />
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-2">
           {videos.slice(0, 4).map((video) => (
             <div key={video.asset_id}>
-              <Link
-                href={`/clip/${video.asset_id}`}
-                title={video.title}
-                prefetch={false}
-              >
+              <Link href={`/clip/${video.asset_id}`} title={video.title}>
                 <div className="transform hover:scale-[1.05] transition-all">
                   <div className="absolute top-2 left-2 rounded-md text-white bg-black/75 p-2 text-xs font-semibold">
                     {video.tag}
