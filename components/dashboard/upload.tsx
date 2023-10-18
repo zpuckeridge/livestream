@@ -6,6 +6,7 @@ import { useRef, useState } from "react";
 import useSwr from "swr";
 import * as UpChunk from "@mux/upchunk";
 import { Eye, Loader2 } from "lucide-react";
+import { z } from "zod"; // Import Zod
 
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
@@ -16,24 +17,31 @@ import { Textarea } from "@/components/ui/textarea";
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
 
+const formSchema = z.object({
+  title: z.string().min(1, "Title is required"),
+  description: z.string().min(1, "Description is required"),
+  tag: z.string().min(1, "Tag is required"),
+  visibility: z.boolean(),
+});
+
 export default function Upload() {
   const [uploadId, setUploadId] = useState(null);
   const [isUploading, setIsUploading] = useState(false);
   const [final, setFinal] = useState(false);
   const [isPreparing, setIsPreparing] = useState(false);
-  const [progress, setProgress] = useState<Number>(0);
+  const [progress, setProgress] = useState(0);
   const [errorMessage, setErrorMessage] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [tag, setTag] = useState("");
-  const [visibility, setVisibility] = useState<boolean>(true);
+  const [visibility, setVisibility] = useState(true);
   const { toast } = useToast();
   const router = useRouter();
 
   const fetcher = (url: string) => {
     return fetch(url, {
-      method: "POST", // Adjust the HTTP method as needed
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
@@ -65,6 +73,7 @@ export default function Upload() {
         ) : (
           <div className="my-20">
             <p className="text-center">Upload Complete!</p>
+            <p className="text-center">Redirecting now...</p>
           </div>
         )}
       </>
@@ -113,7 +122,7 @@ export default function Upload() {
 
           setIsPreparing(false);
 
-          router.refresh();
+          router.push(`/clip/${data.upload.asset_id}`);
         } catch (error) {
           console.error("Error in publishing the video.", error);
           toast({
@@ -151,8 +160,15 @@ export default function Upload() {
   function startUpload() {
     const files = inputRef.current?.files;
 
-    if (!title || !files) {
-      alert("Please enter a title and select a file...");
+    try {
+      formSchema.parse({ title, description, tag, visibility }); // Validate form input using Zod
+    } catch (error) {
+      alert("Oops!");
+      return;
+    }
+
+    if (!files) {
+      alert("Please select a file...");
       return;
     }
 
@@ -161,7 +177,7 @@ export default function Upload() {
     createUpload()
       .then((data) => {
         const upload = UpChunk.createUpload({
-          endpoint: data.url, // Use the URL from the data object
+          endpoint: data.url,
           file: files[0],
         });
 
@@ -180,7 +196,6 @@ export default function Upload() {
         });
       })
       .catch((error) => {
-        // Handle the error from createUpload
         console.error("Error in starting the upload.", error);
       });
   }

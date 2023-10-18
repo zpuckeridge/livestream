@@ -1,16 +1,20 @@
 import { NextResponse, NextRequest } from "next/server";
 import prisma from "@/lib/prisma";
-import { auth } from "@clerk/nextjs";
+import { currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 
 export async function POST(request: NextRequest) {
-  const res = await request.json();
+  const user = await currentUser();
 
-  const { userId } = auth();
+  if (!user) {
+    redirect("/sign-in");
+  }
 
-  if (userId !== process.env.ADMIN_ID) {
+  if (user.id !== process.env.ADMIN_ID) {
     redirect("/unauthorised");
   }
+
+  const res = await request.json();
 
   try {
     await prisma.videos.update({
@@ -30,4 +34,20 @@ export async function POST(request: NextRequest) {
   }
 
   return NextResponse.json({ message: `Video updated.` });
+}
+
+export async function DELETE(request: NextRequest) {
+  const res = await request.json();
+
+  try {
+    await prisma.videos.delete({
+      where: {
+        asset_id: res.asset_id,
+      },
+    });
+  } catch (error) {
+    return NextResponse.json({ message: `Error deleting video.` });
+  }
+
+  return NextResponse.json({ message: `Video deleted.` });
 }

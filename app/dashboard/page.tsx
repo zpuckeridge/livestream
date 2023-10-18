@@ -2,21 +2,11 @@ import { columns } from "./columns";
 import { DataTable } from "./data-table";
 import prisma from "@/lib/prisma";
 import { Activity, Eye, Heart, Stars, UploadIcon } from "lucide-react";
-import Upload from "@/components/dashboard/upload";
 import Views from "@/components/dashboard/views";
 import Likes from "@/components/dashboard/likes";
-import { auth } from "@clerk/nextjs";
+import { currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
-
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -26,11 +16,16 @@ import {
 } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
+import Link from "next/link";
 
 export default async function DashboardPage() {
-  const { userId } = auth();
+  const user = await currentUser();
 
-  if (userId !== process.env.ADMIN_ID) {
+  if (!user) {
+    redirect("/sign-in");
+  }
+
+  if (user.id !== process.env.ADMIN_ID) {
     redirect("/unauthorised");
   }
 
@@ -55,23 +50,13 @@ export default async function DashboardPage() {
           <div className="flex items-center justify-between space-y-2">
             <h2 className="text-3xl font-bold tracking-tight">Dashboard</h2>
             <div className="flex items-center space-x-2">
-              <Dialog>
-                <DialogTrigger asChild>
-                  <Button variant="secondary">
-                    <UploadIcon className="mr-2 h-4 w-4" />
-                    Upload
-                  </Button>
-                </DialogTrigger>
-                <DialogContent className="sm:max-w-[425px]">
-                  <DialogHeader>
-                    <DialogTitle>Upload Video</DialogTitle>
-                    <DialogDescription>
-                      Create and upload a video with relevant metadata.
-                    </DialogDescription>
-                  </DialogHeader>
-                  <Upload />
-                </DialogContent>
-              </Dialog>
+              <Link
+                href="/dashboard/upload"
+                className={buttonVariants({ variant: "outline" })}
+              >
+                <UploadIcon className="mr-2 h-4 w-4" />
+                Upload
+              </Link>
             </div>
           </div>
           <Tabs defaultValue="overview" className="space-y-4">

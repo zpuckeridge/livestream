@@ -1,12 +1,16 @@
-import { NextResponse, NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 import Mux from "@mux/mux-node";
-import { auth } from "@clerk/nextjs";
+import { currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 
 export async function POST() {
-  const { userId } = auth();
+  const user = await currentUser();
 
-  if (userId !== process.env.ADMIN_ID) {
+  if (!user) {
+    redirect("/sign-in");
+  }
+
+  if (user.id !== process.env.ADMIN_ID) {
     redirect("/unauthorised");
   }
 

@@ -1,16 +1,20 @@
 import { NextResponse, NextRequest } from "next/server";
 import Mux from "@mux/mux-node";
-import { auth } from "@clerk/nextjs";
+import { currentUser } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 
 export async function POST(request: NextRequest) {
-  const res = await request.json();
+  const user = await currentUser();
 
-  const { userId } = auth();
+  if (!user) {
+    redirect("/sign-in");
+  }
 
-  if (userId !== process.env.ADMIN_ID) {
+  if (user.id !== process.env.ADMIN_ID) {
     redirect("/unauthorised");
   }
+
+  const res = await request.json();
 
   const { Video } = new Mux();
 
