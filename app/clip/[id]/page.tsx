@@ -28,17 +28,17 @@ export async function generateMetadata({ params }: any) {
       type: "video.other",
       videos: {
         url: `https://stream.mux.com/${video?.playback_id}/high.mp4`,
-        width: 1280,
-        height: 720,
+        width: 1920,
+        height: 1080,
       },
-      images: [
-        {
-          url: `https://image.mux.com/${video?.playback_id}/thumbnail.png`,
-          width: 1800,
-          height: 1600,
-          alt: `${video?.title} Thumbnail`,
-        },
-      ],
+      // images: [
+      //   {
+      //     url: `https://image.mux.com/${video?.playback_id}/thumbnail.png`,
+      //     width: 1800,
+      //     height: 1600,
+      //     alt: `${video?.title} Thumbnail`,
+      //   },
+      // ],
     },
   };
 }
