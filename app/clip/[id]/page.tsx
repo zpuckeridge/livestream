@@ -19,10 +19,8 @@ export async function generateMetadata({ params }: any) {
 
   return {
     title: video?.title,
-    description: video?.description,
     openGraph: {
       title: video?.title,
-      description: video?.description,
       url: `https://sdelta.xyz/clip/${video?.asset_id}`,
       siteName: "sdelta.xyz",
       type: "video.other",
@@ -31,14 +29,14 @@ export async function generateMetadata({ params }: any) {
         width: 1920,
         height: 1080,
       },
-      // images: [
-      //   {
-      //     url: `https://image.mux.com/${video?.playback_id}/thumbnail.png`,
-      //     width: 1800,
-      //     height: 1600,
-      //     alt: `${video?.title} Thumbnail`,
-      //   },
-      // ],
+      images: [
+        {
+          url: `https://image.mux.com/${video?.playback_id}/thumbnail.png`,
+          width: 1800,
+          height: 1600,
+          alt: `${video?.title} Thumbnail`,
+        },
+      ],
     },
   };
 }
