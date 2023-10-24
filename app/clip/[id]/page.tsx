@@ -25,13 +25,13 @@ export async function generateMetadata({ params }: any) {
       description: video?.description,
       url: `https://sdelta.xyz/clip/${video?.asset_id}`,
       siteName: "sdelta.xyz",
+      type: "video.other",
+      videos: {
+        url: `https://stream.mux.com/${video?.playback_id}/high.mp4`,
+        width: 1280,
+        height: 720,
+      },
       images: [
-        {
-          url: `https://image.mux.com/${video?.playback_id}/thumbnail.png`,
-          width: 800,
-          height: 600,
-          alt: `${video?.title} Thumbnail`,
-        },
         {
           url: `https://image.mux.com/${video?.playback_id}/thumbnail.png`,
           width: 1800,
@@ -39,31 +39,6 @@ export async function generateMetadata({ params }: any) {
           alt: `${video?.title} Thumbnail`,
         },
       ],
-      videos: {
-        url: `https://stream.mux.com/${video?.playback_id}/medium.mp4`,
-        width: 1280,
-        height: 720,
-      },
-      locale: "en-US",
-      type: "video.other",
-      author: "sdelta",
-      uploadDate: video?.date,
-      tags: [`${video?.tag}`],
-      duration: video?.duration,
-      twitter: {
-        card: "player",
-        site: "@zpuckeridge",
-        title: video?.title,
-        description: video?.description,
-        image: [
-          {
-            url: `https://image.mux.com/${video?.playback_id}/twitter_card.png`,
-            width: 1200,
-            height: 630,
-            alt: `${video?.title} Twitter Card`,
-          },
-        ],
-      },
     },
   };
 }
