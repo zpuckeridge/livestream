@@ -65,12 +65,12 @@ export default async function Clip({ params }: any) {
           <Player playbackId={video.playback_id} />
           <div className="flex justify-between">
             <h1 className="text-2xl font-bold mt-2">{video.title}</h1>
-            <div className="inline-flex space-x-2">
+            <div className="inline-flex space-x-2 font-mono">
               <Likes assetId={video.asset_id} likes={video.likes ?? 0} />
               <CopyLink />
             </div>
           </div>
-          <div className="flex justify-between">
+          <div className="flex justify-between font-mono">
             <div>{video.views + 1} views</div>
             <div>
               {DateTime.fromJSDate(video.date).toFormat("MMMM d, yyyy")}
