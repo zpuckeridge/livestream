@@ -8,6 +8,8 @@ import { Toaster } from "@/components/ui/toaster";
 import Navigation from "@/components/navigation";
 import { siteConfig } from "@/config/site";
 import Script from "next/script";
+import { GeistSans } from "geist/font/sans";
+import { GeistMono } from "geist/font/mono";
 import { UMAMI_SCRIPT_URL, UMAMI_WEBSITE_ID } from "@/lib/umami";
 
 export const metadata: Metadata = {
@@ -31,7 +33,9 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning>
-        <body className={`${inter.className} dark:bg-black`}>
+        <body
+          className={`${GeistSans.variable} ${GeistMono.variable} font-sans dark:bg-black`}
+        >
           <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
             <Navigation />
             <div className="flex flex-col min-h-screen justify-between space-y-4 container">

@@ -1,10 +1,11 @@
 import Image from "next/image";
 import prisma from "@/lib/prisma";
 import Link from "next/link";
-import { ArrowRight, Heart } from "lucide-react";
+import { MoveRight, Heart } from "lucide-react";
 import { DateTime } from "luxon";
 import { Button } from "@/components/ui/button";
 import Player from "@/components/player";
+import { HeartFilledIcon } from "@radix-ui/react-icons";
 
 export default async function Home() {
   const videos = await prisma.videos.findMany({ orderBy: { date: "desc" } });
@@ -47,15 +48,15 @@ export default async function Home() {
                     priority={true}
                   />
                   <div className="flex justify-between mt-1">
-                    <div className="font-bold text-lg truncate w-full">
+                    <div className="font-bold truncate w-[85%]">
                       {video.title}
                     </div>
-                    <div className="inline-flex my-auto">
+                    <div className="inline-flex my-auto font-mono">
                       {video.likes}
-                      <Heart className="my-auto ml-2" />
+                      <HeartFilledIcon className="my-auto ml-2 w-4 h-4 text-red-500" />
                     </div>
                   </div>
-                  <div className="flex justify-between text-sm">
+                  <div className="flex justify-between text-sm font-mono">
                     <p>
                       {DateTime.fromJSDate(video.date).toFormat("MMMM d, yyyy")}
                     </p>
@@ -69,7 +70,7 @@ export default async function Home() {
         <Link href="/clips">
           <Button className="mt-4" variant="secondary">
             View more
-            <ArrowRight className="ml-1 h-4 w-4" />
+            <MoveRight className="ml-1 h-4 w-4" />
           </Button>
         </Link>
       </main>

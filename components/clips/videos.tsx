@@ -3,10 +3,11 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { ArrowLeft, ArrowRight, Heart } from "lucide-react";
+import { MoveLeft, MoveRight, Heart } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { DateTime } from "luxon";
+import { HeartFilledIcon } from "@radix-ui/react-icons";
 
 interface Video {
   asset_id: string;
@@ -123,10 +124,10 @@ export default function Videos({ videos, itemsPerPage, tags }: Props) {
               key={video.asset_id}
             >
               <div className="transform hover:scale-[1.05] transition-all">
-                <div className="absolute top-2 left-2 rounded-md text-white bg-black/75 p-2 text-xs font-semibold">
+                <div className="absolute top-2 left-2 rounded-md text-white bg-black/75 p-1 text-xs font-semibold font-mono">
                   {video.tag}
                 </div>
-                <div className="absolute top-2 right-2 rounded-md text-white bg-black/75 p-2 text-xs font-semibold">
+                <div className="absolute top-2 right-2 rounded-md text-white bg-black/75 p-1 text-xs font-semibold font-mono">
                   {video.duration ? (
                     <span className="duration">
                       {formatDuration(video.duration)}
@@ -145,16 +146,18 @@ export default function Videos({ videos, itemsPerPage, tags }: Props) {
                   priority={true}
                 />
                 <div className="flex justify-between mt-1">
-                  <div className="font-bold text-lg truncate w-full">
+                  <div className="font-bold truncate w-[85%]">
                     {video.title}
                   </div>
-                  <div className="inline-flex my-auto">
+                  <div className="inline-flex my-auto font-mono">
                     {video.likes}
-                    <Heart className="my-auto ml-2" />
+                    <HeartFilledIcon className="my-auto ml-2 w-4 h-4 text-red-500" />
                   </div>
                 </div>
-                <div className="flex justify-between text-sm">
-                  <p>{formatDate(video.date)}</p>
+                <div className="flex justify-between text-sm font-mono">
+                  <p>
+                    {DateTime.fromJSDate(video.date).toFormat("MMMM d, yyyy")}
+                  </p>
                   {video.views} views
                 </div>
               </div>
@@ -168,7 +171,7 @@ export default function Videos({ videos, itemsPerPage, tags }: Props) {
           size="sm"
           variant="secondary"
         >
-          <ArrowLeft />
+          <MoveLeft />
         </Button>
         <Button onClick={() => setCurrentPage(1)} size="sm" variant="secondary">
           {currentPage} of {totalPages}
@@ -179,7 +182,7 @@ export default function Videos({ videos, itemsPerPage, tags }: Props) {
           size="sm"
           variant="secondary"
         >
-          <ArrowRight />
+          <MoveRight />
         </Button>
       </div>
     </>

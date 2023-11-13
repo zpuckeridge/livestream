@@ -2,7 +2,7 @@ import prisma from "@/lib/prisma";
 import CopyLink from "@/components/copy-link";
 import { DateTime } from "luxon";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft } from "lucide-react";
+import { MoveLeft } from "lucide-react";
 import Link from "next/link";
 import Likes from "@/components/likes";
 import { redirect } from "next/navigation";
@@ -78,7 +78,7 @@ export default async function Clip({ params }: any) {
           </div>
           <Link href="/clips">
             <Button className="mt-4" variant="secondary">
-              <ArrowLeft className="mr-1 h-4 w-4" /> Back to Clips
+              <MoveLeft className="mr-1 h-4 w-4" /> Back to Clips
             </Button>
           </Link>
         </div>
