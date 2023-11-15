@@ -8,6 +8,7 @@ import Likes from "@/components/likes";
 import { redirect } from "next/navigation";
 import Player from "@/components/player";
 import type { Metadata, ResolvingMetadata } from "next";
+import { siteConfig } from "@/config/site";
 
 export const revalidate = 0;
 
@@ -37,6 +38,12 @@ export async function generateMetadata(
     title: `${video.title}`,
     description: video.description,
     openGraph: {
+      siteName: `sdelta.xyz`,
+      title: `${video.title}`,
+      description: video.description,
+      url: `https://${siteConfig.url}/clip/${video.asset_id}`,
+      countryName: "Australia",
+      locale: "en_AU",
       videos: [
         {
           url: `https://stream.mux.com/${video.playback_id}/high.mp4`,
@@ -44,6 +51,7 @@ export async function generateMetadata(
           height: 1080,
         },
       ],
+      type: "video.other",
       images: [
         {
           url: `https://image.mux.com/${video.playback_id}/thumbnail.png`,
