@@ -38,6 +38,7 @@ export async function generateMetadata(
     title: `${video.title}`,
     description: video.description,
     openGraph: {
+      type: "video.other",
       siteName: `sdelta.xyz`,
       title: `${video.title}`,
       description: video.description,
@@ -49,9 +50,9 @@ export async function generateMetadata(
           url: `https://stream.mux.com/${video.playback_id}/high.mp4`,
           width: 1920,
           height: 1080,
+          type: "video/mp4",
         },
       ],
-      type: "video.other",
       images: [
         {
           url: `https://image.mux.com/${video.playback_id}/thumbnail.png`,
