@@ -34,7 +34,7 @@ export async function generateMetadata(
   const previousImages = (await parent).openGraph?.images || [];
 
   return {
-    title: `${video.title} | Haddon Institute`,
+    title: `${video.title}`,
     description: video.description,
     openGraph: {
       videos: [
