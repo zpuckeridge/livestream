@@ -34,14 +34,12 @@ export default function RootLayout({
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning>
         <body
-          className={`${GeistSans.variable} ${GeistMono.variable} font-sans dark:bg-black`}
+          className={`${GeistSans.variable} ${GeistMono.variable} font-sans overflow-x-hidden my-10 lg:my-0 dark:bg-black`}
         >
           <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
             <Navigation />
-            <div className="flex flex-col min-h-screen justify-between space-y-4 container">
-              {children}
-              <Toaster />
-            </div>
+            {children}
+            <Toaster />
           </ThemeProvider>
         </body>
         <Script src={UMAMI_SCRIPT_URL} data-website-id={UMAMI_WEBSITE_ID} />

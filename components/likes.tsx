@@ -16,6 +16,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { HeartFilledIcon } from "@radix-ui/react-icons";
 
 interface Props {
   assetId: string | undefined;
@@ -49,9 +50,9 @@ export default function Likes({ assetId, likes }: Props) {
     return (
       <AlertDialog>
         <AlertDialogTrigger>
-          <div className="inline-flex cursor-pointer">
+          <div className="cursor-pointer hover:text-red-500 transition-all duration-200 flex gap-2 text-sm">
             {likes}
-            <Heart className="my-auto ml-2 hover:text-red-500 transition-all duration-200" />
+            <HeartFilledIcon className="w-4 h-4 my-auto  " />
           </div>
         </AlertDialogTrigger>
         <AlertDialogContent>
@@ -74,14 +75,14 @@ export default function Likes({ assetId, likes }: Props) {
     return (
       <button onClick={handleClick} title="Like" disabled={buttonDisabled}>
         {liked ? (
-          <div className="text-red-500 inline-flex">
+          <div className="text-red-500 flex text-sm gap-2">
             {likes + 1}
-            <Heart className="my-auto ml-2" />
+            <HeartFilledIcon className="w-4 h-4 my-auto" />
           </div>
         ) : (
-          <div className="inline-flex space-x-2">
+          <div className="flex text-sm gap-2 hover:text-red-500 transition-all duration-200">
             <div>{likes}</div>
-            <Heart className="my-auto hover:text-red-500 transition-all duration-200" />
+            <HeartFilledIcon className="w-4 h-4 my-auto " />
           </div>
         )}
       </button>

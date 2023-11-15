@@ -149,12 +149,12 @@ export default function Videos({ videos, itemsPerPage, tags }: Props) {
                   <div className="font-bold truncate w-[85%]">
                     {video.title}
                   </div>
-                  <div className="inline-flex my-auto font-mono">
+                  <div className="flex gap-2 my-auto text-sm font-mono">
                     {video.likes}
-                    <HeartFilledIcon className="my-auto ml-2 w-4 h-4 text-red-500" />
+                    <HeartFilledIcon className="my-auto w-4 h-4 text-red-500" />
                   </div>
                 </div>
-                <div className="flex justify-between text-sm font-mono">
+                <div className="flex justify-between text-muted-foreground text-sm font-mono">
                   <p>
                     {DateTime.fromJSDate(video.date).toFormat("MMMM d, yyyy")}
                   </p>

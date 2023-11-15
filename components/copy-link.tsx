@@ -3,6 +3,12 @@
 import { Check, Copy } from "lucide-react";
 import { useState } from "react";
 import { useToast } from "@/components/ui/use-toast";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 export default function CopyLink() {
   const [copied, setCopied] = useState(false);
@@ -25,13 +31,22 @@ export default function CopyLink() {
   };
 
   return (
-    <button onClick={handleClick} title="Copy URL">
+    <button onClick={handleClick}>
       {copied ? (
-        <div className="inline-flex">
-          <Check className="my-auto" />
+        <div className="flex">
+          <Check className="w-4 h-4 my-auto" />
         </div>
       ) : (
-        <Copy />
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Copy className="w-4 h-4 my-auto" />
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Copy URL</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       )}
     </button>
   );

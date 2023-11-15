@@ -7,35 +7,51 @@ import Link from "next/link";
 import Likes from "@/components/likes";
 import { redirect } from "next/navigation";
 import Player from "@/components/player";
+import type { Metadata, ResolvingMetadata } from "next";
 
 export const revalidate = 0;
 
-export async function generateMetadata({ params }: any) {
-  const { id } = params;
-
-  const video = await prisma.videos.findUnique({
+async function retrieveVideo(id: string) {
+  const data = await prisma.videos.findFirst({
     where: { asset_id: id },
   });
 
+  if (!data) {
+    redirect("/not-found");
+  }
+
+  return data;
+}
+
+export async function generateMetadata(
+  { params }: any,
+  parent: ResolvingMetadata,
+): Promise<Metadata> {
+  const id = params.id;
+
+  const video = await retrieveVideo(id);
+
+  const previousImages = (await parent).openGraph?.images || [];
+
   return {
-    title: video?.title,
+    title: `${video.title} | Haddon Institute`,
+    description: video.description,
     openGraph: {
-      title: video?.title,
-      url: `https://sdelta.xyz/clip/${video?.asset_id}`,
-      siteName: "sdelta.xyz",
-      type: "video.other",
-      videos: {
-        url: `https://stream.mux.com/${video?.playback_id}/high.mp4`,
-        width: 1920,
-        height: 1080,
-      },
+      videos: [
+        {
+          url: `https://stream.mux.com/${video.playback_id}/high.mp4`,
+          width: 1920,
+          height: 1080,
+        },
+      ],
       images: [
         {
-          url: `https://image.mux.com/${video?.playback_id}/thumbnail.png`,
-          width: 1800,
-          height: 1600,
-          alt: `${video?.title} Thumbnail`,
+          url: `https://image.mux.com/${video.playback_id}/thumbnail.png`,
+          width: 1920,
+          height: 1080,
+          alt: `${video.title} Thumbnail`,
         },
+        ...previousImages,
       ],
     },
   };
@@ -44,12 +60,10 @@ export async function generateMetadata({ params }: any) {
 export default async function Clip({ params }: any) {
   const { id } = params;
 
-  const video = await prisma.videos.findFirst({
-    where: { asset_id: id },
-  });
+  const video = await retrieveVideo(id);
 
   if (!video) {
-    redirect("/404");
+    redirect("/not-found");
   }
 
   // increment view count on page load
@@ -59,30 +73,30 @@ export default async function Clip({ params }: any) {
   });
 
   return (
-    <>
-      <main>
-        <div className="max-w-6xl p-4 mx-auto">
-          <Player playbackId={video.playback_id} />
+    <div className="max-w-7xl flex justify-center items-center min-h-screen min-w-screen mx-auto">
+      <div className="space-y-2 p-8 w-full">
+        <Player playbackId={video.playback_id} />
+        <div>
           <div className="flex justify-between">
-            <h1 className="text-2xl font-bold mt-2">{video.title}</h1>
+            <h1 className="text-xl font-semibold truncate">{video.title}</h1>
             <div className="inline-flex space-x-2 font-mono">
               <Likes assetId={video.asset_id} likes={video.likes ?? 0} />
               <CopyLink />
             </div>
           </div>
-          <div className="flex justify-between font-mono">
+          <div className="flex justify-between text-muted-foreground text-sm font-mono">
             <div>{video.views + 1} views</div>
             <div>
               {DateTime.fromJSDate(video.date).toFormat("MMMM d, yyyy")}
             </div>
           </div>
-          <Link href="/clips">
-            <Button className="mt-4" variant="secondary">
-              <MoveLeft className="mr-1 h-4 w-4" /> Back to Clips
-            </Button>
-          </Link>
         </div>
-      </main>
-    </>
+        <Link href="/clips">
+          <Button className="mt-4" variant="secondary">
+            <MoveLeft className="mr-1 h-4 w-4" /> Back to Clips
+          </Button>
+        </Link>
+      </div>
+    </div>
   );
 }
