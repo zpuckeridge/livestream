@@ -32,8 +32,6 @@ export async function generateMetadata(
 
   const video = await retrieveVideo(id);
 
-  // const previousImages = (await parent).openGraph?.images || [];
-
   return {
     title: `${video.title}`,
     description: video.description,
@@ -53,15 +51,6 @@ export async function generateMetadata(
           type: "video/mp4",
         },
       ],
-      // images: [
-      //   {
-      //     url: `https://image.mux.com/${video.playback_id}/thumbnail.png`,
-      //     width: 1920,
-      //     height: 1080,
-      //     alt: `${video.title} Thumbnail`,
-      //   },
-      //   ...previousImages,
-      // ],
     },
   };
 }
