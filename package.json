@@ -62,7 +62,7 @@
     "hls.js": "^1.4.12",
     "lucide-react": "^0.292.0",
     "luxon": "^3.4.4",
-    "next": "14.0.3",
+    "next": "14.0.0",
     "next-themes": "^0.2.1",
     "postcss": "8.4.31",
     "prettier": "^3.1.0",
