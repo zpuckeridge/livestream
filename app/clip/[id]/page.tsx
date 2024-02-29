@@ -9,7 +9,7 @@ import type { Metadata, ResolvingMetadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
-export const revalidate = 0;
+export const dynamicParams = false;
 
 async function retrieveVideo(id: string) {
   const data = await prisma.videos.findFirst({
