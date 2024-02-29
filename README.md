@@ -6,7 +6,7 @@
     <br />
   </h1>
   <sup>
-    Video hosting site built with Next.JS, Planetscale, Prisma, Mux, and Tailwind CSS hosted on Vercel.</em>
+     Video hosting site built with Next.JS, Neon, Prisma, Mux, Vidstack and Tailwind CSS hosted on Vercel.</em>
     <br />
   </sup>
   <br />
@@ -39,9 +39,6 @@ pnpm run dev
 - 🌙 Dark/Light Theme
 - 📡 Open Graph Support
 - 📈 Analytics
-- ☁ Upload Functionality
-- 🎛 Video Management
-- ❤ Like Button
 - 🗂 Tags
 - ▶ Pagination
 
@@ -49,3 +46,6 @@ pnpm run dev
 
 - 💌 Notifications
 - 💬 Live Chat and Comments
+- ☁ Upload Functionality
+- 🎛 Video Management
+- ❤ Like Button
