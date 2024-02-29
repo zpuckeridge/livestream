@@ -1,20 +1,17 @@
-"use client";
+import "@vidstack/react/player/styles/default/layouts/video.css";
+import "@vidstack/react/player/styles/default/theme.css";
 
-import MuxPlayer from "@mux/mux-player-react/lazy";
+import { MediaPlayer, MediaProvider } from "@vidstack/react";
+import {
+  DefaultVideoLayout,
+  defaultLayoutIcons,
+} from "@vidstack/react/player/layouts/default";
 
-interface Props {
-  playbackId: string;
-}
-
-export default function Player({ playbackId }: Props) {
+export default function Player({ src }: { src: any }) {
   return (
-    <MuxPlayer
-      thumbnailTime={5}
-      playbackId={playbackId}
-      accent-color="#292524"
-      primary-color="#ffffff"
-      autoPlay
-      className="w-full h-full aspect-video"
-    />
+    <MediaPlayer src={`https://stream.mux.com/${src}.m3u8`}>
+      <MediaProvider />
+      <DefaultVideoLayout noScrubGesture icons={defaultLayoutIcons} />
+    </MediaPlayer>
   );
 }
