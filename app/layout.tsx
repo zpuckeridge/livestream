@@ -1,4 +1,5 @@
 import "@/app/globals.css";
+
 import { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
@@ -11,8 +12,6 @@ import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import { UMAMI_SCRIPT_URL, UMAMI_WEBSITE_ID } from "@/lib/umami";
 
-export const runtime = "edge";
-
 export const metadata: Metadata = {
   title: {
     default: siteConfig.name,
@@ -20,6 +19,11 @@ export const metadata: Metadata = {
   },
   description: siteConfig.description,
 };
+
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+});
 
 export default function RootLayout({
   children,
