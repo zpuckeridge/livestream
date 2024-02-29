@@ -1,24 +1,22 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
-  relationMode = "prisma"
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
-model Videos {
-  asset_id      String      @id
-  playback_id   String
-  title         String      @db.VarChar(255)
-  description   String      @db.VarChar(255)
-  public        Boolean     @default(false)
-  tag           String
-  date          DateTime
-  likes         Int
-  views         Int
-  duration      Int         
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
+model video {
+  id          Int      @id @default(autoincrement())
+  asset_id    String
+  playback_id String
+  title       String   @db.VarChar(255)
+  description String   @db.VarChar(255)
+  tag         String
+  date        DateTime
+  views       Int
+  duration    Int
 }

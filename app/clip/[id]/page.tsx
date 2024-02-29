@@ -12,7 +12,7 @@ import { redirect } from "next/navigation";
 export const runtime = "edge";
 
 async function retrieveVideo(id: string) {
-  const data = await prisma.videos.findFirst({
+  const data = await prisma.video.findFirst({
     where: { asset_id: id },
   });
 
@@ -64,7 +64,7 @@ export default async function Clip({ params }: any) {
   }
 
   // increment view count on page load
-  await prisma.videos.update({
+  await prisma.video.update({
     where: { asset_id: id },
     data: { views: video.views + 1 },
   });

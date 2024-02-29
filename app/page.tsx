@@ -8,7 +8,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default async function Home() {
-  const videos = await prisma.videos.findMany({ orderBy: { date: "desc" } });
+  const videos = await prisma.video.findMany({ orderBy: { date: "desc" } });
 
   const formatDuration = (duration: number) => {
     const minutes = Math.floor(duration / 60);
