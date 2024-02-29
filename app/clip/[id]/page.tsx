@@ -1,19 +1,16 @@
-import prisma from "@/lib/prisma";
 import CopyLink from "@/components/copy-link";
-import { DateTime } from "luxon";
-import { Button } from "@/components/ui/button";
-import { MoveLeft } from "lucide-react";
-import Link from "next/link";
-import Likes from "@/components/likes";
-import { redirect } from "next/navigation";
 import Player from "@/components/player";
-import type { Metadata, ResolvingMetadata } from "next";
+import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/config/site";
-
-export const revalidate = 0;
+import prisma from "@/lib/prisma";
+import { MoveLeft } from "lucide-react";
+import { DateTime } from "luxon";
+import type { Metadata, ResolvingMetadata } from "next";
+import Link from "next/link";
+import { redirect } from "next/navigation";
 
 async function retrieveVideo(id: string) {
-  const data = await prisma.videos.findFirst({
+  const data = await prisma.video.findFirst({
     where: { asset_id: id },
   });
 
@@ -64,8 +61,7 @@ export default async function Clip({ params }: any) {
     redirect("/not-found");
   }
 
-  // increment view count on page load
-  await prisma.videos.update({
+  await prisma.video.update({
     where: { asset_id: id },
     data: { views: video.views + 1 },
   });
@@ -73,12 +69,11 @@ export default async function Clip({ params }: any) {
   return (
     <div className="max-w-7xl flex justify-center items-center min-h-screen min-w-screen mx-auto">
       <div className="space-y-2 p-8 w-full">
-        <Player playbackId={video.playback_id} />
+        <Player src={video.playback_id} />
         <div>
           <div className="flex justify-between">
             <h1 className="text-xl font-semibold truncate">{video.title}</h1>
             <div className="inline-flex space-x-2 font-mono">
-              <Likes assetId={video.asset_id} likes={video.likes ?? 0} />
               <CopyLink />
             </div>
           </div>

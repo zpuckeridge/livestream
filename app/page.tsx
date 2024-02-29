@@ -1,14 +1,13 @@
-import Image from "next/image";
-import prisma from "@/lib/prisma";
-import Link from "next/link";
-import { MoveRight, Heart } from "lucide-react";
-import { DateTime } from "luxon";
-import { Button, buttonVariants } from "@/components/ui/button";
 import Player from "@/components/player";
-import { HeartFilledIcon } from "@radix-ui/react-icons";
+import { buttonVariants } from "@/components/ui/button";
+import prisma from "@/lib/prisma";
+import { MoveRight } from "lucide-react";
+import { DateTime } from "luxon";
+import Image from "next/image";
+import Link from "next/link";
 
 export default async function Home() {
-  const videos = await prisma.videos.findMany({ orderBy: { date: "desc" } });
+  const videos = await prisma.video.findMany({ orderBy: { date: "desc" } });
 
   const formatDuration = (duration: number) => {
     const minutes = Math.floor(duration / 60);
@@ -21,7 +20,7 @@ export default async function Home() {
     <>
       <div className="max-w-7xl flex justify-center items-center min-h-screen min-w-screen mx-auto">
         <div className="space-y-8 p-8">
-          <Player playbackId="16mLGoj2uixoYcy5oeQ7vzwGPAQvc1sbVqvt01uHnjS8" />
+          <Player src="16mLGoj2uixoYcy5oeQ7vzwGPAQvc1sbVqvt01uHnjS8" />
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-2">
             {videos.slice(0, 4).map((video) => (
               <div key={video.asset_id}>
@@ -51,10 +50,6 @@ export default async function Home() {
                     <div className="flex justify-between mt-1">
                       <div className="font-bold truncate w-[85%]">
                         {video.title}
-                      </div>
-                      <div className="inline-flex my-auto font-mono">
-                        {video.likes}
-                        <HeartFilledIcon className="my-auto ml-2 w-4 h-4 text-red-500" />
                       </div>
                     </div>
                     <div className="flex justify-between text-sm font-mono">

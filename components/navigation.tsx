@@ -1,8 +1,7 @@
-import Link from "next/link";
-import { Home, LayoutGrid } from "lucide-react";
-import { Authentication } from "@/components/authentication";
 import { ModeToggle } from "@/components/mode-toggle";
 import { buttonVariants } from "@/components/ui/button";
+import { Home } from "lucide-react";
+import Link from "next/link";
 
 export default async function Navigation() {
   return (
@@ -18,17 +17,7 @@ export default async function Navigation() {
       </Link>
 
       <div className="flex gap-2 my-auto">
-        <Link
-          href="/dashboard"
-          className={`flex gap-2 ${buttonVariants({
-            variant: "secondary",
-          })}`}
-        >
-          <LayoutGrid className="mr-2 h-4 w-4" />
-          Dashboard
-        </Link>
         <ModeToggle />
-        <Authentication />
       </div>
     </nav>
   );

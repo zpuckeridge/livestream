@@ -2,11 +2,11 @@ import Videos from "@/components/clips/videos";
 import prisma from "@/lib/prisma";
 
 export default async function Clips() {
-  const videos = await prisma.videos.findMany({
+  const videos = await prisma.video.findMany({
     orderBy: { date: "desc" },
   });
 
-  const tags = await prisma.videos.findMany({
+  const tags = await prisma.video.findMany({
     select: { tag: true },
   });
 

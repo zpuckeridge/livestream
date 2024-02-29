@@ -1,13 +1,12 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { MoveLeft, MoveRight } from "lucide-react";
+import { DateTime } from "luxon";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { MoveLeft, MoveRight, Heart } from "lucide-react";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { DateTime } from "luxon";
-import { HeartFilledIcon } from "@radix-ui/react-icons";
 
 interface Video {
   asset_id: string;
@@ -15,7 +14,6 @@ interface Video {
   title: string;
   duration: number;
   tag: string;
-  likes: number;
   views: number;
   date: Date;
 }
@@ -71,11 +69,6 @@ export default function Videos({ videos, itemsPerPage, tags }: Props) {
     return `${minutes}:${seconds.toString().padStart(2, "0")}`;
   };
 
-  const formatDate = (date: Date) => {
-    return DateTime.fromJSDate(date).toFormat("MMMM d, yyyy");
-  };
-
-  // @ts-ignore
   const uniqueTags = [...new Set(tags.map((item: any) => item.tag))];
 
   return (
@@ -148,10 +141,6 @@ export default function Videos({ videos, itemsPerPage, tags }: Props) {
                 <div className="flex justify-between mt-1">
                   <div className="font-bold truncate w-[85%]">
                     {video.title}
-                  </div>
-                  <div className="flex gap-2 my-auto text-sm font-mono">
-                    {video.likes}
-                    <HeartFilledIcon className="my-auto w-4 h-4 text-red-500" />
                   </div>
                 </div>
                 <div className="flex justify-between text-muted-foreground text-sm font-mono">
