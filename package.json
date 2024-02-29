@@ -10,7 +10,7 @@
     "lint": "next lint",
     "prettier": "prettier --write .",
     "postinstall": "prisma generate",
-    "pages:build": "npx @cloudflare/next-on-pages"
+    "pages:build": "pnpm dlx @cloudflare/next-on-pages"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.3.4",
