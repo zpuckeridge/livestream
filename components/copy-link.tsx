@@ -1,14 +1,14 @@
 "use client";
 
-import { Check, Copy } from "lucide-react";
-import { useState } from "react";
-import { useToast } from "@/components/ui/use-toast";
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { useToast } from "@/components/ui/use-toast";
+import { CheckIcon, CopyIcon } from "@radix-ui/react-icons";
+import { useState } from "react";
 
 export default function CopyLink() {
   const [copied, setCopied] = useState(false);
@@ -34,13 +34,13 @@ export default function CopyLink() {
     <button onClick={handleClick}>
       {copied ? (
         <div className="flex">
-          <Check className="w-4 h-4 my-auto" />
+          <CheckIcon className="w-4 h-4 my-auto" />
         </div>
       ) : (
         <TooltipProvider>
           <Tooltip>
             <TooltipTrigger asChild>
-              <Copy className="w-4 h-4 my-auto" />
+              <CopyIcon className="w-4 h-4 my-auto" />
             </TooltipTrigger>
             <TooltipContent>
               <p>Copy URL</p>

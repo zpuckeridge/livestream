@@ -2,8 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { MoveLeft, MoveRight } from "lucide-react";
-import { DateTime } from "luxon";
+import { ArrowLeftIcon, ArrowRightIcon } from "@radix-ui/react-icons";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -116,7 +115,7 @@ export default function Videos({ videos, itemsPerPage, tags }: Props) {
               title={video.title}
               key={video.asset_id}
             >
-              <div className="transform hover:scale-[1.05] transition-all">
+              <div className="transform group hover:scale-[1.05] transition-all duration-300">
                 <div className="absolute top-2 left-2 rounded-md text-white bg-black/75 p-1 text-xs font-semibold font-mono">
                   {video.tag}
                 </div>
@@ -135,17 +134,21 @@ export default function Videos({ videos, itemsPerPage, tags }: Props) {
                   alt={video.title}
                   width={600}
                   height={600}
-                  className="rounded-md aspect-video"
+                  className="rounded-md aspect-video group-hover:shadow-2xl transition-all duration-300"
                   priority={true}
                 />
                 <div className="flex justify-between mt-1">
-                  <div className="font-bold truncate w-[85%]">
+                  <div className="font-semibold truncate w-[85%]">
                     {video.title}
                   </div>
                 </div>
-                <div className="flex justify-between text-muted-foreground text-sm font-mono">
+                <div className="flex justify-between text-sm leading-none text-muted-foreground">
                   <p>
-                    {DateTime.fromJSDate(video.date).toFormat("MMMM d, yyyy")}
+                    {new Date(video.date).toLocaleDateString("en-US", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })}
                   </p>
                   {video.views} views
                 </div>
@@ -160,7 +163,7 @@ export default function Videos({ videos, itemsPerPage, tags }: Props) {
           size="sm"
           variant="secondary"
         >
-          <MoveLeft />
+          <ArrowLeftIcon />
         </Button>
         <Button onClick={() => setCurrentPage(1)} size="sm" variant="secondary">
           {currentPage} of {totalPages}
@@ -171,7 +174,7 @@ export default function Videos({ videos, itemsPerPage, tags }: Props) {
           size="sm"
           variant="secondary"
         >
-          <MoveRight />
+          <ArrowRightIcon />
         </Button>
       </div>
     </>

@@ -3,8 +3,7 @@ import Player from "@/components/player";
 import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/config/site";
 import prisma from "@/lib/prisma";
-import { MoveLeft } from "lucide-react";
-import { DateTime } from "luxon";
+import { ArrowLeftIcon } from "@radix-ui/react-icons";
 import type { Metadata, ResolvingMetadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
@@ -68,7 +67,7 @@ export default async function Clip({ params }: any) {
 
   return (
     <div className="max-w-7xl flex justify-center items-center min-h-screen min-w-screen mx-auto">
-      <div className="space-y-2 p-8 w-full">
+      <div className="space-y-2 py-8 px-4 w-full">
         <Player src={video.playback_id} />
         <div>
           <div className="flex justify-between">
@@ -77,16 +76,20 @@ export default async function Clip({ params }: any) {
               <CopyLink />
             </div>
           </div>
-          <div className="flex justify-between text-muted-foreground text-sm font-mono">
+          <div className="flex justify-between text-sm leading-none text-muted-foreground">
             <div>{video.views + 1} views</div>
             <div>
-              {DateTime.fromJSDate(video.date).toFormat("MMMM d, yyyy")}
+              {new Date(video.date).toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}
             </div>
           </div>
         </div>
         <Link href="/clips">
           <Button className="mt-4" variant="secondary">
-            <MoveLeft className="mr-1 h-4 w-4" /> Back to Clips
+            <ArrowLeftIcon className="mr-1 h-4 w-4" /> Back to Clips
           </Button>
         </Link>
       </div>

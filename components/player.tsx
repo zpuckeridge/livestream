@@ -9,7 +9,10 @@ import {
 
 export default function Player({ src }: { src: any }) {
   return (
-    <MediaPlayer src={`https://stream.mux.com/${src}.m3u8`}>
+    <MediaPlayer
+      src={`https://stream.mux.com/${src}.m3u8`}
+      className="hover:shadow-2xl transition-all duration-300"
+    >
       <MediaProvider />
       <DefaultVideoLayout noScrubGesture icons={defaultLayoutIcons} />
     </MediaPlayer>

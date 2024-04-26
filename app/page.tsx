@@ -1,13 +1,15 @@
 import Player from "@/components/player";
 import { buttonVariants } from "@/components/ui/button";
 import prisma from "@/lib/prisma";
-import { MoveRight } from "lucide-react";
-import { DateTime } from "luxon";
+import { ArrowRightIcon } from "@radix-ui/react-icons";
 import Image from "next/image";
 import Link from "next/link";
 
 export default async function Home() {
-  const videos = await prisma.video.findMany({ orderBy: { date: "desc" } });
+  const videos = await prisma.video.findMany({
+    orderBy: { date: "desc" },
+    take: 4,
+  });
 
   const formatDuration = (duration: number) => {
     const minutes = Math.floor(duration / 60);
@@ -19,13 +21,13 @@ export default async function Home() {
   return (
     <>
       <div className="max-w-7xl flex justify-center items-center min-h-screen min-w-screen mx-auto">
-        <div className="space-y-8 p-8">
+        <div className="space-y-4 py-8 px-4">
           <Player src="16mLGoj2uixoYcy5oeQ7vzwGPAQvc1sbVqvt01uHnjS8" />
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-2">
-            {videos.slice(0, 4).map((video) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {videos.map((video) => (
               <div key={video.asset_id}>
                 <Link href={`/clip/${video.asset_id}`} title={video.title}>
-                  <div className="transform hover:scale-[1.05] transition-all">
+                  <div className="transform group hover:scale-[1.05] transition-all duration-300">
                     <div className="absolute top-2 left-2 rounded-md text-white bg-black/75 p-1 text-xs font-semibold font-mono">
                       {video.tag}
                     </div>
@@ -44,19 +46,21 @@ export default async function Home() {
                       alt={video.title}
                       width={600}
                       height={600}
-                      className="rounded-md aspect-video"
+                      className="rounded-md aspect-video group-hover:shadow-2xl transition-all duration-300"
                       priority={true}
                     />
                     <div className="flex justify-between mt-1">
-                      <div className="font-bold truncate w-[85%]">
+                      <div className="font-semibold truncate w-[85%]">
                         {video.title}
                       </div>
                     </div>
-                    <div className="flex justify-between text-sm font-mono">
+                    <div className="flex justify-between text-sm leading-none text-muted-foreground">
                       <p>
-                        {DateTime.fromJSDate(video.date).toFormat(
-                          "MMMM d, yyyy",
-                        )}
+                        {new Date(video.date).toLocaleDateString("en-US", {
+                          year: "numeric",
+                          month: "long",
+                          day: "numeric",
+                        })}
                       </p>
                       {video.views} views
                     </div>
@@ -69,7 +73,7 @@ export default async function Home() {
             href="/clips"
             className={`flex gap-2 ${buttonVariants({ variant: "secondary" })}`}
           >
-            View more <MoveRight className="w-5 h-5 my-auto" />
+            View more <ArrowRightIcon className="w-5 h-5 my-auto" />
           </Link>
         </div>
       </div>
